@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#1f89ed" />
+    <title>알지오매스를 활용한 회전체 만들기 | BRIDGE</title>
+    <!--APP_JS-->
+    <!--APP_CSS-->
+  </head>
+  <body>
+    <a class="skip-link" href="#slide-stage">학습 화면으로 이동</a>
+    <header class="app-bar">
+      <button id="home-btn" class="brand" aria-label="표지로 이동"><b>BRIDGE</b><span>회전체 만들기</span></button>
+      <nav class="phase-tabs" aria-label="1·2·3 단계">
+        <button data-phase="1">1 <span>살펴보기</span></button><button data-phase="2">2 <span>다가가기</span></button
+        ><button data-phase="3">3 <span>넘어서기</span></button>
+      </nav>
+      <div class="app-actions">
+        <span id="save-status" role="status">자동 저장 준비</span><button id="export-btn">↓ 저장</button
+        ><button id="import-btn">↑ 불러오기</button><button id="help-btn" aria-label="사용 안내">?</button
+        ><input id="import-file" type="file" accept=".json,application/json" hidden />
+      </div>
+    </header>
+    <main id="viewport">
+      <section id="slide-stage" class="stage bg-grid" aria-label="수업 슬라이드">
+        <div id="slide-decoration"></div>
+        <div id="book-frame" class="book-card">
+          <div class="sheet">
+            <header class="sheet-head">
+              <span id="chapter-chip" class="stage-chip"></span>
+              <h1 id="slide-title" tabindex="-1"></h1>
+              <p id="slide-original"></p>
+              <hr />
+            </header>
+            <div id="sheet-body">
+              <div id="slide-content"></div>
+              <aside id="tool-card" class="tool-frame" aria-label="알지오매스 학습 도구" hidden>
+                <div class="tf-head">
+                  <span class="tf-dot"></span><b id="tool-title">알지오3D</b
+                  ><select id="model-choice" aria-label="관찰할 예시"></select
+                  ><span class="tf-actions"
+                    ><button id="section-tool" hidden>단면 관찰</button><button id="expand-tool">크게보기</button
+                    ><a id="external-link" target="_blank" rel="noopener noreferrer">새 창 ↗</a></span
+                  >
+                </div>
+                <div id="frame-holder"></div>
+                <div class="tf-note">
+                  <span id="frame-status">인터넷 연결이 필요합니다.</span
+                  ><button id="model-help">도형 저장 안내</button>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="slide-nav">
+      <progress id="page-progress" aria-label="현재 페이지 위치" value="1" max="41"></progress
+      ><button id="toc-btn" class="nav-small">☷ 목차</button
+      ><button id="source-btn" class="nav-small">원고 보기</button>
+      <div class="nav-context"><span id="nav-stage"></span><span id="learning-progress">활동 완료 0 / 12</span></div>
+      <label class="page-jump"
+        ><select id="page-select" aria-label="학습 페이지 선택"></select
+        ><span id="page-total">/ 41</span></label
+      ><button id="prev-btn" class="nav-button">← 이전</button><button id="next-btn" class="nav-button">다음 →</button>
+    </footer>
+    <div id="toast" role="status" aria-live="polite" hidden></div>
+    <dialog id="help-dialog">
+      <header>
+        <h2>활동지 사용 안내</h2>
+        <button data-close aria-label="안내 닫기">×</button>
+      </header>
+      <ol>
+        <li>
+          이전·다음 버튼이나 키보드 ← →로 한 화면씩 이동합니다. 글을 쓰는 동안에는 방향키로 페이지가 바뀌지 않습니다.
+        </li>
+        <li>목차의 다리에서 BRIDGE 활동으로 바로 이동할 수 있습니다. 상단의 1·2·3 단계 탭도 사용할 수 있습니다.</li>
+        <li>
+          입력은 자동 저장됩니다. 수업이 끝나면 <b>저장</b>으로 JSON 파일을 보관하고, <b>불러오기</b>로 이어서
+          작성하세요.
+        </li>
+        <li>한 문항이 여러 화면으로 나뉜 경우 모든 작성란을 채운 뒤 마지막 화면에서 활동 완료를 누릅니다.</li>
+        <li>
+          알지오3D 모델은 도구에서 .algeo3d로 따로 저장하세요. 학습 기록 JSON에는 답변·스케치·첨부 이미지가 담깁니다.
+        </li>
+      </ol>
+      <p>
+        작은 화면은 세로로 배치됩니다. 외부 도구가 비어 보이면 새 창으로 열거나 HTML 파일을 Edge·Chrome으로 열어 주세요.
+      </p>
+    </dialog>
+    <dialog id="tip-dialog">
+      <header>
+        <h2 id="tip-title">TIP!</h2>
+        <button data-close aria-label="도움말 닫기">×</button>
+      </header>
+      <div id="tip-content"></div>
+    </dialog>
+    <dialog id="model-dialog">
+      <header>
+        <h2>알지오3D 도형 저장</h2>
+        <button data-close aria-label="도형 안내 닫기">×</button>
+      </header>
+      <p>
+        <b>편집용 모델:</b> 도구 메뉴의 ‘다른 이름으로 저장 → 내 PC 저장’으로 .algeo3d 파일을 보관하세요. ‘열기 → 내
+        PC에서 열기’로 다시 열 수 있습니다.
+      </p>
+      <p><b>색칠·장식용:</b> STL로 내보낸 뒤 그림판3D에서 불러오세요.</p>
+      <p>
+        페이지 이동 중에는 열어 둔 도구를 유지합니다. 새로고침·종료 전에는 모델을 따로 저장하세요. 상단의 학습 기록
+        저장에는 알지오매스 모델이 포함되지 않습니다.
+      </p>
+    </dialog>
+    <dialog id="source-dialog" class="source-dialog">
+      <header>
+        <h2>원본 학생용 활동지</h2>
+        <button data-close aria-label="원본 닫기">×</button>
+      </header>
+      <div class="source-controls">
+        <button id="source-prev">← 이전 쪽</button><span id="source-page"></span
+        ><button id="source-next">다음 쪽 →</button>
+      </div>
+      <img id="source-image" alt="원본 활동지" />
+    </dialog>
+    <dialog id="import-dialog">
+      <header>
+        <h2>학습 기록 불러오기</h2>
+        <button data-close aria-label="불러오기 닫기">×</button>
+      </header>
+      <p id="import-summary"></p>
+      <p>현재 학습 기록이 바뀝니다. 필요한 기록은 먼저 저장하세요.</p>
+      <div class="dialog-actions">
+        <button id="backup-current">현재 기록 저장</button
+        ><button id="confirm-import" class="primary">이 기록 불러오기</button>
+      </div>
+    </dialog>
+    <dialog id="section-dialog">
+      <header>
+        <h2>단면 관찰 · 보조 모형</h2>
+        <button data-close aria-label="단면 관찰 닫기">×</button>
+      </header>
+      <p>
+        원기둥·원뿔·구의 속이 찬 기본 모형입니다. 알지오3D에서 만든 작품을 자르는 기능은 아니며, 선택한 평면과 입체의
+        교차 단면을 비교합니다. 모양·단면 방향·높이·시점은 학습 기록에 저장됩니다.
+      </p>
+      <div id="section-host"></div>
+    </dialog>
+  </body>
+</html>
