@@ -38,6 +38,15 @@ var e = {
     profiles: `__ASSET:fig-profiles.webp__`,
     cup: `__ASSET:fig-cup.webp__`,
   },
+  // 알지오3D 조작 순서 그림(알지오3D 실제 화면 캡처, 2026-10-03)
+  _guideImages = (window.ASSET_IMG = {
+    guide1: `__ASSET:guide-1-viewcube.webp__`,
+    guide2: `__ASSET:guide-2-polygon.webp__`,
+    guide3: `__ASSET:guide-3-rotate.webp__`,
+    guide4: `__ASSET:guide-4-axis.webp__`,
+    guide5: `__ASSET:guide-5-click.webp__`,
+    guide6: `__ASSET:guide-5-done.webp__`,
+  }),
   t = `m3-1-algeomath-solids`,
   n = `1.0.0`,
   r = (e, t, n = `관찰하거나 생각한 내용을 적어 보세요.`) => ({ id: e, label: t, placeholder: n }),
@@ -54,11 +63,11 @@ var e = {
       fields: [
         r(
           `q1`,
-          `한 직선을 축으로 돌려서 만든 것처럼 보이는 물건과 그렇게 생각한 이유`,
+          `위 물건 말고 우리 주변에서 볼 수 있는 물건 중에 한 직선을 축으로 돌려서 만든 것처럼 보이는 물건과 그렇게 생각한 이유를 적으시오.`,
           `물건의 이름과 이유를 함께 적고, 친구와 이야기해 보세요.`,
         ),
       ],
-      inquiry: `평면도형을 한 직선을 축으로 회전시키면 어떤 입체도형이 만들어지며, 그 회전체의 단면에는 어떤 성질이 나타날까?`,
+      inquiry: `평면도형을 한 직선을 축으로 회전시키면 어떤 입체도형이 만들어지며, 그 입체도형의 단면에는 어떤 성질이 나타날까?`,
     },
     {
       id: 2,
@@ -66,7 +75,8 @@ var e = {
       page: 2,
       title: `오늘의 탐구 목표`,
       original: `학습 목표를 알아보시오.`,
-      lead: `알지오매스의 회전 도구로 회전체를 만들고, 회전축과 단면의 성질을 탐구·일반화하며, 나만의 회전체를 설계·표현할 수 있다.`,
+      lead: `알지오매스의 회전 도구로 평면도형을 회전시켜 입체도형을 만들고, 회전축과 단면의 성질을 탐구·일반화하며, 나만의 입체도형을 설계·표현할 수 있다.`,
+      auto: !0,
       checks: [{ id: `q2-check`, label: `오늘의 학습 목표를 읽고 확인했어요.` }],
     },
     {
@@ -74,21 +84,21 @@ var e = {
       stage: 1,
       page: 2,
       title: `회전 도구와 만나기`,
-      original: `알지오3D를 실행하고 회전 도구를 확인하시오.`,
+      original: `알지오3D에서 xy평면에 그려진 평면도형을 회전하기 도구로 회전시켜 보시오.`,
       lead: `도구 영역에서 「알지오3D」를 열어 회전 도구를 찾아보세요. 큰 화면이 필요하면 새 창으로 열 수 있어요.`,
       figure: `tool`,
       alt: `알지오3D 좌표 평면과 회전 도구 메뉴를 보여 주는 원고 화면`,
       toolAction: !0,
-      checks: [{ id: `q3-check`, label: `알지오3D를 실행하고 회전 도구를 확인했어요.` }],
+      checks: [{ id: `q3-check`, label: `평면도형을 회전시켜 입체도형을 만들어 보았어요.` }],
     },
     {
       id: 4,
       stage: 1,
       page: 2,
       title: `만들고 싶은 모양 그리기`,
-      original: `오늘 수업을 통해 만들어 보고 싶은 회전체를 손으로 그리시오.`,
+      original: `오늘 수업을 통해 만들어 보고 싶은 입체도형을 손으로 그리시오.`,
       drawing: `q4-drawing`,
-      drawingLabel: `만들고 싶은 회전체 스케치`,
+      drawingLabel: `만들고 싶은 입체도형 스케치`,
       fields: [r(`q4-plan`, `그림 설명 · 글로 대신 표현해도 좋아요`, `어떤 모양을 만들고 싶은가요?`)],
       either: !0,
     },
@@ -97,16 +107,16 @@ var e = {
       stage: 2,
       page: 3,
       title: `평면도형을 360° 돌리면?`,
-      original: `다음 평면도형을 회전축을 중심으로 360° 회전시키면 어떤 회전체가 되는지 관찰하시오.`,
-      lead: `오른쪽 알지오3D에서 원기둥·원뿔·구 예시를 바꾸며 회전 도구로 직접 관찰하세요.`,
+      original: `다음 평면도형을 회전축을 중심으로 360° 회전시키면 어떤 입체도형이 되는지 관찰하시오.`,
+      lead: `알지오3D에서 직사각형·직각삼각형·반원 예시를 바꾸며 회전하기 도구로 직접 관찰하세요.`,
       figure: `profiles`,
       alt: `직사각형, 직각삼각형, 반원과 각각의 회전축`,
       fields: [
         r(`q5-1`, `(1) 직사각형을 한 변을 축으로 회전하면?`),
         r(`q5-2`, `(2) 직각삼각형을 한 변을 축으로 회전하면?`),
         r(`q5-3`, `(3) 반원을 지름을 축으로 회전하면?`),
-        r(`q5-4`, `(4) 각 회전체를 회전축에 수직으로 자른 단면은?`),
-        r(`q5-5`, `(5) 각 회전체를 회전축을 포함하여 자른 단면은?`),
+        r(`q5-4`, `(4) 각 입체도형을 회전축에 수직인 평면으로 자른 단면은?`),
+        r(`q5-5`, `(5) 각 입체도형을 회전축을 포함하는 평면으로 자른 단면은?`),
       ],
       note: `관찰 조건: 직각삼각형은 직각을 이루는 한 변을 회전축으로 삼습니다. 실험실의 단면은 속이 찬 기본 모형의 내부를 지나는 평면으로 자릅니다.`,
     },
@@ -130,7 +140,7 @@ var e = {
       stage: 2,
       page: 5,
       title: `컵을 만든 평면도형은?`,
-      original: `다양한 실생활 속 회전체를 보고, 그것을 만드는 평면도형을 추측하여 xy-평면에 그리시오.`,
+      original: `실생활 속 입체도형(종이컵)을 보고, 그것을 만드는 평면도형을 추측하여 y축을 회전축으로 삼아 제1사분면과 제4사분면에 그리시오.`,
       figure: `cup`,
       alt: `원고에 제시된 위쪽이 넓고 아래쪽이 좁은 종이컵`,
       drawing: `q7-drawing`,
@@ -145,14 +155,18 @@ var e = {
       stage: 2,
       page: 5,
       title: `회전시켜 비교하기`,
-      original: `추측한 평면도형을 y축으로 회전시켜 주어진 회전체와 비교하시오.`,
+      original: `추측한 평면도형을 y축으로 회전시켜 주어진 입체도형과 비교하시오.`,
       fields: [
         r(
           `q8-1`,
-          `(1) 추측한 평면도형을 회전시킨 결과가 주어진 회전체와 같은지 확인하고, 다르면 어디를 고쳐야 할지 말하시오.`,
+          `(1) 추측한 평면도형을 회전시킨 결과가 주어진 입체도형(종이컵)과 같은지 확인하고, 다르면 어디를 고쳐야 할지 말하시오.`,
         ),
         r(`q8-2`, `(2) 회전축을 포함하는 평면으로 자른 단면과 회전시킨 평면도형은 어떤 관계가 있는지 설명하시오.`),
-        r(`q8-3`, `(3) 이 관계를 이용하여 처음의 평면도형 추측을 더 정확히 하는 방법을 설명하시오.`),
+        r(
+          `q8-3`,
+          `(3) 회전축을 포함하는 평면으로 자른 단면을 회전축으로 나누면, 그 한쪽은 어떤 도형인가요? 이 사실을 이용하여 처음 추측한 평면도형을 더 정확히 그리는 방법을 설명하시오.`,
+          `예: 컵을 회전축을 포함하는 평면으로 자른 단면을 먼저 그려 보고, …`,
+        ),
       ],
       recall: `q7`,
     },
@@ -172,7 +186,7 @@ var e = {
       stage: 2,
       page: 6,
       title: `단면의 규칙 일반화하기`,
-      original: `회전체의 단면에 대한 규칙을 일반화하시오. (수직으로 자르면 항상 무엇인지, 그 원의 크기는 무엇으로 정해지는지)`,
+      original: `회전체의 단면에 대한 규칙을 일반화하시오. (회전축에 수직인 평면으로 자르면 단면은 항상 무엇인지, 그 원의 크기는 무엇으로 정해지는지)`,
       lead: `탐구 질문으로 돌아가서, 여러 모양에서 공통으로 관찰한 규칙을 말해 보세요.`,
       fields: [
         r(
@@ -225,6 +239,10 @@ var e = {
     cylinder: `https://www.algeomath.kr/algeo/algeomath/poly/view?id=c27e9217c05511efa490f220ef6fd4fc`,
     cone: `https://www.algeomath.kr/algeo/algeomath/poly/view?id=c5df22abc05511efa490f220ef6fd4fc`,
     sphere: `https://www.algeomath.kr/algeo/algeomath/poly/view?id=20342fd2c05211efa490f220ef6fd4fc`,
+    top: `https://www.algeomath.kr/algeo/algeomath/poly/make`,
+    blank: `https://www.algeomath.kr/algeo/algeomath/poly/make`,
+    // 알지오3D 도구 앱 본체(노란 머리줄 없음). 앱이 자료를 직접 실어 줄 때 쓴다.
+    poly: `https://www.algeomath.kr/algeo/tools/poly/index.html`,
     paint: `https://j333333766-hub.github.io/3d/%EA%B7%B8%EB%A6%BC%ED%8C%903D/`,
   },
   o = i
@@ -235,13 +253,15 @@ var e = {
   l = [
     {
       id: `B`,
+      desc: `회전하기 도구로 평면도형을 돌려 입체도형을 만들어 보고, 만들고 싶은 모양을 그려 봅니다.`,
       stage: 1,
-      name: `회전 도구로 회전체 맛보기`,
+      name: `회전 도구로 입체도형 맛보기`,
       color: `#0D996E`,
       question: `우리 주변의 매끈한 물건들은 어떻게 만들어진 것일까?`,
     },
     {
       id: `R`,
+      desc: `직사각형·직각삼각형·반원을 돌려 만든 입체도형과 그 단면을 관찰하고, 문장이 맞는지 확인합니다.`,
       stage: 2,
       name: `평면도형을 회전시켜 관찰하기`,
       color: `#1073C6`,
@@ -249,13 +269,15 @@ var e = {
     },
     {
       id: `I`,
+      desc: `종이컵을 만드는 평면도형을 추측하고, 회전시켜 비교하며 단면과의 관계를 찾습니다.`,
       stage: 2,
-      name: `실생활 회전체로 평면도형 추측하기`,
+      name: `실생활 입체도형으로 평면도형 추측하기`,
       color: `#E5910A`,
-      question: `주어진 회전체를 만든 평면도형은 그 단면과 어떤 관계가 있을까?`,
+      question: `주어진 입체도형을 만든 평면도형은 그 단면과 어떤 관계가 있을까?`,
     },
     {
       id: `D`,
+      desc: `회전체·회전축·모선·밑면·단면을 이용하여 지금까지의 활동을 정리합니다.`,
       stage: 2,
       name: `회전체 개념 정리하기`,
       color: `#774DC1`,
@@ -263,6 +285,7 @@ var e = {
     },
     {
       id: `G`,
+      desc: `회전축에 수직인 평면으로 자른 단면의 규칙을 일반화합니다.`,
       stage: 2,
       name: `단면의 성질 일반화하기`,
       color: `#308F32`,
@@ -270,6 +293,7 @@ var e = {
     },
     {
       id: `E`,
+      desc: `나만의 회전체를 설계하고 알지오3D와 그림판3D로 만들어 꾸밉니다.`,
       stage: 3,
       name: `나만의 회전체 만들기`,
       color: `#E56A90`,
@@ -295,23 +319,23 @@ var e = {
       id: `big-question`,
       type: `inquiry`,
       title: `이번 탐구를 이끄는 질문`,
-      text: `평면도형을 한 직선을 축으로 회전시키면 어떤 입체도형이 만들어지며, 그 회전체의 단면에는 어떤 성질이 나타날까?`,
+      text: `평면도형을 한 직선을 축으로 회전시키면 어떤 입체도형이 만들어지며, 그 입체도형의 단면에는 어떤 성질이 나타날까?`,
     },
     { id: `bridge`, type: `toc`, title: `오늘의 탐구 흐름` },
     ...u(`B`),
-    { id: `goal`, type: `goal`, chapter: `B`, q: 2, checks: !0, complete: 2, title: `오늘의 학습 목표를 알아보세요.` },
+    { id: `goal`, type: `goal`, chapter: `B`, q: 2, checks: !0, title: `오늘의 학습 목표를 알아보세요.` },
     {
       id: `tool-intro`,
       type: `activity`,
       chapter: `B`,
       q: 3,
-      tools: [`make`],
+      tools: [`top`],
       space: `B`,
+      layout: `side`,
+      guide: `full`,
       checks: !0,
       complete: 3,
-      title: `알지오3D를 실행하고 회전 도구를 확인하세요.`,
-      tipFigure: `tool`,
-      tip: `크게보기 → 왼쪽의 빨간 십자 모양 아이콘 → 회전하기(R)를 선택하세요. 아래 원고의 메뉴 그림도 참고할 수 있어요. 평면도형과 회전축을 정한 뒤 회전시키는 과정을 확인합니다.`,
+      title: `xy평면에 그려진 평면도형을 회전하기 도구로 회전시켜 보세요.`,
     },
     {
       id: `first-sketch`,
@@ -320,7 +344,7 @@ var e = {
       q: 4,
       fields: [`q4-plan`],
       complete: 4,
-      title: `오늘 만들어 보고 싶은 회전체를 그려 보세요.`,
+      title: `오늘 만들어 보고 싶은 입체도형을 그려 보세요.`,
     },
     ...u(`R`),
     {
@@ -331,8 +355,8 @@ var e = {
       tools: [`cylinder`],
       space: `R`,
       fields: [`q5-1`],
+      guide: `short`,
       title: `직사각형을 한 변을 축으로 360° 회전시켜 보세요.`,
-      tip: `원고의 예시는 회전 전 평면도형입니다. 알지오3D의 회전 도구로 평면도형과 축을 선택해 관찰하세요.`,
     },
     {
       id: `triangle`,
@@ -342,8 +366,9 @@ var e = {
       tools: [`cone`],
       space: `R`,
       fields: [`q5-2`],
+      guide: `short`,
       title: `직각삼각형을 한 변을 축으로 360° 회전시켜 보세요.`,
-      tip: `직각을 이루는 한 변을 회전축으로 삼아 관찰하세요.`,
+      tip: `직각을 이루는 한 변이 y축 위에 놓여 있어요. 회전하기 도구에서 초록색 축(y축)을 고르고 삼각형을 누르세요.`,
     },
     {
       id: `semicircle`,
@@ -353,6 +378,7 @@ var e = {
       tools: [`sphere`],
       space: `R`,
       fields: [`q5-3`],
+      guide: `short`,
       title: `반원을 지름을 축으로 360° 회전시켜 보세요.`,
     },
     {
@@ -363,8 +389,9 @@ var e = {
       tools: [`cylinder`, `cone`, `sphere`],
       space: `R`,
       fields: [`q5-4`],
-      title: `각 회전체를 회전축에 수직으로 자른 단면을 관찰하세요.`,
-      tip: `자르는 위치를 바꾸며 단면의 모양과 크기를 비교하세요. 속이 찬 기본 모형의 내부를 관찰합니다.`,
+      sectionCta: `horizontal`,
+      title: `각 입체도형을 회전축에 수직인 평면으로 자른 단면을 관찰하세요.`,
+      tip: `① 알지오3D에서 입체도형을 만든 뒤, 오른쪽 위 보기 큐브(또는 ‘한 방향에서 보기’)에서 ‘위쪽’·‘아래쪽’을 골라 회전축 방향으로 내려다보세요. ② ‘단면 관찰’ 버튼을 누르면 자르는 높이를 바꾸며 단면의 모양과 크기를 비교할 수 있어요.`,
     },
     {
       id: `vertical-section`,
@@ -375,7 +402,9 @@ var e = {
       space: `R`,
       fields: [`q5-5`],
       complete: 5,
+      sectionCta: `vertical`,
       title: `회전축을 포함하는 평면으로 자른 단면을 관찰하세요.`,
+      tip: `① 알지오3D에서 입체도형을 만든 뒤, 보기 큐브(또는 ‘한 방향에서 보기’)에서 ‘앞쪽’을 골라 회전축에 수직인 방향에서 바라보세요. 보이는 윤곽이 회전축을 포함하는 단면의 모양이에요. ② ‘단면 관찰’ 버튼으로 단면을 직접 확인할 수 있어요.`,
     },
     ...Array.from({ length: 5 }, (e, t) => ({
       id: `verify-${t + 1}`,
@@ -386,6 +415,8 @@ var e = {
       tools: t < 3 ? [[`cylinder`, `cone`, `sphere`][t]] : [`cylinder`, `cone`, `sphere`],
       space: `R`,
       complete: t === 4 ? 6 : void 0,
+      feedback: !0,
+      hollowDemo: t === 3,
       title: `관찰로 문장 확인하기 · ${t + 1} / 5`,
       tip: `회전축의 선택, 자르는 위치, 속이 빈 물체인지에 따라 조건이 더 필요한지도 살펴보세요.`,
     })),
@@ -397,7 +428,7 @@ var e = {
       q: 7,
       fields: [`q7-plan`],
       complete: 7,
-      title: `컵을 만드는 평면도형을 추측하여 xy-평면에 그리세요.`,
+      title: `컵을 만드는 평면도형을 추측하여 제1사분면과 제4사분면에 그리세요.`,
       figure: `cup`,
     },
     {
@@ -405,9 +436,10 @@ var e = {
       type: `activity`,
       chapter: `I`,
       q: 8,
-      tools: [`make`],
+      tools: [`blank`],
       space: `I`,
       fields: [`q8-1`],
+      guide: `short`,
       title: `추측한 평면도형을 y축으로 회전시켜 컵과 비교하세요.`,
       figure: `cup`,
     },
@@ -416,10 +448,11 @@ var e = {
       type: `activity`,
       chapter: `I`,
       q: 8,
-      tools: [`make`],
+      tools: [`blank`],
       space: `I`,
       fields: [`q8-2`],
       title: `회전축을 포함하는 단면과 처음 평면도형을 비교하세요.`,
+      tip: `앞 화면에서 만든 입체도형을 보기 큐브(또는 ‘한 방향에서 보기’)의 ‘앞쪽’에서 바라보세요. 보이는 윤곽이 회전축을 포함하는 단면의 모양이에요. 이 단면을 회전축(y축)으로 나눈 한쪽과 처음 그린 평면도형을 비교해 보세요.`,
     },
     {
       id: `cup-refine`,
@@ -428,7 +461,7 @@ var e = {
       q: 8,
       fields: [`q8-3`],
       complete: 8,
-      title: `처음의 평면도형을 더 정확히 추측하려면 어떻게 해야 할까요?`,
+      title: `단면을 이용하여 처음의 평면도형을 더 정확히 추측해 보세요.`,
     },
     ...u(`D`),
     {
@@ -440,6 +473,8 @@ var e = {
       complete: 9,
       title: `다섯 용어를 사용하여 지금까지의 활동을 정리하세요.`,
       terms: !0,
+      define: `지금까지 만든 입체도형처럼, 평면도형을 한 직선을 축으로 하여 한 바퀴 돌릴 때 생기는 입체도형을 회전체라고 해요. 이때 축으로 삼은 직선을 회전축이라고 해요.`,
+      frame: `(평면도형)을 (그 도형의 한 변 또는 한 직선)을 회전축으로 하여 한 바퀴 돌리면 (입체도형)인 회전체가 된다. 이때 옆면을 만드는 선분을 (   )이라 하고, 위아래의 평평한 면을 (   )이라 한다. 회전체를 회전축에 수직인 평면으로 자른 단면은 (   )이고, 회전축을 포함하는 평면으로 자른 단면은 (   )이다.`,
     },
     ...u(`G`),
     {
@@ -450,7 +485,12 @@ var e = {
       fields: [`q10`],
       complete: 10,
       title: `회전체의 단면에 대한 규칙을 일반화하세요.`,
-      note: `수직으로 자른 단면의 모양은 무엇인지, 그 크기는 무엇으로 정해지는지 조건과 함께 설명해 보세요.`,
+      note: `회전축에 수직인 평면으로 자른 단면의 모양은 무엇인지, 그 크기는 무엇으로 정해지는지 조건과 함께 설명해 보세요.`,
+      hints: [
+        `원기둥·원뿔·구를 회전축에 수직인 평면으로 잘랐을 때 단면은 각각 어떤 모양이었나요? 공통점은 무엇인가요?`,
+        `그 단면의 중심은 어디에 있나요? 단면의 반지름은 회전축에서 어디까지의 거리인가요? (자르는 높이에 따라 크기가 어떻게 달라졌는지 떠올려 보세요.)`,
+        `컵이나 두루마리 휴지처럼 속이 빈 회전체를 회전축에 수직인 평면으로 자르면 단면은 어떻게 달라지나요? 규칙이 성립하는 조건까지 함께 써 보세요.`,
+      ],
     },
     ...u(`E`),
     {
@@ -468,6 +508,8 @@ var e = {
       q: 11,
       tools: [`make`],
       space: `E`,
+      layout: `strip`,
+      guide: `short`,
       title: `알지오3D로 나만의 회전체를 만들고 STL로 내보내세요.`,
       tip: `계속 편집할 모델은 .algeo3d로 따로 저장하세요. STL은 다음 화면의 그림판3D로 옮겨 색칠·장식할 때 사용합니다.`,
     },
@@ -479,7 +521,9 @@ var e = {
       tools: [`paint`],
       space: `E`,
       checks: !0,
+      layout: `strip`,
       title: `STL 파일을 불러와 색칠하고 장식하세요.`,
+      tip: `① ‘크게보기’를 누른 뒤 그림판3D 시작 화면 가운데의 ‘파일 가져오기’ 버튼으로 앞에서 내보낸 STL 파일을 불러오세요. (작게 보기에서는 시작 화면을 아래로 내려야 이 버튼이 보여요.) ② 색 채우기·색 바꾸기·스티커로 꾸미세요. ③ 다 꾸몄으면 ‘저장 → 사진(PNG)’으로 저장하세요. 다음 화면에서 이 PNG 파일을 첨부해요. (휴대폰 AR로 보고 싶으면 GLB로도 저장해 두세요.)`,
     },
     {
       id: `my-explanation`,
@@ -488,6 +532,7 @@ var e = {
       q: 11,
       fields: [`q11-description`],
       upload: !0,
+      ar: !0,
       complete: 11,
       title: `내가 만든 회전체는 어떻게 만들어졌나요?`,
     },
@@ -588,7 +633,7 @@ function y(e) {
     let n = e.toolState;
     if (
       !_(n) ||
-      ![`rectangle`, `triangle`, `semicircle`, `trapezoid`].includes(n.shape) ||
+      ![`rectangle`, `triangle`, `semicircle`, `trapezoid`, `hollow`].includes(n.shape) ||
       ![`none`, `horizontal`, `vertical`].includes(n.cut) ||
       !v(n.angle, 0, 360) ||
       !v(n.height, -0.95, 0.95) ||
@@ -622,7 +667,7 @@ function x(e) {
     return !1;
   }
 }
-function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage: a }) {
+function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage: a, locked: lk = !1 }) {
   let o = document.createElement(`div`);
   ((o.className = `sketch`),
     (o.innerHTML = `<div class="sketch-tools"><span class="sketch-label"></span><div class="pen-colors" role="group" aria-label="펜 색상"><button type="button" data-color="#176d64" class="pen active" aria-label="초록색 펜" aria-pressed="true"></button><button type="button" data-color="#e77738" class="pen" aria-label="주황색 펜" aria-pressed="false"></button><button type="button" data-color="#334155" class="pen" aria-label="검정색 펜" aria-pressed="false"></button></div><button type="button" class="quiet undo">되돌리기</button><button type="button" class="quiet clear">지우기</button></div><canvas width="600" height="340"></canvas><p class="micro">마우스·펜·손가락으로 그리세요. 그리기 어려우면 작성란에 글로 설명할 수 있어요.</p>`),
@@ -645,14 +690,18 @@ function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage:
         c.beginPath(),
         c.moveTo(300, 12),
         c.lineTo(300, 330),
-        c.moveTo(15, 270),
-        c.lineTo(585, 270),
+        c.moveTo(15, 170),
+        c.lineTo(585, 170),
         c.stroke(),
         (c.fillStyle = `#55766a`),
         (c.font = `14px sans-serif`),
         c.fillText(`y`, 308, 19),
-        c.fillText(`x`, 580, 261),
-        c.fillText(`O`, 283, 287));
+        c.fillText(`x`, 580, 161),
+        c.fillText(`O`, 283, 187),
+        (c.fillStyle = `#a9bdb4`),
+        (c.font = `13px sans-serif`),
+        c.fillText(`제1사분면`, 500, 40),
+        c.fillText(`제4사분면`, 500, 318));
     }
     for (let e of d)
       e.points.length &&
@@ -663,8 +712,9 @@ function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage:
         (c.lineJoin = `round`),
         e.points.forEach(([e, t], n) => (n ? c.lineTo(e * 600, t * 340) : c.moveTo(e * 600, t * 340))),
         c.stroke());
-    ((o.querySelector(`.undo`).disabled = !d.length), (o.querySelector(`.clear`).disabled = !d.length));
+    ((o.querySelector(`.undo`).disabled = lk || !d.length), (o.querySelector(`.clear`).disabled = lk || !d.length));
   }
+  lk && o.classList.add(`locked`);
   function p(e) {
     let t = s.getBoundingClientRect();
     return [
@@ -674,6 +724,10 @@ function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage:
   }
   (s.addEventListener(`pointerdown`, (e) => {
     if (e.button === 0) {
+      if (lk) {
+        a(`완료한 활동이에요. 고치려면 먼저 ‘완료 취소’를 누르세요.`);
+        return;
+      }
       if (d.length >= 500) {
         a(`스케치가 꽉 찼어요. 일부를 지우거나 글로 설명해 주세요.`);
         return;
@@ -722,7 +776,13 @@ function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage:
     () => {}
   );
 }
-var C = { rectangle: `직사각형`, triangle: `직각삼각형`, semicircle: `반원`, trapezoid: `사다리꼴` };
+var C = {
+  rectangle: `직사각형`,
+  triangle: `직각삼각형`,
+  semicircle: `반원`,
+  trapezoid: `사다리꼴`,
+  hollow: `속이 빈 원기둥(두루마리 휴지)`,
+};
 function w(e, t) {
   return e === `triangle`
     ? (1 - t) / 2
@@ -732,13 +792,28 @@ function w(e, t) {
         ? 0.66 + 0.17 * (t + 1)
         : 1;
 }
+// 회전축에서 안쪽 면까지의 거리. 속이 빈 모형만 0보다 크다.
+function wi(e) {
+  return e === `hollow` ? 0.5 : 0;
+}
+// 회전시키는 평면도형의 윤곽(회전축과 이루는 각 0)
+function profile(e) {
+  let t = [],
+    n = wi(e);
+  for (let r = 0; r <= 28; r++) {
+    let i = -1 + (r * 2) / 28;
+    t.push([w(e, i), i]);
+  }
+  for (let r = 28; r >= 0; r--) t.push([n, -1 + (r * 2) / 28]);
+  return t;
+}
 function ee(e, t, n) {
   let r = { ...t },
     i = 0,
     a = 0,
     o = !1,
     s = null;
-  e.innerHTML = `<div class="lab-top"><label>회전할 평면도형<select id="shape-select"><option value="rectangle">직사각형</option><option value="triangle">직각삼각형</option><option value="semicircle">반원</option><option value="trapezoid">사다리꼴</option></select></label><button class="quiet" id="reset-view">시점 초기화</button></div><div class="model-wrap"><canvas id="solid-canvas" width="760" height="560" role="img" aria-label="회전체와 회전축을 보여 주는 3차원 모형"></canvas><span class="model-hint">드래그하여 시점 바꾸기</span></div><div class="lab-controls"><div class="angle-label"><label for="angle-range">회전각</label><output id="angle-output"></output><button type="button" class="play-btn" id="play-rotation">▶ 회전 보기</button></div><input id="angle-range" type="range" min="0" max="360" step="1" aria-label="회전각"><div class="cut-header"><label for="cut-select">단면 관찰</label><select id="cut-select"><option value="none">자르지 않기</option><option value="horizontal">회전축에 수직으로</option><option value="vertical">회전축을 포함하여</option></select></div><div id="height-control"><label for="height-range">자르는 높이 <output id="height-output"></output></label><input id="height-range" type="range" min="-0.95" max="0.95" step="0.01" aria-label="자르는 높이"></div><p id="lab-description" class="lab-description"></p></div>`;
+  e.innerHTML = `<div class="lab-top"><label>회전할 평면도형<select id="shape-select"><option value="rectangle">직사각형</option><option value="triangle">직각삼각형</option><option value="semicircle">반원</option><option value="trapezoid">사다리꼴</option><option value="hollow">속이 빈 원기둥(두루마리 휴지)</option></select></label><button class="quiet" id="reset-view">시점 초기화</button></div><div class="model-wrap"><canvas id="solid-canvas" width="760" height="560" role="img" aria-label="회전체와 회전축을 보여 주는 3차원 모형"></canvas><span class="model-hint">드래그하여 시점 바꾸기</span></div><div class="lab-controls"><div class="angle-label"><label for="angle-range">회전각</label><output id="angle-output"></output><button type="button" class="play-btn" id="play-rotation">▶ 회전 보기</button></div><input id="angle-range" type="range" min="0" max="360" step="1" aria-label="회전각"><div class="cut-header"><label for="cut-select">단면 관찰</label><select id="cut-select"><option value="none">자르지 않기</option><option value="horizontal">회전축에 수직으로</option><option value="vertical">회전축을 포함하여</option></select></div><div id="height-control"><label for="height-range">자르는 높이 <output id="height-output"></output></label><input id="height-range" type="range" min="-0.95" max="0.95" step="0.01" aria-label="자르는 높이"></div><p id="lab-description" class="lab-description"></p></div>`;
   let c = (t) => e.querySelector(t),
     l = c(`#solid-canvas`),
     u = l.getContext(`2d`);
@@ -756,6 +831,12 @@ function ee(e, t, n) {
       (u.fillStyle = t),
       u.fill(),
       n && ((u.strokeStyle = n), (u.lineWidth = 0.5), u.stroke()));
+  }
+  // 여러 개의 닫힌 경로를 한 번에 칠한다(evenodd라서 고리 모양의 가운데가 비어 보인다).
+  function fp(e, t, n, r = 1) {
+    u.beginPath();
+    for (let t of e) (t.forEach((e, t) => (t ? u.lineTo(e[0], e[1]) : u.moveTo(e[0], e[1]))), u.closePath());
+    ((u.fillStyle = t), u.fill(`evenodd`), n && ((u.strokeStyle = n), (u.lineWidth = r), u.stroke()));
   }
   function p() {
     (u.clearRect(0, 0, 760, 560),
@@ -780,7 +861,8 @@ function ee(e, t, n) {
       }
     let e = (r.angle * Math.PI) / 180,
       t = [],
-      n = Math.max(1, Math.ceil(r.angle / 7));
+      n = Math.max(1, Math.ceil(r.angle / 7)),
+      ri = wi(r.shape);
     function i(e, n) {
       let r = e.map(d);
       t.push({ p: r, z: r.reduce((e, t) => e + t[2], 0) / r.length, color: n });
@@ -794,7 +876,7 @@ function ee(e, t, n) {
         let l = (e * t) / n,
           u = (e * (t + 1)) / n,
           d = Math.round(37 + 15 * Math.cos((l + u) / 2 + r.yaw));
-        i(
+        (i(
           [
             [s * Math.cos(l), a, s * Math.sin(l)],
             [s * Math.cos(u), a, s * Math.sin(u)],
@@ -802,37 +884,53 @@ function ee(e, t, n) {
             [c * Math.cos(l), o, c * Math.sin(l)],
           ],
           `hsla(165, 38%, ${d}%, .92)`,
-        );
+        ),
+          ri > 0 &&
+            i(
+              [
+                [ri * Math.cos(l), a, ri * Math.sin(l)],
+                [ri * Math.cos(u), a, ri * Math.sin(u)],
+                [ri * Math.cos(u), o, ri * Math.sin(u)],
+                [ri * Math.cos(l), o, ri * Math.sin(l)],
+              ],
+              `hsla(35, 45%, ${d + 22}%, .95)`,
+            ));
       }
     }
     for (let t of [-1, 1]) {
       let a = w(r.shape, t);
       if (a < 1e-4) continue;
-      let o = [[0, t, 0]];
-      for (let r = 0; r <= n; r++) {
-        let i = (e * r) / n;
-        o.push([a * Math.cos(i), t, a * Math.sin(i)]);
+      if (ri > 0)
+        for (let r = 0; r < n; r++) {
+          let o = (e * r) / n,
+            s = (e * (r + 1)) / n;
+          i(
+            [
+              [a * Math.cos(o), t, a * Math.sin(o)],
+              [a * Math.cos(s), t, a * Math.sin(s)],
+              [ri * Math.cos(s), t, ri * Math.sin(s)],
+              [ri * Math.cos(o), t, ri * Math.sin(o)],
+            ],
+            t > 0 ? `#87b8a1` : `#245f53`,
+          );
+        }
+      else {
+        let o = [[0, t, 0]];
+        for (let r = 0; r <= n; r++) {
+          let i = (e * r) / n;
+          o.push([a * Math.cos(i), t, a * Math.sin(i)]);
+        }
+        i(o, t > 0 ? `#87b8a1` : `#245f53`);
       }
-      i(o, t > 0 ? `#87b8a1` : `#245f53`);
     }
     if (r.angle < 360)
-      for (let t of [0, e]) {
-        let e = [[0, -1, 0]];
-        for (let n = 0; n <= 28; n++) {
-          let i = -1 + (n * 2) / 28,
-            a = w(r.shape, i);
-          e.push([a * Math.cos(t), i, a * Math.sin(t)]);
-        }
-        (e.push([0, 1, 0]), i(e, `rgba(234,177,84,.85)`));
-      }
-    if ((t.sort((e, t) => e.z - t.z).forEach((e) => f(e.p, e.color)), r.cut === `none` && r.angle === 360)) {
-      let e = [[0, -1, 0]];
-      for (let t = 0; t <= 28; t++) {
-        let n = -1 + (t * 2) / 28;
-        e.push([w(r.shape, n), n, 0]);
-      }
-      (e.push([0, 1, 0]), f(e.map(d), `rgba(249,188,87,.42)`, `#db9b49`));
-    }
+      for (let t of [0, e]) i(profile(r.shape).map(([e, n]) => [e * Math.cos(t), n, e * Math.sin(t)]), `rgba(234,177,84,.85)`);
+    if ((t.sort((e, t) => e.z - t.z).forEach((e) => f(e.p, e.color)), r.cut === `none` && r.angle === 360))
+      f(
+        profile(r.shape).map(([e, t]) => d([e, t, 0])),
+        `rgba(249,188,87,.42)`,
+        `#db9b49`,
+      );
     let a = d([0, -1.35, 0]),
       o = d([0, 1.45, 0]);
     if (
@@ -849,42 +947,39 @@ function ee(e, t, n) {
       u.fillText(`회전축`, o[0] + 10, o[1] + 5),
       r.cut !== `none`)
     ) {
+      // 단면을 이루는 닫힌 경로들(3차원 좌표)
       let e = [];
-      if (r.cut === `horizontal`)
-        for (let t = 0; t <= 80; t++) {
-          let n = (t * Math.PI * 2) / 80,
-            i = w(r.shape, r.height);
-          e.push([i * Math.cos(n), r.height, i * Math.sin(n)]);
-        }
-      else {
-        for (let t = 0; t <= 40; t++) {
-          let n = -1 + t / 20;
-          e.push([w(r.shape, n), n, 0]);
-        }
-        for (let t = 40; t >= 0; t--) {
-          let n = -1 + t / 20;
-          e.push([-w(r.shape, n), n, 0]);
-        }
+      if (r.cut === `horizontal`) {
+        let t = (t) => Array.from({ length: 81 }, (e, n) => [t * Math.cos((n * Math.PI) / 40), r.height, t * Math.sin((n * Math.PI) / 40)]);
+        (e.push(t(w(r.shape, r.height))), ri > 0 && e.push(t(ri)));
+      } else {
+        let t = profile(r.shape);
+        ri > 0
+          ? e.push(
+              t.map(([e, t]) => [e, t, 0]),
+              t.map(([e, t]) => [-e, t, 0]),
+            )
+          : e.push([...t.slice(0, 29).map(([e, t]) => [e, t, 0]), ...t.slice(0, 29).reverse().map(([e, t]) => [-e, t, 0])]);
       }
-      if (
-        (f(e.map(d), `rgba(252,176,60,.5)`, `#dc7429`),
+      (fp(
+        e.map((e) => e.map(d)),
+        `rgba(252,176,60,.5)`,
+        `#dc7429`,
+        0.5,
+      ),
         (u.fillStyle = `rgba(255,255,255,.94)`),
         u.fillRect(564, 352, 180, 190),
         (u.fillStyle = `#745334`),
         (u.font = `bold 15px sans-serif`),
-        u.fillText(`단면을 정면에서`, 584, 379),
-        u.beginPath(),
-        (u.fillStyle = `#f3c27f`),
-        (u.strokeStyle = `#c77635`),
-        (u.lineWidth = 2),
-        r.cut === `horizontal`)
-      ) {
-        let e = w(r.shape, r.height);
-        u.arc(654, 457, e * 63, 0, Math.PI * 2);
-      } else
-        (e.forEach(([e, t], n) => (n ? u.lineTo(654 + e * 57, 458 - t * 57) : u.moveTo(654 + e * 57, 458 - t * 57))),
-          u.closePath());
-      (u.fill(), u.stroke());
+        u.fillText(`단면을 정면에서`, 584, 379));
+      // 단면을 정면에서 본 모양: 수직 단면은 xz평면, 축 포함 단면은 xy평면에 그린다.
+      let t = r.cut === `horizontal` ? 63 : 57;
+      fp(
+        e.map((e) => e.map(([e, n, i]) => (r.cut === `horizontal` ? [654 + e * t, 457 + i * t] : [654 + e * t, 458 - n * t]))),
+        `#f3c27f`,
+        `#c77635`,
+        2,
+      );
     }
   }
   function m() {
@@ -897,7 +992,7 @@ function ee(e, t, n) {
       (c(`#height-control`).hidden = r.cut !== `horizontal`),
       (c(`#lab-description`).textContent =
         r.cut === `none`
-          ? `${C[r.shape]}의 노란 면을 회전시켜 보세요.${r.shape === `trapezoid` ? ` 컵의 바깥 윤곽을 비교하는 속이 찬 모형입니다.` : ``}`
+          ? `${C[r.shape]}의 노란 면을 회전시켜 보세요.${r.shape === `trapezoid` ? ` 컵의 바깥 윤곽을 비교하는 속이 찬 모형입니다.` : r.shape === `hollow` ? ` 회전축에서 떨어진 직사각형을 돌린 모형이라 가운데가 비어 있어요.` : ``}`
           : `완전히 회전한 모형의 단면입니다. 높이는 −1부터 1까지이며, 끝점은 제외합니다.`),
       l.setAttribute(
         `aria-label`,
@@ -967,20 +1062,86 @@ function ee(e, t, n) {
     }
   );
 }
-var T = { make: `새 도형 만들기`, cylinder: `원기둥`, cone: `원뿔`, sphere: `구`, paint: `그림판3D` };
+// 도구 선택 목록에 보이는 이름. 알지오3D 예시는 회전시키기 전의 평면도형 이름으로 부른다.
+var T = {
+  top: `xy평면의 평면도형`,
+  cylinder: `직사각형`,
+  cone: `직각삼각형`,
+  sphere: `반원`,
+  blank: `빈 작업 공간`,
+  make: `새 도형 만들기`,
+  paint: `그림판3D`,
+};
+// 앱이 직접 실어 주는 알지오3D 자료(tools/presets/*.json을 tools/make-presets.cjs로 변환).
+// 모두 같은 도구 구성(deactiveTools)을 쓴다: 다각형·원·회전하기·한 방향에서 보기는 켜고, 입체도형을 바로 만드는 도구는 끈다.
+var PRESET = {
+  top: `__TEXT:presets/top.algeo3d__`,
+  cylinder: `__TEXT:presets/cylinder.algeo3d__`,
+  cone: `__TEXT:presets/cone.algeo3d__`,
+  sphere: `__TEXT:presets/sphere.algeo3d__`,
+  blank: `__TEXT:presets/blank.algeo3d__`,
+};
+// 알지오3D 도구 앱 postMessage API: {id, type, payload, origin} → {id, result}
+function polyCall(f, type, payload) {
+  return new Promise((res) => {
+    let id = `wb-${Math.random().toString(36).slice(2)}`,
+      tm,
+      h = (e) => {
+        e.source === f.contentWindow && e.data && e.data.id === id && !e.data.type && done(e.data.result);
+      },
+      done = (v) => {
+        (removeEventListener(`message`, h), clearTimeout(tm), res(v));
+      };
+    ((tm = setTimeout(() => done(void 0), 2500)), addEventListener(`message`, h));
+    try {
+      f.contentWindow.postMessage({ id, type, payload, origin: location.origin === `null` ? `*` : location.origin }, `*`);
+    } catch {
+      done(void 0);
+    }
+  });
+}
+async function loadPreset(f, key) {
+  for (let k = 0; k < 30; k++) {
+    if (!f.isConnected) return !1;
+    if ((await polyCall(f, `is-loaded`)) === !0 && (await polyCall(f, `set-data`, PRESET[key]))?.success) return !0;
+    await new Promise((r) => setTimeout(r, 600));
+  }
+  return !1;
+}
+var SECTION_SHAPE = { cylinder: `rectangle`, cone: `triangle`, sphere: `semicircle` };
 function te({ getToolState: e, onToolStateChange: t }) {
   let n = (e) => document.querySelector(e),
     r = new Map(),
     i = new Map(),
+    st = new Map(),
     o = null,
-    s = null;
+    s = null,
+    cur = null,
+    rs = !1;
+  function status(e) {
+    let t = st.get(cur);
+    n(`#frame-status`).textContent =
+      t === `loading`
+        ? `알지오3D 자료를 불러오는 중…`
+        : t === `fail`
+          ? `자료를 불러오지 못했어요. ‘처음 상태로’를 누르거나 새 창으로 열어 주세요.`
+          : `화면이 비어 보이면 새 창으로 열어 주세요.`;
+  }
+  async function load(e, k) {
+    (st.set(e, `loading`), status());
+    let t = await loadPreset(r.get(e), k);
+    (st.set(e, t ? `ok` : `fail`), status());
+  }
   function c(e) {
     if (!o?.tools?.includes(e)) return;
     (i.set(o.id, e), (n(`#model-choice`).value = e));
     let t = `${o.space}:${e}`;
-    for (let [e, n] of r) n.hidden = e !== t;
+    cur = t;
+    for (let [e, n] of r) n.classList.toggle(`parked`, e !== t);
+    let p = !!PRESET[e];
     if (
-      ((n(`#section-tool`).hidden = ![`cylinder`, `cone`, `sphere`].includes(e)),
+      ((n(`#section-tool`).hidden = !SECTION_SHAPE[e]),
+      (n(`#view-top`).hidden = n(`#reset-preset`).hidden = !p),
       (n(`#tool-title`).textContent = e === `paint` ? `그림판3D` : `알지오3D`),
       (n(`#external-link`).href = a[e]),
       !r.has(t))
@@ -995,17 +1156,22 @@ function te({ getToolState: e, onToolStateChange: t }) {
           `sandbox`,
           `allow-scripts allow-same-origin allow-forms allow-popups allow-downloads allow-modals allow-popups-to-escape-sandbox`,
         ),
-        (i.src = a[e]),
         r.set(t, i),
-        n(`#frame-holder`).append(i));
+        n(`#frame-holder`).append(i),
+        p && st.set(t, `loading`),
+        // 알지오3D는 처음 실행될 때의 창 너비(750px 이하면 모바일 배치)로 화면 배치를 정한다.
+        // 두 번째 창부터는 캐시 덕에 크기가 정해지기 전에 실행되어 모바일 배치가 되므로, 자리를 잡은 뒤 주소를 넣는다.
+        setTimeout(() => {
+          (p && i.addEventListener(`load`, () => load(t, e), { once: !0 }), (i.src = p ? a.poly : a[e]));
+        }, 400));
     }
-    ((r.get(t).hidden = !1),
-      (n(`#frame-status`).textContent = `화면이 비어 보이면 새 창으로 열어 주세요.`),
-      (n(`#model-help`).hidden = e === `paint`));
+    // 앱이 실어 주는 자료(B·R·I 단계)는 저장할 필요가 없으므로 도형 저장 안내는 ‘새 도형 만들기’에서만 보인다.
+    (r.get(t).classList.remove(`parked`), status(), (n(`#model-help`).hidden = e === `paint` || p));
   }
   function l(e) {
-    ((o = e), (n(`#tool-card`).hidden = !e.tools));
-    for (let e of r.values()) e.hidden = !0;
+    // 도구 카드와 iframe은 display:none 대신 보이지 않게만 한다(크기가 0이 되면 알지오3D가 다음부터 모바일 배치로 열린다).
+    ((o = e), n(`#tool-card`).classList.toggle(`parked`, !e.tools));
+    for (let e of r.values()) e.classList.add(`parked`);
     if (e.tools) {
       n(`#model-choice`).replaceChildren();
       for (let t of e.tools) {
@@ -1023,6 +1189,13 @@ function te({ getToolState: e, onToolStateChange: t }) {
     let e = u();
     ((n(`#expand-tool`).textContent = e ? `작게보기` : `크게보기`),
       n(`#expand-tool`).setAttribute(`aria-expanded`, String(e)));
+  }
+  async function section(r, a) {
+    (document.fullscreenElement && (await document.exitFullscreen()),
+      document.body.classList.remove(`tool-expanded`),
+      d());
+    let c = e();
+    (s?.destroy(), (s = ee(n(`#section-host`), { ...c, shape: r, angle: 360, cut: a }, t)), n(`#section-dialog`).showModal());
   }
   return (
     n(`#expand-tool`).addEventListener(`click`, async () => {
@@ -1043,26 +1216,33 @@ function te({ getToolState: e, onToolStateChange: t }) {
         (document.body.classList.remove(`tool-expanded`), d(), e.preventDefault());
     }),
     n(`#model-help`).addEventListener(`click`, () => n(`#model-dialog`).showModal()),
-    n(`#section-tool`).addEventListener(`click`, async () => {
-      (document.fullscreenElement && (await document.exitFullscreen()),
-        document.body.classList.remove(`tool-expanded`),
-        d());
-      let r = { cylinder: `rectangle`, cone: `triangle`, sphere: `semicircle` }[i.get(o.id) || o.tools[0]],
-        a = e(),
-        c =
-          o.id === `vertical-section`
-            ? `vertical`
-            : o.id === `horizontal-section` || a.cut === `none`
-              ? `horizontal`
-              : a.cut;
-      (s?.destroy(),
-        (s = ee(n(`#section-host`), { ...a, shape: r, angle: 360, cut: c }, t)),
-        n(`#section-dialog`).showModal());
+    n(`#view-top`).addEventListener(`click`, () => {
+      let e = r.get(cur);
+      e && polyCall(e, `camera-view`, 2);
+    }),
+    n(`#reset-preset`).addEventListener(`click`, (e) => {
+      let t = e.currentTarget;
+      if (!rs) {
+        ((rs = !0),
+          (t.textContent = `한 번 더 누르면 처음으로`),
+          setTimeout(() => {
+            ((rs = !1), (t.textContent = `처음 상태로`));
+          }, 3500));
+        return;
+      }
+      ((rs = !1), (t.textContent = `처음 상태로`), load(cur, cur.split(`:`)[1]));
+    }),
+    n(`#section-tool`).addEventListener(`click`, () => {
+      let t = e();
+      section(
+        SECTION_SHAPE[i.get(o.id) || o.tools[0]],
+        o.sectionCta || (t.cut === `none` ? `horizontal` : t.cut),
+      );
     }),
     n(`#section-dialog`).addEventListener(`close`, () => {
       (s?.destroy(), (s = null));
     }),
-    { show: l }
+    { show: l, section: (e, t) => section(e || SECTION_SHAPE[i.get(o.id) || o.tools[0]] || `rectangle`, t) }
   );
 }
 var E = `<div class="reference-art">
@@ -1133,7 +1313,35 @@ function V() {
   ((k(`#save-status`).textContent = e ? `● 자동 저장됨` : `자동 저장 불가 · 파일로 저장`),
     k(`#save-status`).classList.toggle(`warning`, !e));
 }
+// ---- 화면별 작성 상태 ----
+// 문항 q에 속하면서 학생이 채울 것이 있는 화면들
+function qSlides(q) {
+  return d.filter((e) => e.q === q && (e.fields || e.checks || e.type === `judgment` || e.type === `drawing`));
+}
+function slideFilled(e, t = M) {
+  let r = i.find((t) => t.id === e.q),
+    n = (e) => !!t.answers[e]?.trim();
+  return e.type === `judgment`
+    ? n(`q6-${e.statement}-judgment`) && n(`q6-${e.statement}-reason`)
+    : e.type === `drawing`
+      ? !!t.drawings[r.drawing]?.some((e) => e.points.length > 1) || (e.fields || []).some(n)
+      : (e.fields || []).every(n) && (!e.checks || (r.checks || []).every((e) => t.checks[e.id]));
+}
+var pageNo = (e) => d.indexOf(e) + 1,
+  // 완료한 활동은 고치지 못하게 잠근다(완료를 취소하면 다시 고칠 수 있다).
+  lockedQ = (e) => M.completed.includes(e) && !i[e - 1].auto,
+  qOfField = (e) => (e.startsWith(`q6-`) ? 6 : i.find((t) => t.fields?.some((t) => t.id === e))?.id),
+  firstEmpty = (e) => qSlides(e).find((e) => !slideFilled(e)) || d.find((t) => t.complete === e);
+function unlock(e) {
+  ((M.completed = M.completed.filter((t) => t !== e)), B(`${e}번 활동의 완료를 취소했어요. 이제 고칠 수 있어요.`), V(), J());
+}
 function H() {
+  for (let e of i)
+    if (e.auto) {
+      let t = g(e, M),
+        n = M.completed.includes(e.id);
+      t && !n ? M.completed.push(e.id) : !t && n && (M.completed = M.completed.filter((t) => t !== e.id));
+    }
   ((M.completed = M.completed.filter((e) => g(i[e - 1], M))),
     U(),
     clearTimeout(N),
@@ -1144,39 +1352,78 @@ function U() {
   ((k(`#learning-progress`).textContent = `활동 완료 ${M.completed.length} / 12`),
     A(`[data-complete]`).forEach((e) => {
       let t = M.completed.includes(+e.dataset.complete);
-      ((e.textContent = t ? `✓ 활동 완료됨` : `${e.dataset.complete}번 활동 완료`),
-        e.setAttribute(`aria-pressed`, String(t)));
+      ((e.textContent = t ? `✓ ${e.dataset.complete}번 활동 완료됨` : `${e.dataset.complete}번 활동 완료`),
+        e.setAttribute(`aria-pressed`, String(t)),
+        e.nextElementSibling &&
+          (e.nextElementSibling.textContent = t
+            ? `고치려면 이 버튼을 다시 눌러 완료를 취소하세요.`
+            : i[e.dataset.complete - 1].either
+              ? `그림 또는 설명을 남긴 뒤 눌러 주세요.`
+              : `이 활동의 모든 화면을 채운 뒤 눌러 주세요.`));
+    }),
+    A(`.q-tracker`).forEach((e) => {
+      let t = +e.dataset.q;
+      e.querySelectorAll(`[data-page]`).forEach((e) => {
+        let t = d[e.dataset.page - 1],
+          n = slideFilled(t);
+        (e.classList.toggle(`filled`, n), (e.title = `${e.dataset.page}쪽 · ${n ? `작성함` : `아직 비어 있음`}`));
+      });
+      let n = e.querySelector(`.qt-here`),
+        r = z();
+      n && (n.textContent = slideFilled(r) ? `이 화면 ✓ 작성함` : `이 화면 ○ 아직 비어 있음`);
+      e.classList.toggle(`done`, M.completed.includes(t));
     }));
 }
 function W(e) {
   let t = L(`div`, `completion`),
     n = L(`button`),
-    r = L(
-      `small`,
-      ``,
-      i[e - 1].either ? `그림 또는 설명을 남겨 주세요.` : `이 문항의 작성을 모두 마친 뒤 눌러 주세요.`,
-    );
+    r = L(`small`);
   return (
     (n.dataset.complete = String(e)),
     n.addEventListener(`click`, () => {
-      if (M.completed.includes(e)) M.completed = M.completed.filter((t) => t !== e);
-      else if (g(i[e - 1], M)) (M.completed.push(e), B(`${e}번 활동을 완료했어요.`));
+      if (M.completed.includes(e)) return unlock(e);
+      if (g(i[e - 1], M)) (M.completed.push(e), B(`${e}번 활동을 완료했어요.`), V(), J());
       else {
-        B(`앞선 화면을 포함해 이 문항의 작성란과 확인 항목을 채워 주세요.`);
-        return;
+        let t = qSlides(e).filter((e) => !slideFilled(e));
+        B(
+          t.length
+            ? `아직 비어 있는 화면이 있어요: ${t.map(pageNo).join(`, `)}쪽. 아래 번호를 눌러 이동하세요.`
+            : `이 활동의 작성란과 확인 항목을 모두 채워 주세요.`,
+        );
       }
-      (U(), V());
     }),
     t.append(n, r),
     t
   );
+}
+// 한 활동이 여러 화면에 걸칠 때: 화면 번호 단추(채운 화면은 초록색)와 이 화면의 상태
+function tracker(e) {
+  let t = qSlides(e.q);
+  // 한 화면짜리 활동은 완료 버튼만으로 충분하다
+  if (t.length < 2 || i[e.q - 1].auto) return null;
+  let n = L(`div`, `q-tracker`),
+    r = d.find((t) => t.complete === e.q);
+  if (((n.dataset.q = e.q), n.append(L(`b`, ``, `${e.q}번 활동`)), t.length > 1)) {
+    let e = L(`span`, `qt-pages`);
+    for (let t of qSlides(n.dataset.q * 1)) {
+      let n = L(`button`, t === z() ? `current` : ``, String(pageNo(t)));
+      ((n.dataset.page = pageNo(t)), n.addEventListener(`click`, () => Y(t.id)), e.append(n));
+    }
+    n.append(e);
+  }
+  if ((n.append(L(`span`, `qt-here`)), lockedQ(e.q))) {
+    let t = L(`button`, `qt-unlock`, `완료 취소하고 고치기`);
+    (t.addEventListener(`click`, () => unlock(e.q)), n.append(L(`span`, `qt-msg`, `✓ 완료한 활동이에요.`), t));
+  } else r && r !== e && n.append(L(`span`, `qt-msg`, `완료 버튼은 ${pageNo(r)}쪽에 있어요.`));
+  return n;
 }
 function G(e) {
   let t = i.flatMap((e) => e.fields || []).find((t) => t.id === e),
     n = L(`div`, `answer-field`),
     r = L(`label`, ``, t?.label || `관찰 내용과 이유`),
     a = L(`textarea`),
-    o = L(`span`, `counter`);
+    o = L(`span`, `counter`),
+    s = qOfField(e);
   return (
     (r.htmlFor = e),
     (a.id = e),
@@ -1184,6 +1431,7 @@ function G(e) {
     (a.placeholder = t?.placeholder || `어떤 조건에서 무엇을 관찰했나요?`),
     (a.value = M.answers[e] || ``),
     (o.textContent = `${a.value.length} / 8000`),
+    s && lockedQ(s) && ((a.readOnly = !0), a.addEventListener(`focus`, () => B(`완료한 활동이에요. 고치려면 ‘완료 취소’를 누르세요.`))),
     a.addEventListener(`input`, () => {
       ((M.answers[e] = a.value), (o.textContent = `${a.value.length} / 8000`), H());
     }),
@@ -1193,16 +1441,17 @@ function G(e) {
 }
 function K(e, t) {
   for (let n of e.checks || []) {
-    let e = L(`label`, `check-label`),
+    let a = L(`label`, `check-label`),
       r = L(`input`);
     ((r.type = `checkbox`),
       (r.id = n.id),
       (r.checked = !!M.checks[n.id]),
+      (r.disabled = lockedQ(e.id)),
       r.addEventListener(`change`, () => {
         ((M.checks[n.id] = r.checked), H());
       }),
-      e.append(r, L(`span`, ``, n.label)),
-      t.append(e));
+      a.append(r, L(`span`, ``, n.label)),
+      t.append(a));
   }
 }
 function re(t, n, r) {
@@ -1216,6 +1465,133 @@ function re(t, n, r) {
   }),
     n.append(i));
 }
+// ---- 알지오3D로 회전체 만드는 순서(그림과 함께) ----
+var GUIDE = [
+  [`guide1`, `오른쪽 위 보기 큐브에서 ‘위쪽’을 눌러 xy평면을 위에서 내려다봐요. (도구 위의 ‘위에서 보기’ 버튼도 같아요.)`],
+  [`guide2`, `왼쪽 빨간 십자 아이콘 → ‘다각형’(또는 ‘원’)을 골라 y축에 붙여 평면도형을 그려요. 이미 그려져 있으면 건너뛰어요.`],
+  [`guide3`, `같은 메뉴에서 ‘회전하기’를 골라요.`],
+  [`guide4`, `‘회전축 선택’ 창에서 ‘초록색 축(y축) 기준으로 회전’을 눌러요.`],
+  [`guide5`, `평면도형을 누르면 y축을 중심으로 돌린 입체도형이 만들어져요. 화면을 끌어 여러 방향에서 관찰해요.`],
+];
+function guideDialog(e = 0) {
+  ((k(`#tip-title`).textContent = `알지오3D에서 평면도형을 회전시키는 순서`), k(`#tip-content`).replaceChildren());
+  let t = L(`ol`, `guide-big`);
+  (GUIDE.forEach(([e, n]) => {
+    let r = L(`li`),
+      i = L(`img`);
+    ((i.src = window.ASSET_IMG[e]), (i.alt = n), r.append(L(`p`, ``, n), i), t.append(r));
+  }),
+    k(`#tip-content`).append(t));
+  let n = L(`img`, `guide-done`);
+  ((n.src = window.ASSET_IMG.guide6),
+    (n.alt = `회전하기로 만든 입체도형`),
+    k(`#tip-content`).append(L(`p`, ``, `▼ 이렇게 입체도형이 만들어져요.`), n),
+    k(`#tip-dialog`).showModal(),
+    e && t.children[e]?.scrollIntoView({ block: `start` }));
+}
+function guideBox(e, t) {
+  if (e === `full`) {
+    let e = L(`ol`, `guide-steps`);
+    return (
+      GUIDE.forEach(([t, n], r) => {
+        let i = L(`li`),
+          a = L(`button`, `guide-thumb`),
+          o = L(`img`);
+        ((o.src = window.ASSET_IMG[t]),
+          (o.alt = ``),
+          a.append(o),
+          a.setAttribute(`aria-label`, `${r + 1}단계 그림 크게 보기`),
+          a.addEventListener(`click`, () => guideDialog(r)),
+          i.append(a, L(`span`, ``, n)),
+          e.append(i));
+      }),
+      e
+    );
+  }
+  let n = L(`div`, `guide-short`),
+    r = L(`button`, ``, `그림으로 보기`);
+  return (
+    r.addEventListener(`click`, () => guideDialog()),
+    n.append(L(`span`, ``, `만드는 순서: ① 위쪽 보기 → ② 다각형·원으로 그리기 → ③ 회전하기 → ④ 초록색 축(y축) → ⑤ 평면도형 누르기`), r),
+    n
+  );
+}
+// ---- 스스로 점검(규칙 기반 자동 힌트, AI 아님) ----
+var FEEDBACK = [
+  {
+    맞음: [/원기둥/, `이유에 어떤 입체도형(원기둥)이 되었는지와 관찰한 모습을 함께 써 보세요.`],
+    "조건이 필요함": `직사각형은 어느 변을 축으로 돌려도 원기둥이 되는지 알지오3D에서 확인해 보세요. 그래도 조건이 필요하다면 그 조건을 이유에 적어 보세요.`,
+    다름: `알지오3D에서 직사각형을 한 변을 축으로 360° 돌려 보고, 어떤 입체도형이 되는지 다시 관찰해 보세요.`,
+  },
+  {
+    맞음: `직각삼각형의 빗변을 회전축으로 하면 어떤 입체도형이 될까요? 어느 변을 축으로 하느냐에 따라 결과가 같은지 확인해 보세요.`,
+    "조건이 필요함": [/직각|빗변/, `어떤 변을 회전축으로 해야 원뿔이 되는지(예: 직각을 낀 변) 조건을 구체적으로 써 보세요.`],
+    다름: `직각을 낀 한 변을 축으로 돌렸을 때와 빗변을 축으로 돌렸을 때를 비교해 보세요. 항상 원뿔이 아닌가요?`,
+  },
+  {
+    맞음: [/구/, `이유에 어떤 입체도형(구)이 되었는지와 관찰한 모습을 함께 써 보세요.`],
+    "조건이 필요함": `문장은 ‘지름을 축으로’ 돌리는 경우만 말하고 있어요. 반원을 지름을 축으로 돌렸을 때 항상 같은 입체도형이 되는지 다시 판단해 보세요.`,
+    다름: `알지오3D에서 반원을 지름을 축으로 360° 돌려 보고, 어떤 입체도형이 되는지 다시 관찰해 보세요.`,
+  },
+  {
+    맞음: `두루마리 휴지처럼 속이 빈 입체도형을 회전축에 수직인 평면으로 자르면 단면이 어떤 모양일까요? 아래 ‘속이 빈 원기둥 단면 보기’로 확인해 보세요.`,
+    "조건이 필요함": [
+      /속이\s*빈|비어|빈\s*공간|구멍|고리|도넛|휴지|두\s*원|원\s*안/,
+      `어떤 경우에 단면이 원이 아닐 수 있는지(예: 속이 빈 회전체) 조건을 구체적으로 써 보세요.`,
+    ],
+    다름: `원기둥·원뿔·구를 회전축에 수직인 평면으로 잘랐을 때 단면은 무엇이었나요? 항상 다른지, 어떤 경우에만 다른지 생각해 보세요.`,
+  },
+  {
+    맞음: [/대칭|접|겹/, `회전축을 기준으로 단면을 접으면 어떻게 되는지 이유에 써 보세요.`],
+    "조건이 필요함": `‘단면 관찰’에서 여러 모형의 회전축을 포함하는 단면을 보세요. 회전축을 기준으로 접었을 때 겹치지 않는 경우가 있었나요?`,
+    다름: `‘단면 관찰’에서 회전축을 포함하는 단면을 보고, 회전축을 기준으로 접으면 겹쳐지는지 확인해 보세요.`,
+  },
+];
+function judgeHints(e) {
+  let t = M.answers[`q6-${e}-judgment`] || ``,
+    n = (M.answers[`q6-${e}-reason`] || ``).trim(),
+    r = FEEDBACK[e][t];
+  if (!t) return [`먼저 이 문장이 맞는지 판단을 골라 주세요.`];
+  let i = [];
+  return (
+    typeof r == `string` ? i.push(r) : n && !r[0].test(n) && i.push(r[1]),
+    n.length < 15 && i.push(`관찰한 내용을 바탕으로 이유를 조금 더 자세히 써 보세요.`),
+    i.length ? i : [`좋아요! 판단과 관찰 근거가 잘 드러나요. 친구의 생각과도 비교해 보세요.`]
+  );
+}
+function generalHints() {
+  let e = (M.answers.q10 || ``).trim(),
+    t = [];
+  return e.length < 15
+    ? [`먼저 내가 찾은 규칙을 문장으로 써 보세요. 막히면 위의 힌트를 차례로 열어 보세요.`]
+    : (/원/.test(e) || t.push(`회전축에 수직인 평면으로 자른 단면이 어떤 모양인지 써 보세요.`),
+      /반지름|거리|떨어/.test(e) || t.push(`단면의 크기(반지름)가 회전축에서 어디까지의 거리로 정해지는지 써 보세요.`),
+      /속이|빈|구멍|고리|휴지|컵/.test(e) || t.push(`컵처럼 속이 빈 회전체일 때 단면이 어떻게 달라지는지, 규칙이 성립하는 조건도 써 보세요.`),
+      t.length ? t : [`좋아요! 단면의 모양·크기·조건이 모두 드러나요.`]);
+}
+function conceptHints() {
+  let e = M.answers.q9 || ``,
+    t = i[8].terms.filter((t) => !e.includes(t));
+  return e.trim().length < 15
+    ? [`다섯 용어를 사용해 지금까지 한 활동을 정리해 보세요. 막히면 ‘문장 틀 넣기’를 눌러 빈칸을 채워 보세요.`]
+    : t.length
+      ? [`아직 쓰지 않은 용어가 있어요: ${t.join(`, `)}`]
+      : [`좋아요! 다섯 용어를 모두 사용했어요. 각 용어가 무엇을 가리키는지 정확한지 한 번 더 확인해 보세요.`];
+}
+function selfCheck(e, t) {
+  let n = L(`div`, `self-check`),
+    r = L(`button`, ``, `💬 스스로 점검하기`),
+    a = L(`ul`);
+  function o() {
+    a.replaceChildren(...e().map((e) => L(`li`, ``, e)));
+  }
+  return (
+    r.addEventListener(`click`, o),
+    n.append(r, L(`small`, ``, `미리 정한 규칙으로 주는 힌트예요(AI 아님).`), a),
+    t && (n.refresh = o),
+    n
+  );
+}
 function q(t, n) {
   let r = L(`figure`, t === `cup` ? `figure-cup` : `source-figure`),
     i = L(`img`);
@@ -1227,6 +1603,7 @@ function ie(e, t) {
     grid: e.grid,
     label: e.drawingLabel,
     onMessage: B,
+    locked: lockedQ(e.id),
     onChange: (t) => {
       if (
         Object.entries(M.drawings)
@@ -1245,21 +1622,28 @@ function ie(e, t) {
 function ae(e) {
   let t = L(`div`, `upload-area`),
     n = L(`label`, ``, `완성 작품 이미지 첨부 (선택)`),
-    r = L(`input`);
+    r = L(`input`),
+    lk = lockedQ(11);
   if (
     ((r.type = `file`),
     (r.accept = `image/png,image/jpeg,image/webp`),
     (r.id = `artwork-file`),
+    (r.disabled = lk),
     (n.htmlFor = r.id),
-    t.append(n, r, L(`p`, ``, `PNG·JPG·WebP, 8MB 이하. 큰 이미지는 줄여 저장합니다.`)),
+    t.append(
+      n,
+      r,
+      L(`p`, ``, `그림판3D에서 ‘저장 → 사진(PNG)’으로 저장한 파일을 첨부하세요. PNG·JPG·WebP, 8MB 이하. 큰 이미지는 줄여 저장합니다.`),
+    ),
     M.image)
   ) {
     let e = L(`img`);
     ((e.src = M.image), (e.alt = `내가 만든 회전체 완성 작품`), t.append(e));
     let n = L(`button`, ``, `첨부 이미지 삭제`);
-    (n.addEventListener(`click`, () => {
-      ((M.image = null), H(), J());
-    }),
+    ((n.disabled = lk),
+      n.addEventListener(`click`, () => {
+        ((M.image = null), H(), J());
+      }),
       t.append(n));
   }
   (r.addEventListener(`change`, async () => {
@@ -1286,6 +1670,64 @@ function ae(e) {
       }
     }
   }),
+    e.append(t));
+}
+// ---- 3D·AR로 보기: 그림판3D에서 GLB로 저장한 파일을 바로 띄운다(학습 기록에는 저장하지 않음) ----
+var arUrl = null;
+function arBox(e) {
+  let t = L(`details`, `ar-area`),
+    n = L(`input`),
+    r = L(`div`, `ar-view`);
+  ((n.type = `file`), (n.accept = `.glb,model/gltf-binary`), (n.id = `ar-file`));
+  let i = L(`label`, ``, `GLB 파일 고르기`);
+  ((i.htmlFor = n.id),
+    t.append(
+      L(`summary`, ``, `📱 내 회전체를 3D·AR로 보기 (선택)`),
+      L(
+        `p`,
+        ``,
+        `그림판3D에서 ‘저장 → GLB’로 저장한 파일을 고르면 여기서 돌려 볼 수 있어요. 휴대폰·태블릿에서 이 활동지를 열고 고르면 ‘AR로 보기’ 버튼으로 내 책상 위에 띄울 수 있어요. 이 파일은 학습 기록에 저장되지 않아요.`,
+      ),
+      i,
+      n,
+      r,
+    ),
+    n.addEventListener(`change`, async () => {
+      let e = n.files[0];
+      if (!e) return;
+      if (!/\.glb$/i.test(e.name) || e.size > 31457280) return B(`30MB 이하의 GLB 파일을 골라 주세요.`);
+      r.textContent = `3D 보기 도구를 불러오는 중…`;
+      try {
+        (customElements.get(`model-viewer`) ||
+          (await new Promise((e, t) => {
+            let n = document.createElement(`script`);
+            ((n.type = `module`),
+              (n.src = `https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer.min.js`),
+              (n.onload = e),
+              (n.onerror = t),
+              document.head.append(n));
+          }),
+          await customElements.whenDefined(`model-viewer`)),
+          arUrl && URL.revokeObjectURL(arUrl),
+          (arUrl = URL.createObjectURL(e)));
+        let t = document.createElement(`model-viewer`);
+        for (let [e, n] of [
+          [`src`, arUrl],
+          [`alt`, `내가 만든 회전체`],
+          [`ar`, ``],
+          [`ar-modes`, `webxr quick-look`],
+          [`camera-controls`, ``],
+          [`auto-rotate`, ``],
+          [`shadow-intensity`, `1`],
+        ])
+          t.setAttribute(e, n);
+        r.replaceChildren(t);
+      } catch {
+        r.textContent = `3D 보기 도구를 불러오지 못했어요. 인터넷 연결을 확인해 주세요.`;
+      } finally {
+        n.value = ``;
+      }
+    }),
     e.append(t));
 }
 function oe(e, t) {
@@ -1320,15 +1762,25 @@ function oe(e, t) {
     (i.addEventListener(`click`, () => Y(d[d.indexOf(e) + 1].id)), n.querySelector(`.bubble`).append(i));
   }
 }
+// 목차의 다리: 누르면 그 단계의 설명만 보여 준다(화면 이동은 다음 버튼·쪽 번호로).
 function se(e) {
   let t = L(`div`, `bridge-map`);
   t.innerHTML = `<svg viewBox="0 0 1100 340" preserveAspectRatio="none" aria-hidden="true"><path d="M0 122H1100M0 130H1100" fill="none" stroke="#82b8df" stroke-width="7"/><path d="M0 327Q92 159 183 327M183 327Q275 159 366 327M366 327Q458 159 550 327M550 327Q642 159 733 327M733 327Q825 159 916 327M916 327Q1008 159 1100 327" fill="none" stroke="#c3e0f3" stroke-width="18"/><path d="M183 129V325M366 129V325M550 129V325M733 129V325M916 129V325" stroke="#abd0ea" stroke-width="12"/></svg>`;
   for (let e of l) {
-    let n = L(`button`, `bridge-stop`);
+    let n = L(`button`, `bridge-stop`),
+      r = d.filter((t) => t.chapter === e.id).map(pageNo);
     (n.style.setProperty(`--chapter`, e.color),
       (n.dataset.chapter = e.id),
-      n.append(L(`span`, `init`, e.id), L(`span`, `nm`, e.name), L(`small`, ``, `${e.stage}단계 · 바로 가기`)),
-      n.addEventListener(`click`, () => Y(`${e.id}-cover`)),
+      n.append(L(`span`, `init`, e.id), L(`span`, `nm`, e.name), L(`small`, ``, `${e.stage}단계 · 설명 보기`)),
+      n.addEventListener(`click`, () => {
+        ((k(`#tip-title`).textContent = `${e.id}. ${e.name}`),
+          k(`#tip-content`).replaceChildren(
+            L(`p`, `stage-desc`, e.desc),
+            L(`p`, `stage-question`, `탐구 질문 · ${e.question}`),
+            L(`p`, `stage-range`, `${[``, `살펴보기`, `다가가기`, `넘어서기`][e.stage]} 단계 · ${Math.min(...r)}~${Math.max(...r)}쪽`),
+          ),
+          k(`#tip-dialog`).showModal());
+      }),
       t.append(n));
   }
   e.append(t);
@@ -1346,15 +1798,16 @@ function J() {
     ((k(`#slide-stage`).dataset.slide = t.id),
     k(`#slide-stage`).style.setProperty(`--stage`, n?.color || `#1f89ed`),
     k(`#slide-stage`).classList.toggle(`art-slide`, o),
+    k(`#slide-stage`).classList.toggle(`tool-slide`, !!t.tools),
     (k(`#book-frame`).hidden = o),
     (k(`#slide-decoration`).hidden = !o),
     k(`#slide-decoration`).replaceChildren(),
     s.replaceChildren(),
     (k(`#sheet-body`).className = t.tools
       ? `with-tool` +
-        (t.checks || (t.tip && !t.fields && t.type !== `judgment`)
+        ((t.layout || (t.checks || (t.tip && !t.fields && t.type !== `judgment`) ? `strip` : ``)) === `strip`
           ? ` tool-strip`
-          : !t.fields && !t.statement && t.type !== `judgment`
+          : !t.fields && !t.statement && t.type !== `judgment` && !t.guide
             ? ` tool-only`
             : ``)
       : ``),
@@ -1372,15 +1825,35 @@ function J() {
       L(`strong`, ``, `${M.completed.length} / 12 활동 완료`),
       L(`p`, ``, `나의 생각과 그림, 작품을 학습 기록 파일로 보관하세요.`),
     );
-    let t = L(`button`, `primary`, `학습 기록 저장하기 ↓`);
-    t.addEventListener(`click`, Z);
-    let n = L(`button`, ``, `목차에서 활동 이어가기`);
-    (n.addEventListener(`click`, () => Y(`bridge`)), e.append(t, n), s.append(e));
+    let t = i.filter((e) => !M.completed.includes(e.id));
+    if (t.length) {
+      let n = L(`div`, `finish-todo`);
+      n.append(L(`p`, ``, `아직 완료하지 않은 활동`));
+      let r = L(`ul`);
+      for (let e of t) {
+        let t = L(`li`),
+          n = qSlides(e.id).filter((e) => !slideFilled(e)),
+          i = L(`button`, ``, `${pageNo(firstEmpty(e.id))}쪽으로 →`);
+        (i.addEventListener(`click`, () => Y(firstEmpty(e.id).id)),
+          t.append(
+            L(`b`, ``, `${e.id}. ${e.title}`),
+            L(`span`, ``, n.length ? `비어 있는 화면: ${n.map(pageNo).join(`, `)}쪽` : `모두 채웠어요 · 완료 버튼을 눌러 주세요`),
+            i,
+          ),
+          r.append(t));
+      }
+      (n.append(r), e.append(n));
+    }
+    let n = L(`button`, `primary`, `학습 기록 저장하기 ↓`);
+    n.addEventListener(`click`, Z);
+    let r = L(`button`, ``, `목차 보기`);
+    (r.addEventListener(`click`, () => Y(`bridge`)), e.append(L(`div`, `finish-actions`)), e.lastChild.append(n, r), s.append(e));
   } else if (t.type === `situation`) {
     let n = L(`div`, `intro-row`),
       i = L(`img`);
     ((i.src = e.objects), (i.alt = r.alt), n.append(L(`p`, `note-box`, r.lead), i), s.append(n, ...t.fields.map(G)));
-  } else if (t.type === `goal`) (s.append(L(`p`, `goal-copy`, r.lead)), K(r, s));
+  } else if (t.type === `goal`)
+    (s.append(L(`p`, `goal-copy`, r.lead)), K(r, s), s.append(L(`p`, `goal-hint`, `확인란에 표시하면 자동으로 완료돼요.`)));
   else if (t.type === `drawing`) {
     let e = L(`div`, `drawing-layout`),
       n = L(`div`, `drawing-canvas`),
@@ -1389,30 +1862,64 @@ function J() {
   } else if (t.type === `judgment`) {
     s.append(L(`p`, `judgment-statement`, r.statements[t.statement]));
     let e = L(`select`, `judgment-select`),
-      n = `q6-${t.statement}-judgment`;
-    ((e.id = n), e.setAttribute(`aria-label`, `${t.statement + 1}번 문장에 대한 판단`));
+      n = `q6-${t.statement}-judgment`,
+      a = selfCheck(() => judgeHints(t.statement), !0);
+    ((e.id = n), e.setAttribute(`aria-label`, `${t.statement + 1}번 문장에 대한 판단`), (e.disabled = lockedQ(6)));
     for (let t of [``, `맞음`, `조건이 필요함`, `다름`]) {
       let n = L(`option`, ``, t || `판단을 선택하세요`);
       ((n.value = t), e.append(n));
     }
-    ((e.value = M.answers[n] || ``),
+    if (
+      ((e.value = M.answers[n] || ``),
       e.addEventListener(`change`, () => {
-        ((M.answers[n] = e.value), H());
+        ((M.answers[n] = e.value), H(), a.refresh());
       }),
-      s.append(e, G(`q6-${t.statement}-reason`)));
+      s.append(e, G(`q6-${t.statement}-reason`)),
+      t.hollowDemo)
+    ) {
+      let e = L(`button`, `section-cta`, `🧻 속이 빈 원기둥 단면 보기`);
+      (e.addEventListener(`click`, () => ne.section(`hollow`, `horizontal`)), s.append(e));
+    }
+    s.append(a);
   } else {
-    if ((t.figure && q(t.figure, s), t.terms)) {
+    if ((t.guide === `full` && s.append(guideBox(`full`)), t.figure && q(t.figure, s), t.define && s.append(L(`p`, `define-box`, t.define)), t.terms)) {
       let e = L(`div`, `terms`);
       (r.terms.forEach((t) => e.append(L(`span`, ``, t))), s.append(e));
     }
-    if ((t.note && s.append(L(`p`, `note-box`, t.note)), t.upload)) {
+    if ((t.note && s.append(L(`p`, `note-box`, t.note)), t.hints)) {
+      let e = L(`div`, `hint-steps`);
+      (t.hints.forEach((t, n) => {
+        let r = L(`details`);
+        (r.append(L(`summary`, ``, `힌트 ${n + 1}`), L(`p`, ``, t)), e.append(r));
+      }),
+        s.append(e));
+    }
+    if (t.upload) {
       let e = L(`div`, `upload-layout`);
-      (t.fields.forEach((t) => e.append(G(t))), ae(e), s.append(e));
+      (t.fields.forEach((t) => e.append(G(t))), ae(e), s.append(e), t.ar && arBox(s));
     } else for (let e of t.fields || []) s.append(G(e));
-    t.checks && K(r, s);
+    if (t.frame) {
+      let e = L(`div`, `frame-box`),
+        n = L(`button`, ``, `문장 틀 넣기`);
+      ((n.disabled = lockedQ(9)),
+        n.addEventListener(`click`, () => {
+          let e = k(`#q9`),
+            n = e.value.trim();
+          ((e.value = n ? `${n}\n${t.frame}` : t.frame), (M.answers.q9 = e.value), H(), J(), B(`문장 틀을 넣었어요. 괄호 안을 채워 보세요.`));
+        }),
+        e.append(L(`b`, ``, `문장 틀`), L(`p`, ``, t.frame), n),
+        s.append(e, selfCheck(conceptHints)));
+    }
+    if ((t.hints && s.append(selfCheck(generalHints)), t.sectionCta)) {
+      let e = L(`button`, `section-cta`, `🔍 단면 관찰 열기`);
+      (e.addEventListener(`click`, () => ne.section(void 0, t.sectionCta)), s.append(e));
+    }
+    (t.guide === `short` && s.append(guideBox(`short`)), t.checks && K(r, s));
   }
-  (t.tip && re(t.tip, s, t.tipFigure),
-    t.complete && s.append(W(t.complete)),
+  t.tip && re(t.tip, s, t.tipFigure);
+  let tr = r && !o && tracker(t);
+  tr && s.append(tr);
+  (t.complete && !r?.auto && s.append(W(t.complete)),
     ne.show(t),
     (k(`#prev-btn`).disabled = a === 0),
     (k(`#next-btn`).textContent = a === d.length - 1 ? `저장 ↓` : `다음 →`),
@@ -1509,9 +2016,6 @@ function Q() {
   A(`[data-close]`).forEach((e) => e.addEventListener(`click`, () => e.closest(`dialog`).close())),
   k(`#home-btn`).addEventListener(`click`, () => Y(`cover`)),
   k(`#toc-btn`).addEventListener(`click`, () => Y(`bridge`)),
-  A(`[data-phase]`).forEach((e) =>
-    e.addEventListener(`click`, () => Y({ 1: `B-cover`, 2: `R-cover`, 3: `E-cover` }[e.dataset.phase])),
-  ),
   d.forEach((e, t) => {
     let n = L(`option`, ``, String(t + 1));
     ((n.value = String(t + 1)),

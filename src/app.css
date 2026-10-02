@@ -116,7 +116,7 @@ textarea {
   margin: auto;
   display: flex;
 }
-.phase-tabs button {
+.phase-tabs > span {
   color: #62758a;
   background: #f3f7fb;
   border: 0;
@@ -124,7 +124,7 @@ textarea {
   padding: 8px 13px;
   font-size: 12px;
 }
-.phase-tabs button[aria-current="step"] {
+.phase-tabs > span[aria-current="step"] {
   color: #1b70bf;
   background: #e4f1ff;
   box-shadow: inset 0 0 0 1px #a4cbed;
@@ -1065,7 +1065,7 @@ dialog img {
     gap: 8px;
     padding: 0 10px;
   }
-  .phase-tabs button {
+  .phase-tabs > span {
     padding: 8px 9px;
     font-size: 11px;
   }
@@ -1105,7 +1105,7 @@ dialog img {
     width: 100%;
     margin: 0;
   }
-  .phase-tabs button {
+  .phase-tabs > span {
     flex: 1;
     max-width: 180px;
     padding: 7px;
@@ -1539,3 +1539,485 @@ button.primary:hover {
   font-display: swap;
 }
 /*$vite$:1*/
+
+/* ===== v2.3 (2026-10-03 수업 실연 검토 의견 반영) ===== */
+.phase-tabs > span {
+  cursor: default;
+  user-select: none;
+}
+/* 도구 화면: 머리말을 한 줄로 줄이고 책 테두리를 얇게 해서 알지오3D를 크게 보인다 */
+@media (width > 700px) {
+  .tool-slide .book-card {
+    inset: 10px 14px;
+    border-width: 10px;
+  }
+  .tool-slide .book-card:before {
+    display: none;
+  }
+  .tool-slide .sheet {
+    inset: 10px 16px 12px;
+  }
+  .tool-slide .sheet-head {
+    text-align: left;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 14px;
+    display: flex;
+  }
+  .tool-slide .stage-chip {
+    padding: 5px 14px;
+    font-size: 15px;
+  }
+  .tool-slide .sheet-head h1 {
+    flex: 1;
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.35;
+  }
+  .tool-slide .sheet-head > p {
+    flex-basis: 100%;
+    margin: 4px 0 0;
+    font-size: 13.5px;
+  }
+  .tool-slide .sheet-head > hr {
+    display: none;
+  }
+  .tool-slide #sheet-body {
+    gap: 16px;
+    margin-top: 10px;
+  }
+  .tool-slide #sheet-body.with-tool #slide-content {
+    flex-basis: 30%;
+    overflow-y: auto;
+    padding-right: 2px;
+  }
+  .tool-slide #sheet-body.tool-strip #slide-content {
+    flex-wrap: wrap;
+    row-gap: 6px;
+    overflow: visible;
+  }
+}
+.tf-actions #view-top,
+.tf-actions #reset-preset {
+  color: #1c6aa8;
+}
+.tf-actions #section-tool {
+  color: #fff;
+  background: #e5791d;
+  border-color: #e5791d;
+  font-weight: 700;
+}
+/* 알지오3D 조작 순서 */
+.guide-steps {
+  counter-reset: g;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+}
+.guide-steps li {
+  counter-increment: g;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+  line-height: 1.45;
+  display: flex;
+}
+.guide-steps li > span:before {
+  content: counter(g) ". ";
+  color: var(--stage);
+  font-weight: 800;
+}
+.guide-thumb {
+  background: #fff;
+  border: 1px solid #c9d8e6;
+  border-radius: 8px;
+  flex: none;
+  width: 92px;
+  height: 62px;
+  padding: 0;
+  overflow: hidden;
+}
+.guide-thumb img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+.guide-short {
+  color: #2a5576;
+  background: #eef6ff;
+  border-radius: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  display: flex;
+}
+.guide-short button {
+  color: #1c6aa8;
+  background: #fff;
+  border: 1px solid #b7cde1;
+  border-radius: 7px;
+  padding: 3px 9px;
+  font-size: 13px;
+}
+.guide-big {
+  padding-left: 22px;
+}
+.guide-big li {
+  margin-bottom: 16px;
+}
+.guide-big p {
+  margin: 0 0 6px;
+}
+.guide-big img,
+.guide-done {
+  border: 1px solid #d1deea;
+  border-radius: 10px;
+  max-width: 100%;
+}
+/* 활동별 화면 상태 */
+.q-tracker {
+  color: #4d6378;
+  background: #f6f9fc;
+  border: 1px solid #dbe6f0;
+  border-radius: 10px;
+  flex: none;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  padding: 7px 11px;
+  font-size: 13px;
+  display: flex;
+}
+.q-tracker b {
+  color: #27506f;
+}
+.qt-pages {
+  gap: 4px;
+  display: flex;
+}
+.qt-pages button {
+  color: #7a8b9b;
+  background: #fff;
+  border: 1.5px dashed #b9c8d6;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 700;
+}
+.qt-pages button.filled {
+  color: #fff;
+  background: #2e9a63;
+  border: 1.5px solid #2e9a63;
+}
+.qt-pages button.current {
+  box-shadow: 0 0 0 2.5px #1f89ed;
+}
+.qt-here {
+  font-weight: 600;
+}
+.qt-msg {
+  color: #7a8b9b;
+}
+.q-tracker.done {
+  background: #ecf8f0;
+  border-color: #b9e0c6;
+}
+.q-tracker.done .qt-msg {
+  color: #1e7848;
+  font-weight: 700;
+}
+.qt-unlock {
+  color: #a1531b;
+  background: #fff;
+  border: 1px solid #e4c3a5;
+  border-radius: 7px;
+  padding: 3px 9px;
+  font-size: 12.5px;
+}
+textarea[readonly] {
+  color: #4f6273;
+  background: #f4f7f9 !important;
+}
+.sketch.locked canvas {
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+.goal-hint {
+  color: #7a8b9b;
+  margin: 0;
+  font-size: 14px;
+}
+/* 스스로 점검·힌트·문장 틀 */
+.self-check {
+  background: #fffaf0;
+  border: 1px solid #f0dcb4;
+  border-radius: 10px;
+  flex: none;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+.self-check button {
+  color: #8a5a12;
+  background: #fff;
+  border: 1px solid #e6c98f;
+  border-radius: 7px;
+  padding: 4px 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+}
+.self-check small {
+  color: #a08a63;
+  margin-left: 8px;
+  font-size: 11.5px;
+}
+.self-check ul {
+  margin: 6px 0 0;
+  padding-left: 20px;
+  line-height: 1.55;
+}
+.self-check ul:empty {
+  display: none;
+}
+.hint-steps {
+  flex-wrap: wrap;
+  gap: 6px;
+  display: flex;
+}
+.hint-steps details {
+  background: #f1f7ee;
+  border: 1px solid #cfe2c8;
+  border-radius: 9px;
+  flex: 1 1 30%;
+  padding: 5px 11px;
+  font-size: 14px;
+}
+.hint-steps summary {
+  cursor: pointer;
+  color: #2f6b2f;
+  font-weight: 700;
+}
+.hint-steps p {
+  margin: 4px 0 2px;
+  line-height: 1.5;
+}
+.define-box {
+  color: #4a2f80;
+  background: #f3eefc;
+  border-left: 5px solid #774dc1;
+  border-radius: 8px;
+  margin: 0;
+  padding: 10px 14px;
+  font-size: 16px;
+  line-height: 1.55;
+}
+.frame-box {
+  background: #f7f5fd;
+  border: 1px dashed #c7b8e8;
+  border-radius: 10px;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 12px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  display: flex;
+}
+.frame-box p {
+  flex: 1;
+  margin: 0;
+}
+.frame-box button {
+  white-space: nowrap;
+  color: #5b3aa0;
+  background: #fff;
+  border: 1px solid #c7b8e8;
+  border-radius: 7px;
+  padding: 4px 10px;
+  font-size: 13px;
+}
+.section-cta {
+  color: #fff;
+  background: #e5791d;
+  border: 0;
+  border-radius: 10px;
+  flex: none;
+  padding: 10px 14px;
+  font-size: 16px;
+  font-weight: 800;
+  box-shadow: 0 3px 0 #b85c10;
+}
+.section-cta:hover {
+  background: #d86c12;
+}
+/* 마무리: 아직 완료하지 않은 활동 */
+.finish-todo {
+  text-align: left;
+  background: #fff8ef;
+  border: 1px solid #f0d6b4;
+  border-radius: 12px;
+  width: min(760px, 100%);
+  max-height: 290px;
+  padding: 10px 16px;
+  overflow: auto;
+}
+.finish-todo > p {
+  color: #8a5a12;
+  margin: 0 0 6px;
+  font-weight: 800;
+}
+.finish-todo ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.finish-todo li {
+  border-top: 1px dashed #efdcc4;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 14px;
+  display: flex;
+}
+.finish-todo li span {
+  color: #8b99a8;
+  flex: 1;
+  font-size: 13px;
+}
+.finish-todo li button {
+  padding: 4px 10px;
+  font-size: 13px;
+}
+.finish-actions {
+  justify-content: center;
+  gap: 10px;
+  display: flex;
+}
+/* 3D·AR 보기 */
+.ar-area {
+  background: #f4f8ff;
+  border: 1px solid #cfe0f2;
+  border-radius: 10px;
+  padding: 6px 12px;
+  font-size: 13.5px;
+}
+.ar-area summary {
+  cursor: pointer;
+  color: #1c5f97;
+  font-weight: 700;
+}
+.ar-area p {
+  color: #5d7388;
+  margin: 6px 0;
+  line-height: 1.5;
+}
+.ar-area model-viewer {
+  background: #fff;
+  border-radius: 8px;
+  width: 100%;
+  height: 260px;
+  margin-top: 6px;
+}
+.stage-desc {
+  font-size: 17px;
+  line-height: 1.6;
+}
+.stage-question {
+  color: #1c5f97;
+  font-weight: 700;
+}
+.stage-range {
+  color: #8b99a8;
+  font-size: 13px;
+}
+
+/* 숨긴 도구: 크기는 유지하고 보이지만 않게 한다 */
+#frame-holder iframe.parked {
+  visibility: hidden;
+  pointer-events: none;
+}
+#tool-card.parked {
+  visibility: hidden;
+  pointer-events: none;
+  width: 820px;
+  height: 520px;
+  position: fixed;
+  top: 0;
+  left: -10000px;
+}
+/* 띠 배치(도구가 가로로 넓은 화면): 아래 줄을 한 줄로 줄여 도구 높이를 확보한다 */
+@media (width > 700px) {
+  .tool-slide #sheet-body.tool-strip #slide-content {
+    flex: none;
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+  .tool-strip .guide-short,
+  .tool-strip .check-label {
+    flex: 1;
+    padding: 7px 12px;
+    font-size: 14px;
+  }
+  .tool-strip .q-tracker {
+    padding: 5px 9px;
+  }
+  .tool-strip .q-tracker .qt-msg {
+    display: none;
+  }
+  .tool-strip .tip-button {
+    flex: none;
+    align-self: center;
+    padding: 7px 12px;
+    font-size: 15px;
+  }
+  /* 개념 정리 화면: 정의·용어·문장 틀이 들어가므로 조금씩 줄인다 */
+  [data-slide="concept"] .define-box {
+    padding: 8px 14px;
+    font-size: 15px;
+  }
+  [data-slide="concept"] .terms {
+    padding: 0;
+  }
+  [data-slide="concept"] .terms span {
+    padding: 5px 15px;
+    font-size: 17px;
+  }
+  [data-slide="concept"] #slide-content,
+  [data-slide="generalization"] #slide-content {
+    gap: 9px;
+  }
+  [data-slide="concept"] .answer-field,
+  [data-slide="generalization"] .answer-field {
+    min-height: 130px;
+  }
+  .finish-todo {
+    max-height: 205px;
+  }
+}
+#slide-content > .self-check,
+#slide-content > .frame-box,
+#slide-content > .define-box,
+#slide-content > .hint-steps,
+#slide-content > .guide-short,
+#slide-content > .guide-steps {
+  flex: none;
+}
+.version-note {
+  color: #8b99a8;
+  font-size: 12px;
+}
+@media (width<=700px) {
+  .finish-todo li {
+    flex-wrap: wrap;
+  }
+  .finish-todo li b {
+    flex-basis: 100%;
+  }
+}

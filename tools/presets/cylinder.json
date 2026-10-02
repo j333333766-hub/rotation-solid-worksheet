@@ -1,0 +1,268 @@
+{
+ "scene": {
+  "orthographicCamera": {
+   "metadata": {
+    "version": 4.5,
+    "type": "Object",
+    "generator": "Object3D.toJSON"
+   },
+   "object": {
+    "uuid": "63B430F9-09E7-41EF-A3B9-4DC44A6A7A0E",
+    "type": "OrthographicCamera",
+    "layers": 1,
+    "matrix": [
+     1,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
+    ],
+    "zoom": 1,
+    "left": -16.850574712643677,
+    "right": 16.850574712643677,
+    "top": 8.999999999999998,
+    "bottom": -8.999999999999998,
+    "near": 0.1,
+    "far": 10000
+   }
+  },
+  "isOrthographicCamera": false,
+  "camera": {
+   "metadata": {
+    "version": 4.5,
+    "type": "Object",
+    "generator": "Object3D.toJSON"
+   },
+   "object": {
+    "uuid": "68465CBB-EE6B-490D-9C35-26588D530393",
+    "type": "PerspectiveCamera",
+    "layers": 1,
+    "matrix": [
+     0.8320502943378437,
+     0.5547001962252291,
+     2.7755575615628914e-17,
+     0,
+     -0.2690691175985249,
+     0.4036036763977875,
+     0.8744746321952063,
+     0,
+     0.48507125007266594,
+     -0.7276068751089989,
+     0.48507125007266594,
+     0,
+     10,
+     -15,
+     10,
+     1
+    ],
+    "fov": 45,
+    "zoom": 1,
+    "near": 0.1,
+    "far": 10000,
+    "focus": 10,
+    "aspect": 1.872286079182631,
+    "filmGauge": 35,
+    "filmOffset": 0
+   }
+  },
+  "gridSize": 14,
+  "coneState": "Basic",
+  "gridVisibleState": true,
+  "axisVisibleState": true,
+  "coneVisibleState": true,
+  "autoFoldPlanarState": true,
+  "autoFoldPlanarExist": false,
+  "originMarkVisibleState": true,
+  "EdgeVisibleState": false,
+  "gridBackgroundColor": "#FFE18D",
+  "gridLineColor": "#6B490E",
+  "objectDatas": [
+   {
+    "id": 258,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": -0.01443147097844899,
+     "y": 3.9795646309027513,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     270
+    ]
+   },
+   {
+    "id": 261,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 3.00299422133016,
+     "y": 3.948173267646479,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     270
+    ]
+   },
+   {
+    "id": 264,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 2.990311753373985,
+     "y": -4.014211697485662,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     270
+    ]
+   },
+   {
+    "id": 267,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 0.012702985548006085,
+     "y": -4.022763537831223,
+     "z": -3.552713678800501e-15
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     270
+    ]
+   },
+   {
+    "id": 270,
+    "typeName": "POLYGON",
+    "name": "polygon",
+    "is2DObject": true,
+    "color": 13747190,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "standardPolygonId": -1,
+    "planarFigureChildPolygons": null,
+    "geometryVertices": null,
+    "geometryFaces": null,
+    "foldDirectionNormal": null,
+    "foldAngle": 0,
+    "autoFolded": false,
+    "autoFoldAngle": 0,
+    "isPlanarFigureObjectSideRoot": false,
+    "elementType": "Polygon",
+    "pointIdArray": [
+     258,
+     261,
+     264,
+     267
+    ]
+   }
+  ]
+ },
+ "blockCoding": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"algeo_start\" id=\"algeo_start\" x=\"10\" y=\"15\"><field name=\"state\">0</field></block></xml>",
+ "deactiveTools": [
+  "쌓기나무",
+  "연결큐브",
+  "직육면체",
+  "각기둥",
+  "각뿔",
+  "각뿔대",
+  "원기둥",
+  "원뿔",
+  "구",
+  "정다면체",
+  "정다각형",
+  "전개도",
+  "접기",
+  "겉넓이 측정",
+  "부피 측정"
+ ]
+}

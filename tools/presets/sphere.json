@@ -1,0 +1,844 @@
+{
+ "scene": {
+  "orthographicCamera": {
+   "metadata": {
+    "version": 4.5,
+    "type": "Object",
+    "generator": "Object3D.toJSON"
+   },
+   "object": {
+    "uuid": "F569A587-BF83-4798-AEFA-EE026B32EC49",
+    "type": "OrthographicCamera",
+    "layers": 1,
+    "matrix": [
+     1,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
+    ],
+    "zoom": 1,
+    "left": -6.047493403693932,
+    "right": 6.047493403693932,
+    "top": 9,
+    "bottom": -9,
+    "near": 0.1,
+    "far": 10000
+   }
+  },
+  "isOrthographicCamera": false,
+  "camera": {
+   "metadata": {
+    "version": 4.5,
+    "type": "Object",
+    "generator": "Object3D.toJSON"
+   },
+   "object": {
+    "uuid": "C9AFFF26-5713-4548-9C0E-9D079B01A5E0",
+    "type": "PerspectiveCamera",
+    "layers": 1,
+    "matrix": [
+     0.8320502943378437,
+     0.5547001962252291,
+     2.7755575615628914e-17,
+     0,
+     -0.2690691175985249,
+     0.4036036763977875,
+     0.8744746321952063,
+     0,
+     0.48507125007266594,
+     -0.7276068751089989,
+     0.48507125007266594,
+     0,
+     10,
+     -15,
+     10,
+     1
+    ],
+    "fov": 45,
+    "zoom": 1,
+    "near": 0.1,
+    "far": 10000,
+    "focus": 10,
+    "aspect": 0.671943711521548,
+    "filmGauge": 35,
+    "filmOffset": 0
+   }
+  },
+  "gridSize": 14,
+  "coneState": "Basic",
+  "gridVisibleState": true,
+  "axisVisibleState": true,
+  "coneVisibleState": true,
+  "autoFoldPlanarState": true,
+  "autoFoldPlanarExist": false,
+  "originMarkVisibleState": true,
+  "EdgeVisibleState": false,
+  "gridBackgroundColor": "#FFE18D",
+  "gridLineColor": "#6B490E",
+  "objectDatas": [
+   {
+    "id": 258,
+    "typeName": "POLYGON",
+    "name": "polygon",
+    "is2DObject": true,
+    "color": 15406176,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "standardPolygonId": -1,
+    "planarFigureChildPolygons": null,
+    "geometryVertices": null,
+    "geometryFaces": null,
+    "foldDirectionNormal": null,
+    "foldAngle": 0,
+    "autoFolded": false,
+    "autoFoldAngle": 0,
+    "isPlanarFigureObjectSideRoot": false,
+    "elementType": "Polygon",
+    "pointIdArray": []
+   },
+   {
+    "id": 261,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 0.012032454760222855,
+     "y": -3.996928233316288,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     327
+    ]
+   },
+   {
+    "id": 264,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 0.5112464076199565,
+     "y": -3.933733909919939,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     327
+    ]
+   },
+   {
+    "id": 267,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 1.1257417539883081,
+     "y": -3.806735254461404,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     327
+    ]
+   },
+   {
+    "id": 270,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 1.5995032846756692,
+     "y": -3.653915817964573,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     327
+    ]
+   },
+   {
+    "id": 273,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 2.0734075057847523,
+     "y": -3.4115134939888323,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     327
+    ]
+   },
+   {
+    "id": 276,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 2.5090209886933925,
+     "y": -3.10505931182664,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     327
+    ]
+   },
+   {
+    "id": 279,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 2.9319985309223653,
+     "y": -2.6962057536631154,
+     "z": -3.552713678800501e-15
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     327
+    ]
+   },
+   {
+    "id": 282,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 3.3167464960023287,
+     "y": -2.184906187326884,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     327
+    ]
+   },
+   {
+    "id": 285,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 3.6119931082519328,
+     "y": -1.6222744247343999,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     327
+    ]
+   },
+   {
+    "id": 288,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 3.8689256714948814,
+     "y": -1.008389784476547,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     327
+    ]
+   },
+   {
+    "id": 291,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 3.985348639564579,
+     "y": -0.22790970843563818,
+     "z": 3.552713678800501e-15
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     327
+    ]
+   },
+   {
+    "id": 294,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 3.960957689489387,
+     "y": 0.5271980442924632,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     327
+    ]
+   },
+   {
+    "id": 297,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 3.808403283830647,
+     "y": 1.1673316326120906,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     327
+    ]
+   },
+   {
+    "id": 300,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 3.6044940838664408,
+     "y": 1.705163370375222,
+     "z": -3.552713678800501e-15
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     327
+    ]
+   },
+   {
+    "id": 303,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 3.2854679813907657,
+     "y": 2.2815719928649276,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     327
+    ]
+   },
+   {
+    "id": 306,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 3.004407939454229,
+     "y": 2.589166290654922,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     327
+    ]
+   },
+   {
+    "id": 309,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 2.5827960140405066,
+     "y": 3.037760925878699,
+     "z": -3.552713678800501e-15
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     327
+    ]
+   },
+   {
+    "id": 312,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 2.0714744436062107,
+     "y": 3.4097106843509883,
+     "z": -3.552713678800501e-15
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     327
+    ]
+   },
+   {
+    "id": 315,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 1.5983446358582547,
+     "y": 3.6536222026386738,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     327
+    ]
+   },
+   {
+    "id": 318,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 1.0483668346207768,
+     "y": 3.85926332958489,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     327
+    ]
+   },
+   {
+    "id": 321,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 0.48540801587499316,
+     "y": 3.9497445685895456,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     327
+    ]
+   },
+   {
+    "id": 324,
+    "typeName": "POINT",
+    "name": "point",
+    "is2DObject": true,
+    "color": 1012971,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": -0.026657904998863946,
+     "y": 3.9627438501238816,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "isSubObject": false,
+    "linkChildren": [
+     327
+    ]
+   },
+   {
+    "id": 327,
+    "typeName": "POLYGON",
+    "name": "polygon",
+    "is2DObject": true,
+    "color": 15203501,
+    "measurementType": null,
+    "visible": true,
+    "position": {
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    "rotation": {
+     "_x": 0,
+     "_y": 0,
+     "_z": 0,
+     "_order": "XYZ"
+    },
+    "scale": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "standardPolygonId": -1,
+    "planarFigureChildPolygons": null,
+    "geometryVertices": null,
+    "geometryFaces": null,
+    "foldDirectionNormal": null,
+    "foldAngle": 0,
+    "autoFolded": false,
+    "autoFoldAngle": 0,
+    "isPlanarFigureObjectSideRoot": false,
+    "elementType": "Polygon",
+    "pointIdArray": [
+     261,
+     264,
+     267,
+     270,
+     273,
+     276,
+     279,
+     282,
+     285,
+     288,
+     291,
+     294,
+     297,
+     300,
+     303,
+     306,
+     309,
+     312,
+     315,
+     318,
+     321,
+     324
+    ]
+   }
+  ]
+ },
+ "blockCoding": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"algeo_start\" id=\"algeo_start\" x=\"10\" y=\"15\"><field name=\"state\">0</field></block></xml>",
+ "deactiveTools": [
+  "쌓기나무",
+  "연결큐브",
+  "직육면체",
+  "각기둥",
+  "각뿔",
+  "각뿔대",
+  "원기둥",
+  "원뿔",
+  "구",
+  "정다면체",
+  "정다각형",
+  "전개도",
+  "접기",
+  "겉넓이 측정",
+  "부피 측정"
+ ]
+}
