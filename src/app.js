@@ -538,7 +538,7 @@ var e = {
       checks: !0,
       layout: `strip`,
       title: `STL 파일을 불러와 색칠하고 장식하세요.`,
-      tip: `① ‘크게보기’를 누른 뒤 그림판3D 시작 화면 가운데의 ‘파일 가져오기’ 버튼으로 앞에서 내보낸 STL 파일을 불러오세요. (작게 보기에서는 시작 화면을 아래로 내려야 이 버튼이 보여요.) ② 색 채우기·색 바꾸기·스티커로 꾸미세요. ③ 다 꾸몄으면 ‘저장 → 사진(PNG)’으로 저장하세요. 다음 화면에서 이 PNG 파일을 첨부해요. (휴대폰 AR로 보고 싶으면 GLB로도 저장해 두세요.)`,
+      tip: `① ‘크게보기’를 누른 뒤 그림판3D 시작 화면 가운데의 ‘파일 가져오기’ 버튼으로 앞에서 내보낸 STL 파일을 불러오세요. (작게 보기에서는 시작 화면을 아래로 내려야 이 버튼이 보여요.) ② 색 채우기·색 바꾸기·스티커로 꾸미세요. ③ 다 꾸몄으면 ‘저장 → 사진(PNG)’과 ‘저장 → GLB’로 두 번 저장하세요. 다음 화면에서 PNG는 첨부하고, GLB는 선생님 OneDrive 폴더에 제출해요.`,
     },
     {
       id: `my-explanation`,
@@ -548,6 +548,7 @@ var e = {
       fields: [`q11-description`],
       upload: !0,
       ar: !0,
+      glbSubmit: !0,
       complete: 11,
       title: `내가 만든 회전체는 어떻게 만들어졌나요?`,
     },
@@ -1724,6 +1725,26 @@ function ae(e) {
   }),
     e.append(t));
 }
+// ---- 작품 3D 파일(GLB) 제출: 교사의 OneDrive 폴더(공유 링크)를 새 창으로 연다 ----
+var GLB_SUBMIT_URL = `https://icego0265-my.sharepoint.com/:f:/g/personal/j333333_guwol_icems_kr/IgCAsA7TFOuLRZvoN6d1nG3WARgbr5CFjdEcsZ5Fd2RpXVg?e=xWhxB6`;
+function glbSubmitBox() {
+  let e = L(`div`, `glb-submit`),
+    t = L(`a`, `glb-submit-btn`, `📤 GLB 파일 제출하기`),
+    n = L(`div`);
+  ((t.href = GLB_SUBMIT_URL), (t.target = `_blank`), (t.rel = `noopener`));
+  return (
+    n.append(
+      L(`b`, ``, `작품 3D 파일(GLB) 제출 `),
+      L(
+        `span`,
+        ``,
+        `① 그림판3D에서 ‘저장 → GLB’로 저장(‘다운로드’ 폴더) ② 파일 이름을 ‘학번_이름.glb’로 바꾸기(예: 10101_홍길동.glb) ③ 오른쪽 버튼으로 열린 OneDrive 폴더에 끌어다 놓거나 ‘업로드 → 파일’ ※ 다른 친구의 파일은 열거나 지우지 않아요.`,
+      ),
+    ),
+    e.append(n, t),
+    e
+  );
+}
 // ---- 3D·AR로 보기: 그림판3D에서 GLB로 저장한 파일을 바로 띄운다(학습 기록에는 저장하지 않음) ----
 var arUrl = null;
 function arBox(e) {
@@ -1954,7 +1975,7 @@ function J() {
     }
     if (t.upload) {
       let e = L(`div`, `upload-layout`);
-      (t.fields.forEach((t) => e.append(G(t))), ae(e), s.append(e), t.ar && arBox(s));
+      (t.fields.forEach((t) => e.append(G(t))), ae(e), s.append(e), t.glbSubmit && s.append(glbSubmitBox()), t.ar && arBox(s));
     } else for (let e of t.fields || []) s.append(G(e));
     if (t.frame) {
       let e = L(`div`, `frame-box`),
