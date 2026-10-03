@@ -47,6 +47,16 @@ var e = {
     guide5: `__ASSET:guide-5-click.webp__`,
     guide6: `__ASSET:guide-5-done.webp__`,
     qrFolder: `__ASSET:qr-submit-folder.svg__`,
+    p8: `__ASSET:stage-p8.webp__`,
+    p9: `__ASSET:stage-p9.webp__`,
+    p12: `__ASSET:stage-p12.webp__`,
+    p20: `__ASSET:stage-p20.webp__`,
+    p24: `__ASSET:stage-p24.webp__`,
+    p25: `__ASSET:stage-p25.webp__`,
+    p30: `__ASSET:stage-p30.webp__`,
+    p33: `__ASSET:stage-p33.webp__`,
+    p37: `__ASSET:stage-p37.webp__`,
+    p40: `__ASSET:stage-p40.webp__`,
     qrFiles: `__ASSET:qr-files-by-google.svg__`,
   }),
   t = `m3-1-algeomath-solids`,
@@ -306,7 +316,7 @@ var e = {
     },
     {
       id: `E`,
-      desc: `나만의 회전체를 설계하고 알지오3D와 그림판3D로 만들어 꾸밉니다.`,
+      desc: `나만의 회전체를 설계하고 알지오3D와 그림판3D로 만들어 꾸민 뒤, 제출하고 스마트폰 증강현실(AR)로 봅니다.`,
       stage: 3,
       name: `나만의 회전체 만들기`,
       color: `#E56A90`,
@@ -1507,7 +1517,7 @@ function K(e, t) {
 function re(t, n, r) {
   let i = L(`button`, `tip-button`, `💡 TIP!`);
   (i.addEventListener(`click`, () => {
-    if (((k(`#tip-title`).textContent = `관찰 도움말`), k(`#tip-content`).replaceChildren(L(`p`, ``, t)), r)) {
+    if ((k(`#tip-dialog`).classList.remove(`wide`), (k(`#tip-title`).textContent = `관찰 도움말`), k(`#tip-content`).replaceChildren(L(`p`, ``, t)), r)) {
       let t = L(`img`);
       ((t.src = e[r]), (t.alt = `원고의 알지오3D 회전 도구 메뉴 예시`), k(`#tip-content`).append(t));
     }
@@ -1875,6 +1885,94 @@ function oe(e, t) {
   }
 }
 // 목차의 다리: 누르면 그 단계의 설명만 보여 준다(화면 이동은 다음 버튼·쪽 번호로).
+// 목차 다리에서 단계를 누르면 보이는 자세한 안내. 쪽 번호는 화면 id로 계산한다(화면이 늘거나 줄어도 맞게).
+var STAGE_GUIDE = {
+  B: {
+    tools: `알지오3D(회전하기 도구), 스케치 칸`,
+    steps: [
+      [[`goal`], `오늘의 학습 목표를 읽고 확인란에 표시해요.`],
+      [[`tool-intro`], `알지오3D에서 xy평면에 그려진 평면도형을 ‘회전하기’ 도구로 y축을 축으로 하여 1회전 시켜 입체도형을 만들어요. 왼쪽의 그림 5장이 조작 순서를 알려 줘요.`],
+      [[`first-sketch`], `평면도형을 한 직선을 축으로 하여 1회전 시킬 때 생기는 입체도형 중에서 만들고 싶은 것을 그려요. 이 그림은 마지막 E단계에서 알지오3D로 직접 만들어요.`],
+    ],
+    shots: [[`p8`, `알지오3D에서 평면도형을 1회전 시키기`], [`p9`, `만들고 싶은 입체도형 그리기`]],
+  },
+  R: {
+    tools: `알지오3D(회전하기, 한 방향에서 보기), 단면 관찰 보조 모형, 스스로 점검하기`,
+    steps: [
+      [[`rectangle`, `triangle`, `semicircle`], `직사각형·직각삼각형·반원을 한 변(지름)을 축으로 하여 1회전 시켜 어떤 입체도형이 되는지 관찰하고, 밑면·옆면의 모양을 적어요.`],
+      [[`horizontal-section`, `vertical-section`], `만든 입체도형을 회전축에 수직인 평면(‘앞쪽·뒤쪽’에서 보기)과 회전축을 포함하는 평면(‘위쪽·아래쪽’에서 보기)으로 자른 단면을 관찰해요. ‘단면 관찰’ 보조 모형으로 자르는 높이도 바꿔 봐요.`],
+      [[`verify-1`, `verify-2`, `verify-3`, `verify-4`, `verify-5`], `다섯 문장이 맞는지 ‘맞음·조건이 필요함·다름’ 중에서 판단하고, 관찰한 근거를 이유로 써요. ‘스스로 점검하기’로 힌트를 확인해요.`],
+    ],
+    shots: [[`p12`, `직사각형을 1회전 시켜 관찰하기`], [`p20`, `단면 관찰 보조 모형(속이 빈 원기둥)`]],
+  },
+  I: {
+    tools: `알지오3D(다각형, 회전하기, 한 방향에서 보기)`,
+    steps: [
+      [[`cup-sketch`], `종이컵을 만드는 평면도형을 추측해 알지오3D의 xy평면(제1사분면과 제4사분면)에 다각형 도구로 그려요.`],
+      [[`cup-compare`], `그린 평면도형을 y축을 축으로 하여 1회전 시켜 종이컵과 비교하고, 다르면 고쳐 다시 그려요.`],
+      [[`cup-section`], `만든 입체도형을 ‘위쪽·아래쪽’에서 보며 회전축을 포함하는 단면과 처음 그린 평면도형을 비교해요.`],
+      [[`cup-refine`], `단면을 이용해 평면도형을 더 정확히 추측하는 방법을 정리해요.`],
+    ],
+    shots: [[`p24`, `xy평면에 컵의 평면도형 그리기`], [`p25`, `1회전 시켜 컵과 비교하기`]],
+  },
+  D: {
+    tools: `정의 상자, 문장 틀, 스스로 점검하기`,
+    steps: [
+      [[`concept`], `회전체와 회전축의 정의를 읽고, 회전체·회전축·모선·밑면·단면 다섯 용어를 사용해 지금까지의 활동을 정리해요. 막히면 ‘문장 틀 넣기’로 빈칸을 채워요.`],
+    ],
+    shots: [[`p30`, `다섯 용어로 개념 정리하기`]],
+  },
+  G: {
+    tools: `단계별 힌트 3개, 스스로 점검하기`,
+    steps: [
+      [[`generalization`], `회전축에 수직인 평면으로 자른 단면은 항상 어떤 모양인지, 그 크기는 무엇으로 정해지는지, 속이 빈 경우는 어떤지 조건과 함께 규칙으로 써요. 힌트를 차례로 열어 볼 수 있어요.`],
+    ],
+    shots: [[`p33`, `단면의 규칙 일반화하기`]],
+  },
+  E: {
+    tools: `스케치 칸, 알지오3D(STL 출력), 그림판3D(USDZ·GLB 저장), OneDrive 제출 폴더, 스마트폰 AR`,
+    steps: [
+      [[`my-design`], `9쪽에 그린 입체도형을 만들려면 어떤 평면도형을 어느 직선을 축으로 하여 1회전 시켜야 할지 설계도를 그려요.`],
+      [[`my-model`], `알지오3D로 회전체를 만들고 메뉴(≡) → ‘STL 출력’으로 내보내요.`],
+      [[`my-paint`], `그림판3D에서 STL을 불러와 색칠·장식하고, 아이폰은 USDZ, 안드로이드는 GLB로 저장해요.`],
+      [[`my-explanation`], `내 회전체가 어떻게 만들어졌는지 설명하고, 파일 이름을 ‘학번+이름’으로 바꿔 OneDrive 제출 폴더에 올려요.`],
+      [[`my-ar`], `스마트폰으로 제출 폴더 QR 코드를 찍어 내 파일을 내려받고 증강현실(AR)로 봐요.`],
+      [[`reflection`], `공학 도구를 사용하며 느낀 점을 적어요.`],
+    ],
+    shots: [[`p37`, `알지오3D로 나만의 회전체 만들기`], [`p40`, `스마트폰 AR로 보기`]],
+  },
+};
+function pagesOf(e) {
+  let t = e.map((e) => pageNo(d.find((t) => t.id === e))).sort((e, t) => e - t);
+  return t.length > 1 ? `${t[0]}~${t.at(-1)}쪽` : `${t[0]}쪽`;
+}
+function stageDialog(e) {
+  let t = STAGE_GUIDE[e.id],
+    n = d.filter((t) => t.chapter === e.id).map(pageNo),
+    r = k(`#tip-content`);
+  ((k(`#tip-title`).textContent = `${e.id}. ${e.name}`), r.replaceChildren());
+  r.append(
+    L(`p`, `stage-range`, `${[``, `살펴보기`, `다가가기`, `넘어서기`][e.stage]} 단계 · ${Math.min(...n)}~${Math.max(...n)}쪽`),
+    L(`p`, `stage-question`, `탐구 질문 · ${e.question}`),
+    L(`p`, `stage-desc`, e.desc),
+  );
+  if (t) {
+    let e = L(`ol`, `stage-steps`);
+    for (let [ids, txt] of t.steps) {
+      let li = L(`li`);
+      (li.append(L(`b`, ``, pagesOf(ids)), L(`span`, ``, txt)), e.append(li));
+    }
+    r.append(L(`h3`, `stage-h`, `이 단계에서 하는 일`), e, L(`p`, `stage-tools`, `🧰 사용하는 도구 · ${t.tools}`));
+    let n = L(`div`, `stage-shots`);
+    for (let [key, cap] of t.shots) {
+      let f = L(`figure`),
+        a = L(`img`);
+      ((a.src = window.ASSET_IMG[key]), (a.alt = cap), f.append(a, L(`figcaption`, ``, cap)), n.append(f));
+    }
+    r.append(n);
+  }
+  (k(`#tip-dialog`).classList.add(`wide`), k(`#tip-dialog`).showModal());
+}
 function se(e) {
   let t = L(`div`, `bridge-map`);
   t.innerHTML = `<svg viewBox="0 0 1100 340" preserveAspectRatio="none" aria-hidden="true"><path d="M0 122H1100M0 130H1100" fill="none" stroke="#82b8df" stroke-width="7"/><path d="M0 327Q92 159 183 327M183 327Q275 159 366 327M366 327Q458 159 550 327M550 327Q642 159 733 327M733 327Q825 159 916 327M916 327Q1008 159 1100 327" fill="none" stroke="#c3e0f3" stroke-width="18"/><path d="M183 129V325M366 129V325M550 129V325M733 129V325M916 129V325" stroke="#abd0ea" stroke-width="12"/></svg>`;
@@ -1884,15 +1982,7 @@ function se(e) {
     (n.style.setProperty(`--chapter`, e.color),
       (n.dataset.chapter = e.id),
       n.append(L(`span`, `init`, e.id), L(`span`, `nm`, e.name), L(`small`, ``, `${e.stage}단계 · 설명 보기`)),
-      n.addEventListener(`click`, () => {
-        ((k(`#tip-title`).textContent = `${e.id}. ${e.name}`),
-          k(`#tip-content`).replaceChildren(
-            L(`p`, `stage-desc`, e.desc),
-            L(`p`, `stage-question`, `탐구 질문 · ${e.question}`),
-            L(`p`, `stage-range`, `${[``, `살펴보기`, `다가가기`, `넘어서기`][e.stage]} 단계 · ${Math.min(...r)}~${Math.max(...r)}쪽`),
-          ),
-          k(`#tip-dialog`).showModal());
-      }),
+      n.addEventListener(`click`, () => stageDialog(e)),
       t.append(n));
   }
   e.append(t);
@@ -2167,6 +2257,7 @@ function Q() {
   }),
   k(`#help-btn`).addEventListener(`click`, () => k(`#help-dialog`).showModal()),
   A(`[data-close]`).forEach((e) => e.addEventListener(`click`, () => e.closest(`dialog`).close())),
+  k(`#tip-dialog`).addEventListener(`close`, () => k(`#tip-dialog`).classList.remove(`wide`)),
   k(`#home-btn`).addEventListener(`click`, () => Y(`cover`)),
   k(`#toc-btn`).addEventListener(`click`, () => Y(`bridge`)),
   d.forEach((e, t) => {

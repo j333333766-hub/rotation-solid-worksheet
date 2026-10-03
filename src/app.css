@@ -2328,3 +2328,57 @@ textarea[readonly] {
     font-size: 15px;
   }
 }
+#tip-dialog.wide {
+  max-width: 920px;
+}
+.stage-h {
+  margin: 14px 0 6px;
+  font-size: 17px;
+}
+.stage-steps {
+  margin: 0;
+  padding-left: 22px;
+  line-height: 1.6;
+}
+.stage-steps li {
+  margin-bottom: 6px;
+}
+.stage-steps li b {
+  color: #fff;
+  background: #1f89ed;
+  border-radius: 6px;
+  margin-right: 8px;
+  padding: 1px 7px;
+  font-size: 13px;
+}
+.stage-tools {
+  color: #3a5a78;
+  background: #f1f6fb;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 14px;
+}
+.stage-shots {
+  gap: 12px;
+  display: flex;
+}
+.stage-shots figure {
+  flex: 1;
+  margin: 0;
+}
+.stage-shots img {
+  border: 1px solid #d3e0ec;
+  border-radius: 10px;
+  width: 100%;
+}
+.stage-shots figcaption {
+  color: #5d7388;
+  text-align: center;
+  margin-top: 4px;
+  font-size: 13px;
+}
+@media (width<=700px) {
+  .stage-shots {
+    flex-direction: column;
+  }
+}
