@@ -108,10 +108,11 @@ var e = {
       stage: 1,
       page: 2,
       title: `만들고 싶은 모양 그리기`,
-      original: `평면도형을 한 직선을 축으로 하여 1회전 시킬 때 생기는 입체도형 중에서 오늘 만들어 보고 싶은 것을 그리시오.`,
+      original: `평면도형을 한 직선을 축으로 하여 1회전 시킬 때 생기는 입체도형 중에서 오늘 나만의 작품으로 만들어 보고 싶은 것을 그리시오.`,
       drawing: `q4-drawing`,
-      drawingLabel: `만들고 싶은 입체도형 스케치`,
-      fields: [r(`q4-plan`, `그림 설명 · 글로 대신 표현해도 좋아요`, `어떤 모양을 만들고 싶은가요?`)],
+      drawingLabel: `나만의 작품 설계 스케치 · 가운데 점선을 축으로 생각하고 그려요`,
+      axisGuide: !0,
+      fields: [r(`q4-plan`, `무엇을 닮은 작품인가요?`, `예) 꽃병 모양 — 아래는 둥글고 위는 좁아요. 그림 대신 글로 설명해도 좋아요.`)],
       either: !0,
     },
     {
@@ -367,8 +368,8 @@ var e = {
       q: 4,
       fields: [`q4-plan`],
       complete: 4,
-      title: `평면도형을 한 직선을 축으로 하여 1회전 시킬 때 생기는 입체도형을 그려 보세요.`,
-      note: `여기에서 그린 입체도형은 마지막 활동(E. 나만의 회전체 만들기)에서 알지오매스로 직접 만들고, 그림판3D로 색칠하여 꾸며 봅니다.`,
+      title: `오늘 나만의 작품으로 만들 입체도형을 설계해 보세요.`,
+      plan: !0,
     },
     ...u(`R`),
     {
@@ -720,7 +721,7 @@ function x(e) {
     return !1;
   }
 }
-function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage: a, locked: lk = !1 }) {
+function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage: a, locked: lk = !1, axis: ax = !1 }) {
   let o = document.createElement(`div`);
   ((o.className = `sketch`),
     (o.innerHTML = `<div class="sketch-tools"><span class="sketch-label"></span><div class="pen-colors" role="group" aria-label="펜 색상"><button type="button" data-color="#176d64" class="pen active" aria-label="초록색 펜" aria-pressed="true"></button><button type="button" data-color="#e77738" class="pen" aria-label="주황색 펜" aria-pressed="false"></button><button type="button" data-color="#334155" class="pen" aria-label="검정색 펜" aria-pressed="false"></button></div><button type="button" class="quiet undo">되돌리기</button><button type="button" class="quiet clear">지우기</button></div><canvas width="600" height="340"></canvas><p class="micro">마우스·펜·손가락으로 그리세요. 그리기 어려우면 작성란에 글로 설명할 수 있어요.</p>`),
@@ -756,6 +757,18 @@ function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage:
         c.fillText(`제1사분면`, 500, 40),
         c.fillText(`제4사분면`, 500, 318));
     }
+    ax &&
+      ((c.strokeStyle = `#d98a4a`),
+      (c.lineWidth = 1.5),
+      c.setLineDash([7, 6]),
+      c.beginPath(),
+      c.moveTo(300, 10),
+      c.lineTo(300, 330),
+      c.stroke(),
+      c.setLineDash([]),
+      (c.fillStyle = `#c97a3a`),
+      (c.font = `13px sans-serif`),
+      c.fillText(`축`, 308, 24));
     for (let e of d)
       e.points.length &&
         (c.beginPath(),
@@ -1539,7 +1552,7 @@ function recallDialog(q) {
     n = d.find((e) => e.q === q),
     r = M.drawings[t.drawing] || [],
     a = (M.answers[t.fields?.[0]?.id] || ``).trim();
-  ((k(`#tip-title`).textContent = `${pageNo(n)}쪽에 그린 나의 입체도형`), k(`#tip-content`).replaceChildren());
+  ((k(`#tip-title`).textContent = `${pageNo(n)}쪽에 그린 나만의 작품 설계도`), k(`#tip-content`).replaceChildren());
   if (r.some((e) => e.points.length > 1)) {
     let e = L(`canvas`, `recall-canvas`);
     ((e.width = 600), (e.height = 340), e.setAttribute(`role`, `img`), e.setAttribute(`aria-label`, `${pageNo(n)}쪽에 그린 그림`));
@@ -1568,6 +1581,28 @@ function hintBox(t, s) {
   if (!t.hint && !t.viewHint) return;
   let e = L(`div`, `view-hint`);
   (t.hint && e.append(L(`p`, ``, `📌 ${t.hint}`)), t.viewHint && e.append(L(`p`, ``, `👁 ${t.viewHint}`)), s.append(e));
+}
+// 9쪽: 이 그림이 오늘의 마지막 작품 설계도라는 것과 앞으로의 과정을 보여 준다.
+function planBox() {
+  let e = L(`div`, `plan-box`),
+    t = L(`div`, `plan-flow`),
+    n = (e) => pageNo(d.find((t) => t.id === e));
+  for (let [e, r, a] of [
+    [`✏️`, `지금 설계`, n(`first-sketch`)],
+    [`🧊`, `알지오3D`, n(`my-model`)],
+    [`🎨`, `색칠·꾸미기`, n(`my-paint`)],
+    [`📱`, `AR로 보기`, n(`my-ar`)],
+  ]) {
+    let n = L(`span`, `plan-step`);
+    (n.append(L(`i`, ``, e), L(`b`, ``, r), L(`small`, ``, `${a}쪽`)), t.append(n));
+  }
+  let r = L(`ul`);
+  for (let e of [
+    `원기둥·원뿔·구 같은 기본 도형이 아니라, 갖고 싶은 나만의 작품을 자유롭게 그려요. (예: 꽃병, 팽이, 아이스크림 콘, 체스 말)`,
+    `조건: 가운데 점선(축)의 왼쪽과 오른쪽이 똑같고 위에서 보면 둥근 모양(그래야 평면도형을 1회전 시켜 만들 수 있어요). 잘 그리지 않아도 괜찮아요.`,
+  ])
+    r.append(L(`li`, ``, e));
+  return (e.append(L(`b`, `plan-h`, `이 그림은 오늘의 마지막 작품 설계도예요`), t, r), e);
 }
 function recallButton(q) {
   let e = L(`button`, `recall-btn`, `🖍 ${pageNo(d.find((e) => e.q === q))}쪽에 그린 내 그림 보기`);
@@ -1702,6 +1737,7 @@ function ie(e, t) {
   S(t, {
     strokes: M.drawings[e.drawing] || [],
     grid: e.grid,
+    axis: e.axisGuide,
     label: e.drawingLabel,
     onMessage: B,
     locked: lockedQ(e.id),
@@ -1892,9 +1928,9 @@ var STAGE_GUIDE = {
     steps: [
       [[`goal`], `오늘의 학습 목표를 읽고 확인란에 표시해요.`],
       [[`tool-intro`], `알지오3D에서 xy평면에 그려진 평면도형을 ‘회전하기’ 도구로 y축을 축으로 하여 1회전 시켜 입체도형을 만들어요. 왼쪽의 그림 5장이 조작 순서를 알려 줘요.`],
-      [[`first-sketch`], `평면도형을 한 직선을 축으로 하여 1회전 시킬 때 생기는 입체도형 중에서 만들고 싶은 것을 그려요. 이 그림은 마지막 E단계에서 알지오3D로 직접 만들어요.`],
+      [[`first-sketch`], `오늘 나만의 작품으로 만들 입체도형(예: 꽃병, 팽이, 아이스크림 콘)을 가운데 축을 기준으로 좌우가 같게 설계해요. 이 설계도는 E단계에서 알지오3D로 만들고, 색칠하고, 스마트폰 AR로 봐요.`],
     ],
-    shots: [[`p8`, `알지오3D에서 평면도형을 1회전 시키기`], [`p9`, `만들고 싶은 입체도형 그리기`]],
+    shots: [[`p8`, `알지오3D에서 평면도형을 1회전 시키기`], [`p9`, `나만의 작품 설계도 그리기`]],
   },
   R: {
     tools: `알지오3D(회전하기, 한 방향에서 보기), 단면 관찰 보조 모형, 스스로 점검하기`,
@@ -2075,6 +2111,7 @@ function J() {
     (ie(r, n),
       t.figure && q(t.figure, i),
       t.note && i.append(L(`p`, `note-box drawing-note`, t.note)),
+      t.plan && i.append(planBox()),
       t.recall && i.append(recallButton(t.recall)),
       t.fields.forEach((e) => i.append(G(e))),
       e.append(n, i),

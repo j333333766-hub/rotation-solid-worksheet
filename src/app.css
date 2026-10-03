@@ -2382,3 +2382,74 @@ textarea[readonly] {
     flex-direction: column;
   }
 }
+.plan-box {
+  color: #234a66;
+  background: #f3f9ff;
+  border: 1.5px solid #c8def2;
+  border-radius: 12px;
+  flex: none;
+  padding: 8px 12px;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+.plan-h {
+  color: #0d6a4e;
+  margin-bottom: 4px;
+  font-size: 15px;
+  display: block;
+}
+.plan-flow {
+  align-items: stretch;
+  gap: 4px;
+  margin-bottom: 6px;
+  display: flex;
+}
+.plan-step {
+  text-align: center;
+  background: #fff;
+  border: 1px solid #d3e3f1;
+  border-radius: 9px;
+  flex: 1;
+  padding: 4px 2px;
+  font-size: 12px;
+  line-height: 1.3;
+  position: relative;
+}
+.plan-step:first-child {
+  background: #e6f6ee;
+  border-color: #9fd3b8;
+}
+.plan-step i {
+  font-style: normal;
+  font-size: 15px;
+  display: block;
+}
+.plan-step b {
+  display: block;
+}
+.plan-step small {
+  color: #7a8b9b;
+}
+.plan-box ul {
+  margin: 0;
+  padding-left: 18px;
+}
+.plan-box li {
+  margin-bottom: 3px;
+}
+[data-slide="first-sketch"] .drawing-side {
+  min-height: 0;
+  overflow-y: auto;
+}
+[data-slide="first-sketch"] .drawing-side {
+  gap: 10px;
+}
+[data-slide="first-sketch"] .drawing-side .answer-field label {
+  margin-bottom: 4px;
+  font-size: 16px;
+}
+[data-slide="first-sketch"] .drawing-side .answer-field textarea {
+  min-height: 70px;
+  padding: 10px 14px;
+  font-size: 17px;
+}
