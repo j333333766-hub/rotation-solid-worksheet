@@ -719,7 +719,18 @@ function y(e) {
       Object.keys(t.answers).length || t.completed.length || t.currentQuestion !== 1 ? p(t.currentQuestion) : `cover`;
   return ((t.savedAt = typeof e.savedAt == `string` ? e.savedAt.slice(0, 40) : null), t);
 }
+// 기록 초기화 차수: 이 값을 바꿔 배포하면 모든 브라우저에 남아 있던 이 활동지의 기록(답·그림·완료·학번+이름)이
+// 다음 접속 때 한 번 지워진다. (수업 전 시험 입력을 지우려고 2026-10-03에 1로 시작)
+var RESET_EPOCH = `2026-10-03-1`;
+function resetOldRecords() {
+  try {
+    let e = `workbook:${t}:epoch`;
+    localStorage.getItem(e) !== RESET_EPOCH &&
+      (localStorage.removeItem(m), localStorage.removeItem(`workbook:${t}:who`), localStorage.setItem(e, RESET_EPOCH));
+  } catch {}
+}
 function b() {
+  resetOldRecords();
   try {
     let e = localStorage.getItem(m);
     return e ? { state: y(JSON.parse(e)), restored: !0 } : { state: h() };
