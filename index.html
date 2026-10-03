@@ -1187,7 +1187,8 @@ function polyCall(f, type, payload) {
       };
     ((tm = setTimeout(() => done(void 0), 2500)), addEventListener(`message`, h));
     try {
-      w.postMessage({ id, type, payload, origin: location.origin === `null` ? `*` : location.origin }, `*`);
+      // 파일로 열면(file://) 응답을 받을 주소가 없으므로 `*`로 받는다.
+      w.postMessage({ id, type, payload, origin: /^https?:/.test(location.origin) ? location.origin : `*` }, `*`);
     } catch {
       done(void 0);
     }
