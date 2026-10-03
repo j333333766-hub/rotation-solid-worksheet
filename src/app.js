@@ -46,6 +46,8 @@ var e = {
     guide4: `__ASSET:guide-4-axis.webp__`,
     guide5: `__ASSET:guide-5-click.webp__`,
     guide6: `__ASSET:guide-5-done.webp__`,
+    qrFolder: `__ASSET:qr-submit-folder.svg__`,
+    qrFiles: `__ASSET:qr-files-by-google.svg__`,
   }),
   t = `m3-1-algeomath-solids`,
   n = `1.0.0`,
@@ -538,7 +540,7 @@ var e = {
       checks: !0,
       layout: `strip`,
       title: `STL 파일을 불러와 색칠하고 장식하세요.`,
-      tip: `① ‘크게보기’를 누른 뒤 그림판3D 시작 화면 가운데의 ‘파일 가져오기’ 버튼으로 앞에서 내보낸 STL 파일을 불러오세요. (작게 보기에서는 시작 화면을 아래로 내려야 이 버튼이 보여요.) ② 색 채우기·색 바꾸기·스티커로 꾸미세요. ③ 다 꾸몄으면 ‘저장 → 사진(PNG)’과 ‘저장 → GLB’로 두 번 저장하세요. 다음 화면에서 PNG는 첨부하고, GLB는 선생님 OneDrive 폴더에 제출해요.`,
+      tip: `① ‘크게보기’를 누른 뒤 그림판3D 시작 화면 가운데의 ‘파일 가져오기’ 버튼으로 앞에서 내보낸 STL 파일을 불러오세요. (작게 보기에서는 시작 화면을 아래로 내려야 이 버튼이 보여요.) ② 색 채우기·색 바꾸기·스티커로 꾸미세요. ③ 다 꾸몄으면 ‘저장 → GLB’와 ‘저장 → USDZ’(아이폰 AR용)로 두 번 저장하세요. 다음 화면에서 두 파일을 선생님 OneDrive 폴더에 제출하고, 그다음 화면에서 스마트폰 AR로 봐요.`,
     },
     {
       id: `my-explanation`,
@@ -546,11 +548,15 @@ var e = {
       chapter: `E`,
       q: 11,
       fields: [`q11-description`],
-      upload: !0,
-      ar: !0,
       glbSubmit: !0,
       complete: 11,
       title: `내가 만든 회전체는 어떻게 만들어졌나요?`,
+    },
+    {
+      id: `my-ar`,
+      type: `ar`,
+      chapter: `E`,
+      title: `내가 만든 회전체를 스마트폰 증강현실(AR)로 보세요.`,
     },
     {
       id: `reflection`,
@@ -1729,79 +1735,69 @@ function ae(e) {
 var GLB_SUBMIT_URL = `https://icego0265-my.sharepoint.com/:f:/g/personal/j333333_guwol_icems_kr/IgCAsA7TFOuLRZvoN6d1nG3WARgbr5CFjdEcsZ5Fd2RpXVg?e=xWhxB6`;
 function glbSubmitBox() {
   let e = L(`div`, `glb-submit`),
-    t = L(`a`, `glb-submit-btn`, `📤 GLB 파일 제출하기`),
+    t = L(`a`, `glb-submit-btn`, `📤 3D 파일 제출하기`),
     n = L(`div`);
   ((t.href = GLB_SUBMIT_URL), (t.target = `_blank`), (t.rel = `noopener`));
   return (
     n.append(
-      L(`b`, ``, `작품 3D 파일(GLB) 제출 `),
+      L(`b`, ``, `작품 3D 파일 제출 `),
       L(
         `span`,
         ``,
-        `① 그림판3D에서 ‘저장 → GLB’로 저장(‘다운로드’ 폴더) ② 파일 이름을 ‘학번_이름.glb’로 바꾸기(예: 10101_홍길동.glb) ③ 오른쪽 버튼으로 열린 OneDrive 폴더에 끌어다 놓거나 ‘업로드 → 파일’ ※ 다른 친구의 파일은 열거나 지우지 않아요.`,
+        `① 그림판3D에서 ‘저장 → GLB’와 ‘저장 → USDZ’로 저장(‘다운로드’ 폴더) ② 파일 이름을 ‘학번_이름’으로 바꾸기(예: 10101_홍길동.glb, 10101_홍길동.usdz) ③ 오른쪽 버튼으로 열린 OneDrive 폴더에 두 파일을 끌어다 놓거나 ‘업로드 → 파일’ ※ 다른 친구의 파일은 열거나 지우지 않아요.`,
       ),
     ),
     e.append(n, t),
     e
   );
 }
-// ---- 3D·AR로 보기: 그림판3D에서 GLB로 저장한 파일을 바로 띄운다(학습 기록에는 저장하지 않음) ----
-var arUrl = null;
-function arBox(e) {
-  let t = L(`details`, `ar-area`),
-    n = L(`input`),
-    r = L(`div`, `ar-view`);
-  ((n.type = `file`), (n.accept = `.glb,model/gltf-binary`), (n.id = `ar-file`));
-  let i = L(`label`, ``, `GLB 파일 고르기`);
-  ((i.htmlFor = n.id),
-    t.append(
-      L(`summary`, ``, `📱 내 회전체를 3D·AR로 보기 (선택)`),
-      L(
-        `p`,
-        ``,
-        `그림판3D에서 ‘저장 → GLB’로 저장한 파일을 고르면 여기서 돌려 볼 수 있어요. 휴대폰·태블릿에서 이 활동지를 열고 고르면 ‘AR로 보기’ 버튼으로 내 책상 위에 띄울 수 있어요. 이 파일은 학습 기록에 저장되지 않아요.`,
-      ),
-      i,
-      n,
-      r,
-    ),
-    n.addEventListener(`change`, async () => {
-      let e = n.files[0];
-      if (!e) return;
-      if (!/\.glb$/i.test(e.name) || e.size > 31457280) return B(`30MB 이하의 GLB 파일을 골라 주세요.`);
-      r.textContent = `3D 보기 도구를 불러오는 중…`;
-      try {
-        (customElements.get(`model-viewer`) ||
-          (await new Promise((e, t) => {
-            let n = document.createElement(`script`);
-            ((n.type = `module`),
-              (n.src = `https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer.min.js`),
-              (n.onload = e),
-              (n.onerror = t),
-              document.head.append(n));
-          }),
-          await customElements.whenDefined(`model-viewer`)),
-          arUrl && URL.revokeObjectURL(arUrl),
-          (arUrl = URL.createObjectURL(e)));
-        let t = document.createElement(`model-viewer`);
-        for (let [e, n] of [
-          [`src`, arUrl],
-          [`alt`, `내가 만든 회전체`],
-          [`ar`, ``],
-          [`ar-modes`, `webxr quick-look`],
-          [`camera-controls`, ``],
-          [`auto-rotate`, ``],
-          [`shadow-intensity`, `1`],
-        ])
-          t.setAttribute(e, n);
-        r.replaceChildren(t);
-      } catch {
-        r.textContent = `3D 보기 도구를 불러오지 못했어요. 인터넷 연결을 확인해 주세요.`;
-      } finally {
-        n.value = ``;
+// ---- 스마트폰 AR 안내: 제출 폴더를 휴대폰으로 열어 아이폰은 USDZ, 안드로이드는 GLB를 연다 ----
+function arGuide() {
+  let e = L(`div`, `ar-guide`),
+    t = (t, n, r, a) => {
+      let i = L(`section`, `ar-col`),
+        o = L(`ol`);
+      (n.forEach((e) => o.append(L(`li`, ``, e))), i.append(L(`h3`, ``, t), o));
+      let s = L(`div`, `ar-qrs`);
+      for (let [e, t, n] of r) {
+        let r = L(`figure`),
+          i = L(`img`);
+        ((i.src = e), (i.alt = `${t} QR 코드`), r.append(i, L(`figcaption`, ``, t)), n && r.append(L(`small`, ``, n)), s.append(r));
       }
-    }),
-    e.append(t));
+      return (i.append(s), a && i.append(L(`p`, `ar-note`, a)), i);
+    };
+  return (
+    e.append(
+      L(`p`, `ar-lead`, `39쪽에서 OneDrive 폴더에 올린 내 작품 파일을 스마트폰으로 열면, 내 책상이나 바닥 위에 회전체를 띄워 볼 수 있어요. 스마트폰 카메라로 QR 코드를 찍어 시작하세요.`),
+      L(`div`, `ar-cols`),
+    ),
+    e.lastChild.append(
+      t(
+        `🍎 아이폰·아이패드`,
+        [
+          `카메라로 ‘제출 폴더’ QR 코드를 찍어 OneDrive 폴더를 열어요.`,
+          `내 파일 ‘학번_이름.usdz’를 눌러 열어요. (‘다운로드’를 묻으면 다운로드한 뒤 파일을 눌러요.)`,
+          `3D 모델이 보이면 위쪽의 ‘AR’을 누르고, 휴대폰을 천천히 움직여 바닥을 비춰요.`,
+        ],
+        [[window.ASSET_IMG.qrFolder, `제출 폴더`]],
+        `USDZ 파일은 아이폰에서 별도 앱 없이 바로 AR로 열려요.`,
+      ),
+      t(
+        `🤖 안드로이드`,
+        [
+          `‘Files by Google’ 앱이 없으면 먼저 설치해요. (QR 코드 또는 han.gl/구글파일)`,
+          `카메라로 ‘제출 폴더’ QR 코드를 찍어 OneDrive 폴더를 열고, 내 파일 ‘학번_이름.glb’를 다운로드해요.`,
+          `‘Files by Google’ 앱 → ‘다운로드’에서 내 .glb 파일을 눌러요. Google 앱으로 3D 모델이 열리면 ‘내 공간에서 보기’(AR)를 눌러요.`,
+        ],
+        [
+          [window.ASSET_IMG.qrFolder, `제출 폴더`],
+          [window.ASSET_IMG.qrFiles, `Files by Google 설치`, `han.gl/구글파일`],
+        ],
+        `다운로드 알림이나 다른 파일 앱에서 .glb를 누르면 Google 앱으로 연결되지 않는 경우가 많아요. 꼭 ‘Files by Google’ 앱에서 여세요.`,
+      ),
+    ),
+    e
+  );
 }
 function oe(e, t) {
   let n = k(`#slide-decoration`);
@@ -1892,6 +1888,7 @@ function J() {
   )
     oe(t, n);
   else if (t.type === `toc`) se(s);
+  else if (t.type === `ar`) s.append(arGuide());
   else if (t.type === `finish`) {
     let e = L(`div`, `finish-content`);
     e.append(
@@ -1975,8 +1972,9 @@ function J() {
     }
     if (t.upload) {
       let e = L(`div`, `upload-layout`);
-      (t.fields.forEach((t) => e.append(G(t))), ae(e), s.append(e), t.glbSubmit && s.append(glbSubmitBox()), t.ar && arBox(s));
+      (t.fields.forEach((t) => e.append(G(t))), ae(e), s.append(e));
     } else for (let e of t.fields || []) s.append(G(e));
+    t.glbSubmit && s.append(glbSubmitBox());
     if (t.frame) {
       let e = L(`div`, `frame-box`),
         n = L(`button`, ``, `문장 틀 넣기`);

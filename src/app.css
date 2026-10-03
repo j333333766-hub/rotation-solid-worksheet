@@ -2115,3 +2115,76 @@ textarea[readonly] {
 .glb-submit-btn:hover {
   background: #0b5aa0;
 }
+.ar-guide {
+  flex-direction: column;
+  gap: 12px;
+  display: flex;
+}
+.ar-lead {
+  color: #0e4171;
+  background: #e8f4ff;
+  border-radius: 12px;
+  margin: 0;
+  padding: 10px 16px;
+  font-size: 17px;
+  line-height: 1.55;
+}
+.ar-cols {
+  gap: 16px;
+  display: flex;
+}
+.ar-col {
+  background: #fff;
+  border: 1.5px solid #d3e1ee;
+  border-radius: 14px;
+  flex: 1;
+  padding: 10px 16px;
+}
+.ar-col h3 {
+  margin: 0 0 4px;
+  font-size: 19px;
+}
+.ar-col ol {
+  margin: 0 0 8px;
+  padding-left: 20px;
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+.ar-qrs {
+  justify-content: center;
+  gap: 18px;
+  display: flex;
+}
+.ar-qrs figure {
+  text-align: center;
+  margin: 0;
+}
+.ar-qrs img {
+  border: 1px solid #e1e8ef;
+  border-radius: 8px;
+  width: 128px;
+  height: 128px;
+}
+.ar-qrs figcaption {
+  font-size: 13px;
+  font-weight: 700;
+}
+.ar-qrs small {
+  color: #7a8b9b;
+  font-size: 12px;
+  display: block;
+}
+.ar-note {
+  color: #8a5a12;
+  background: #fff8ec;
+  border-radius: 8px;
+  margin: 8px 0 0;
+  padding: 6px 10px;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+@media (width<=700px) {
+  .ar-cols {
+    flex-direction: column;
+  }
+}
