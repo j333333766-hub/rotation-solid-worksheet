@@ -1158,18 +1158,20 @@ var PRESET = {
 };
 // 알지오3D 도구 앱 postMessage API: {id, type, payload, origin} → {id, result}
 function polyCall(f, type, payload) {
+  // f: 알지오3D 도구 앱을 담은 iframe, 또는 그 창(정식 make 화면 안쪽 iframe의 창)
+  let w = f instanceof HTMLIFrameElement ? f.contentWindow : f;
   return new Promise((res) => {
     let id = `wb-${Math.random().toString(36).slice(2)}`,
       tm,
       h = (e) => {
-        e.source === f.contentWindow && e.data && e.data.id === id && !e.data.type && done(e.data.result);
+        e.source === w && e.data && e.data.id === id && !e.data.type && done(e.data.result);
       },
       done = (v) => {
         (removeEventListener(`message`, h), clearTimeout(tm), res(v));
       };
     ((tm = setTimeout(() => done(void 0), 2500)), addEventListener(`message`, h));
     try {
-      f.contentWindow.postMessage({ id, type, payload, origin: location.origin === `null` ? `*` : location.origin }, `*`);
+      w.postMessage({ id, type, payload, origin: location.origin === `null` ? `*` : location.origin }, `*`);
     } catch {
       done(void 0);
     }
@@ -1182,6 +1184,23 @@ async function loadPreset(f, key) {
     await new Promise((r) => setTimeout(r, 600));
   }
   return !1;
+}
+// 알지오3D가 처음 열릴 때의 보는 시점(camera-view): 2 = 위쪽(xy평면을 위에서 내려다봄)
+var TOP_VIEW = 2;
+// 정식 make 화면(E단계)은 안쪽 iframe이 도구 앱이라 그 창에 직접 명령을 보낸다.
+async function makeTopView(f) {
+  for (let k = 0; k < 40; k++) {
+    if (!f.isConnected) return;
+    let w;
+    try {
+      w = f.contentWindow?.frames?.[0];
+    } catch {}
+    if (w && (await polyCall(w, `is-loaded`)) === !0) {
+      await new Promise((e) => setTimeout(e, 800));
+      return void (await polyCall(w, `camera-view`, TOP_VIEW));
+    }
+    await new Promise((e) => setTimeout(e, 700));
+  }
 }
 var SECTION_SHAPE = { cylinder: `rectangle`, cone: `triangle`, sphere: `semicircle` };
 function te({ getToolState: e, onToolStateChange: t }) {
@@ -1205,7 +1224,7 @@ function te({ getToolState: e, onToolStateChange: t }) {
   async function load(e, k, v) {
     (st.set(e, `loading`), status());
     let t = await loadPreset(r.get(e), k);
-    t && v != null && (await polyCall(r.get(e), `camera-view`, v));
+    t && (await polyCall(r.get(e), `camera-view`, v ?? TOP_VIEW));
     (st.set(e, t ? `ok` : `fail`), status());
   }
   function c(e) {
@@ -1217,7 +1236,7 @@ function te({ getToolState: e, onToolStateChange: t }) {
     let p = !!PRESET[e];
     if (
       ((n(`#section-tool`).hidden = !SECTION_SHAPE[e]),
-      (n(`#view-top`).hidden = n(`#reset-preset`).hidden = !p),
+      ((n(`#reset-preset`).hidden = !p), (n(`#view-top`).hidden = !p && e !== `make`)),
       (n(`#tool-title`).textContent = e === `paint` ? `그림판3D` : `알지오3D`),
       (n(`#external-link`).href = a[e]),
       !r.has(t))
@@ -1239,7 +1258,10 @@ function te({ getToolState: e, onToolStateChange: t }) {
         // 알지오3D는 처음 실행될 때의 창 너비(750px 이하면 모바일 배치)로 화면 배치를 정한다.
         // 두 번째 창부터는 캐시 덕에 크기가 정해지기 전에 실행되어 모바일 배치가 되므로, 자리를 잡은 뒤 주소를 넣는다.
         setTimeout(() => {
-          (p && i.addEventListener(`load`, () => load(t, e, vw), { once: !0 }), (i.src = p ? a.poly : a[e]));
+          (p
+            ? i.addEventListener(`load`, () => load(t, e, vw), { once: !0 })
+            : e === `make` && i.addEventListener(`load`, () => makeTopView(i), { once: !0 }),
+            (i.src = p ? a.poly : a[e]));
         }, 400));
     }
     // 앱이 실어 주는 자료(B·R·I 단계)는 저장할 필요가 없으므로 도형 저장 안내는 ‘새 도형 만들기’에서만 보인다.
@@ -1300,7 +1322,9 @@ function te({ getToolState: e, onToolStateChange: t }) {
     n(`#model-help`).addEventListener(`click`, () => n(`#model-dialog`).showModal()),
     n(`#view-top`).addEventListener(`click`, () => {
       let e = r.get(cur);
-      e && polyCall(e, `camera-view`, 2);
+      if (!e) return;
+      let t = e.dataset.model === `make` ? e.contentWindow?.frames?.[0] : e;
+      t && polyCall(t, `camera-view`, TOP_VIEW);
     }),
     n(`#reset-preset`).addEventListener(`click`, (e) => {
       let t = e.currentTarget;
