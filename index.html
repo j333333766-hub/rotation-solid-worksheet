@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="theme-color" content="#1f89ed" />
-    <meta name="version" content="2.3" />
+    <meta name="version" content="2.4" />
     <title>알지오매스를 활용한 회전체 만들기 | BRIDGE</title>
     <script type="module">
 (function () {
@@ -123,11 +123,11 @@ var e = {
       figure: `profiles`,
       alt: `직사각형, 직각삼각형, 반원과 각각의 회전축`,
       fields: [
-        r(`q5-1`, `(1) 직사각형을 한 변을 축으로 회전하면?`),
-        r(`q5-2`, `(2) 직각삼각형을 한 변을 축으로 회전하면?`),
-        r(`q5-3`, `(3) 반원을 지름을 축으로 회전하면?`),
-        r(`q5-4`, `(4) 각 입체도형을 회전축에 수직인 평면으로 자른 단면은?`),
-        r(`q5-5`, `(5) 각 입체도형을 회전축을 포함하는 평면으로 자른 단면은?`),
+        r(`q5-1`, `(1) 직사각형을 한 변을 축으로 회전하면?`, `어떤 입체도형이 되었나요? 밑면과 옆면은 각각 어떤 모양인가요?`),
+        r(`q5-2`, `(2) 직각삼각형을 한 변을 축으로 회전하면?`, `어떤 입체도형이 되었나요? 어느 변을 축으로 돌렸는지, 밑면과 옆면은 어떤 모양인지 적어 보세요.`),
+        r(`q5-3`, `(3) 반원을 지름을 축으로 회전하면?`, `어떤 입체도형이 되었나요? 어느 방향에서 보아도 모양이 같은지 관찰해 적어 보세요.`),
+        r(`q5-4`, `(4) 각 입체도형을 회전축에 수직인 평면으로 자른 단면은?`, `직사각형·직각삼각형·반원으로 만든 입체도형을 차례로 보고, 단면의 모양과 자르는 높이에 따라 크기가 어떻게 변하는지 적어 보세요.`),
+        r(`q5-5`, `(5) 각 입체도형을 회전축을 포함하는 평면으로 자른 단면은?`, `세 입체도형의 단면이 각각 어떤 도형인지, 회전축을 기준으로 어떤 특징이 있는지 적어 보세요.`),
       ],
       note: `관찰 조건: 직각삼각형은 직각을 이루는 한 변을 회전축으로 삼습니다. 실험실의 단면은 속이 찬 기본 모형의 내부를 지나는 평면으로 자릅니다.`,
     },
@@ -173,8 +173,13 @@ var e = {
         r(
           `q8-1`,
           `(1) 추측한 평면도형을 회전시킨 결과가 주어진 입체도형(종이컵)과 같은지 확인하고, 다르면 어디를 고쳐야 할지 말하시오.`,
+          `윗면·아랫면의 크기, 옆면의 기울기, 높이를 컵과 비교해 같은 점과 다른 점을 적어 보세요.`,
         ),
-        r(`q8-2`, `(2) 회전축을 포함하는 평면으로 자른 단면과 회전시킨 평면도형은 어떤 관계가 있는지 설명하시오.`),
+        r(
+          `q8-2`,
+          `(2) 회전축을 포함하는 평면으로 자른 단면과 회전시킨 평면도형은 어떤 관계가 있는지 설명하시오.`,
+          `단면을 회전축(y축)으로 나눈 한쪽과 24쪽에서 그린 평면도형을 비교해 적어 보세요.`,
+        ),
         r(
           `q8-3`,
           `(3) 회전축을 포함하는 평면으로 자른 단면을 회전축으로 나누면, 그 한쪽은 어떤 도형인가요? 이 사실을 이용하여 처음 추측한 평면도형을 더 정확히 그리는 방법을 설명하시오.`,
@@ -222,7 +227,11 @@ var e = {
       grid: !0,
       fields: [
         r(`q11-plan`, `설계 설명 · 그림 대신 글로 표현할 수 있어요`, `만들 물체, 평면도형, 회전축을 설명해 보세요.`),
-        r(`q11-description`, `(3) 내가 만든 회전체는 어떤 평면도형을 어떻게 회전한 것인지 설명하시오.`),
+        r(
+          `q11-description`,
+          `(3) 내가 만든 회전체는 어떤 평면도형을 어떻게 회전한 것인지 설명하시오.`,
+          `어떤 모양·크기의 평면도형을 어느 직선을 회전축으로 하여 돌렸는지, 만들어진 회전체는 어떤 특징이 있는지 적어 보세요.`,
+        ),
       ],
       checks: [
         {
@@ -370,6 +379,7 @@ var e = {
       space: `R`,
       fields: [`q5-1`],
       guide: `short`,
+      tip: `직사각형의 한 변이 y축 위에 놓여 있어요. 빨간 십자 → ‘회전하기’ → ‘초록색 축(y축) 기준으로 회전’ → 직사각형을 누르세요.`,
       title: `직사각형을 한 변을 축으로 360° 회전시켜 보세요.`,
     },
     {
@@ -393,6 +403,7 @@ var e = {
       space: `R`,
       fields: [`q5-3`],
       guide: `short`,
+      tip: `반원의 지름이 y축 위에 놓여 있어요. 빨간 십자 → ‘회전하기’ → ‘초록색 축(y축) 기준으로 회전’ → 반원을 누르세요.`,
       title: `반원을 지름을 축으로 360° 회전시켜 보세요.`,
     },
     {
@@ -404,6 +415,7 @@ var e = {
       space: `R`,
       fields: [`q5-4`],
       sectionCta: `horizontal`,
+      hint: `위쪽 목록에서 ‘직사각형·직각삼각형·반원’을 바꿔 가며 세 입체도형을 모두 관찰해요(아직 회전 전이면 먼저 회전하기).`,
       title: `각 입체도형을 회전축에 수직인 평면으로 자른 단면을 관찰하세요.`,
       tip: `① 알지오3D에서 입체도형을 만든 뒤, 오른쪽 위의 ‘한 방향에서 보기’(또는 보기 큐브)에서 ‘앞쪽’이나 ‘뒤쪽’을 골라 회전축(y축) 방향으로 바라보세요. 보이는 모양이 회전축에 수직인 평면으로 자른 단면의 모양이에요. ② ‘단면 관찰’ 버튼을 누르면 자르는 높이를 바꾸며 단면의 모양과 크기를 비교할 수 있어요.`,
       viewHint: `회전축에 수직인 평면으로 자른 단면은 ‘한 방향에서 보기’를 ‘앞쪽’ 또는 ‘뒤쪽’으로 하여 관찰해요. (회전축인 y축 방향으로 바라보게 돼요.)`,
@@ -418,6 +430,7 @@ var e = {
       fields: [`q5-5`],
       complete: 5,
       sectionCta: `vertical`,
+      hint: `위쪽 목록에서 ‘직사각형·직각삼각형·반원’을 바꿔 가며 세 입체도형을 모두 관찰해요(아직 회전 전이면 먼저 회전하기).`,
       title: `회전축을 포함하는 평면으로 자른 단면을 관찰하세요.`,
       tip: `① 알지오3D에서 입체도형을 만든 뒤, 오른쪽 위의 ‘한 방향에서 보기’(또는 보기 큐브)에서 ‘위쪽’이나 ‘아래쪽’을 골라 회전축에 수직인 방향에서 바라보세요. 보이는 윤곽이 회전축을 포함하는 평면으로 자른 단면의 모양이에요. ② ‘단면 관찰’ 버튼으로 단면을 직접 확인할 수 있어요.`,
       viewHint: `회전축을 포함하는 평면으로 자른 단면은 ‘한 방향에서 보기’를 ‘위쪽’ 또는 ‘아래쪽’으로 하여 관찰해요. (회전축에 수직인 방향에서 바라보게 돼요.)`,
@@ -433,6 +446,12 @@ var e = {
       complete: t === 4 ? 6 : void 0,
       feedback: !0,
       hollowDemo: t === 3,
+      hint:
+        t === 1
+          ? `빗변을 축으로도 돌려 보세요: ‘다각형’으로 빗변이 y축 위에 놓인 직각삼각형을 원래 도형과 겹치지 않게 새로 그린 뒤, ‘회전하기’ → 초록색 축(y축) → 새 삼각형을 누르세요.`
+          : t > 2
+            ? `위쪽 목록에서 ‘직사각형·직각삼각형·반원’을 바꿔 가며 세 입체도형을 모두 살펴봐요.`
+            : void 0,
       viewHint: t === 3 ? `회전축에 수직인 평면으로 자른 단면은 ‘한 방향에서 보기’를 ‘앞쪽’ 또는 ‘뒤쪽’으로 하여 관찰해요. (회전축인 y축 방향으로 바라보게 돼요.)` : t === 4 ? `회전축을 포함하는 평면으로 자른 단면은 ‘한 방향에서 보기’를 ‘위쪽’ 또는 ‘아래쪽’으로 하여 관찰해요. (회전축에 수직인 방향에서 바라보게 돼요.)` : void 0,
       title: `관찰로 문장 확인하기 · ${t + 1} / 5`,
       tip: `회전축의 선택, 자르는 위치, 속이 빈 물체인지에 따라 조건이 더 필요한지도 살펴보세요.`,
@@ -452,7 +471,7 @@ var e = {
       checks: !0,
       complete: 7,
       title: `컵을 만드는 평면도형을 추측하여 알지오3D의 제1사분면과 제4사분면에 그리세요.`,
-      hint: `보는 시점이 ‘위쪽’으로 맞춰져 있어 xy평면이 보여요. 왼쪽 빨간 십자 아이콘 → ‘다각형’을 고르고 꼭짓점을 차례로 찍은 뒤, 처음 점을 다시 누르면 평면도형이 완성돼요. 그린 도형은 다음 화면에서 그대로 회전시켜 봅니다.`,
+      hint: `보는 시점이 ‘위쪽’으로 맞춰져 있어 xy평면이 보여요. 제1사분면과 제4사분면은 y축의 오른쪽(x가 양수인 쪽)이에요. 왼쪽 빨간 십자 아이콘 → ‘다각형’을 고르고 꼭짓점을 차례로 찍은 뒤, 처음 점을 다시 누르면 평면도형이 완성돼요. 잘못 찍었으면 위쪽의 ↶(되돌리기)를 누르세요. 그린 도형은 다음 화면에서 그대로 회전시켜 봅니다.`,
       figure: `cup`,
     },
     {
@@ -463,7 +482,7 @@ var e = {
       tools: [`blank`],
       space: `I`,
       fields: [`q8-1`],
-      hint: `24쪽에서 그린 평면도형이 그대로 있어요. 빨간 십자 → ‘회전하기’ → ‘초록색 축(y축) 기준으로 회전’ → 그린 도형을 누르세요.`,
+      hint: `24쪽에서 그린 평면도형이 그대로 있어요. 빨간 십자 → ‘회전하기’ → ‘초록색 축(y축) 기준으로 회전’ → 그린 도형을 누르세요. 컵과 다르면 ↶(되돌리기)로 회전을 취소하고, 평면도형을 다시 그려 회전해 보세요.`,
       title: `추측한 평면도형을 y축으로 회전시켜 컵과 비교하세요.`,
       figure: `cup`,
     },
@@ -524,7 +543,8 @@ var e = {
       chapter: `E`,
       q: 11,
       fields: [`q11-plan`],
-      title: `어떤 평면도형을 어느 직선을 축으로 회전할지 그려 보세요.`,
+      recall: 4,
+      title: `9쪽에서 그린 입체도형을 만들려면 어떤 평면도형을 어느 직선을 축으로 회전해야 할지 그려 보세요.`,
     },
     {
       id: `my-model`,
@@ -534,10 +554,10 @@ var e = {
       tools: [`make`],
       space: `E`,
       layout: `strip`,
-      guide: `short`,
       recall: 4,
+      hint: `36쪽 설계대로 평면도형을 그리고 회전하기로 회전체를 만든 뒤, 왼쪽 위 메뉴(≡) → ‘STL 출력’을 누르세요. STL 파일은 ‘다운로드’ 폴더에 저장되고, 다음 화면 그림판3D에서 이 파일을 불러와요.`,
       title: `알지오3D로 나만의 회전체를 만들고 STL로 내보내세요.`,
-      tip: `계속 편집할 모델은 .algeo3d로 따로 저장하세요. STL은 다음 화면의 그림판3D로 옮겨 색칠·장식할 때 사용합니다.`,
+      tip: `① 평면도형 그리기와 회전하기는 ‘그림으로 보기’ 순서를 따라요. 잘못했으면 위쪽의 ↶(되돌리기)를 눌러요. ② 다 만들었으면 왼쪽 위 메뉴(≡) → ‘STL 출력’ → ‘다운로드’ 폴더에 STL 파일이 저장돼요. ③ 나중에 다시 고치고 싶으면 메뉴(≡) → ‘다른 이름으로 저장 → 내 PC 저장’으로 .algeo3d 파일도 저장해 두세요.`,
     },
     {
       id: `my-paint`,
@@ -548,8 +568,9 @@ var e = {
       space: `E`,
       checks: !0,
       layout: `strip`,
+      hint: `크게보기 → ‘파일 가져오기’로 ‘다운로드’ 폴더의 STL을 불러와 꾸민 뒤, 아이폰은 ‘저장 → USDZ’, 안드로이드는 ‘저장 → GLB’로 저장해요.`,
       title: `STL 파일을 불러와 색칠하고 장식하세요.`,
-      tip: `① ‘크게보기’를 누른 뒤 그림판3D 시작 화면 가운데의 ‘파일 가져오기’ 버튼으로 앞에서 내보낸 STL 파일을 불러오세요. (작게 보기에서는 시작 화면을 아래로 내려야 이 버튼이 보여요.) ② 색 채우기·색 바꾸기·스티커로 꾸미세요. ③ 다 꾸몄으면 내 스마트폰에 맞게 저장하세요. 아이폰·아이패드는 ‘저장 → USDZ’, 안드로이드는 ‘저장 → GLB’예요. 다음 화면에서 이 파일을 선생님 OneDrive 폴더에 제출하고, 그다음 화면에서 스마트폰 AR로 봐요.`,
+      tip: `① ‘크게보기’를 누른 뒤 그림판3D 시작 화면 가운데의 ‘파일 가져오기’ 버튼으로 ‘다운로드’ 폴더에 있는 STL 파일을 불러오세요. (작게 보기에서는 시작 화면을 아래로 내려야 이 버튼이 보여요.) ② 색 채우기·색 바꾸기·스티커로 꾸미세요. ③ 다 꾸몄으면 내 스마트폰에 맞게 저장하세요. 아이폰·아이패드는 ‘저장 → USDZ’, 안드로이드는 ‘저장 → GLB’예요. 다음 화면에서 이 파일을 선생님 OneDrive 폴더에 제출하고, 그다음 화면에서 스마트폰 AR로 봐요.`,
     },
     {
       id: `my-explanation`,
@@ -1262,7 +1283,7 @@ function te({ getToolState: e, onToolStateChange: t }) {
       let t = e.currentTarget;
       if (!rs) {
         ((rs = !0),
-          (t.textContent = `한 번 더 누르면 처음으로`),
+          (t.textContent = `그린 것이 모두 지워져요! 한 번 더 누르면 처음으로`),
           setTimeout(() => {
             ((rs = !1), (t.textContent = `처음 상태로`));
           }, 3500));
@@ -1466,7 +1487,7 @@ function G(e) {
     (r.htmlFor = e),
     (a.id = e),
     (a.maxLength = 8e3),
-    (a.placeholder = t?.placeholder || `어떤 조건에서 무엇을 관찰했나요?`),
+    (a.placeholder = t?.placeholder || `알지오3D나 ‘단면 관찰’에서 무엇을 해 보고 무엇을 보았는지 근거를 적어 보세요.`),
     (a.value = M.answers[e] || ``),
     (o.textContent = `${a.value.length} / 8000`),
     s && lockedQ(s) && ((a.readOnly = !0), a.addEventListener(`focus`, () => B(`완료한 활동이에요. 고치려면 ‘완료 취소’를 누르세요.`))),
@@ -1509,7 +1530,7 @@ var GUIDE = [
   [`guide2`, `왼쪽 빨간 십자 아이콘 → ‘다각형’(또는 ‘원’)을 골라 y축에 붙여 평면도형을 그려요. 이미 그려져 있으면 건너뛰어요.`],
   [`guide3`, `같은 메뉴에서 ‘회전하기’를 골라요.`],
   [`guide4`, `‘회전축 선택’ 창에서 ‘초록색 축(y축) 기준으로 회전’을 눌러요.`],
-  [`guide5`, `평면도형을 누르면 y축을 중심으로 돌린 입체도형이 만들어져요. 화면을 끌어 여러 방향에서 관찰해요.`],
+  [`guide5`, `평면도형을 누르면 y축을 중심으로 돌린 입체도형이 만들어져요. 화면을 끌어 여러 방향에서 관찰해요. 축을 잘못 골랐거나 잘못 만들었으면 위쪽의 ↶(되돌리기)를 누르세요.`],
 ];
 // 앞에서 그린 그림(문항 q의 스케치와 설명)을 대화상자로 다시 보여 준다.
 function recallDialog(q) {
@@ -1540,6 +1561,16 @@ function recallDialog(q) {
       k(`#tip-content`).append(L(`p`, ``, `아직 ${pageNo(n)}쪽에 그린 그림이나 설명이 없어요.`), e));
   } else k(`#tip-content`).append(L(`p`, `recall-hint`, `이 그림을 보면서 어떤 평면도형을 어느 직선을 축으로 회전하면 될지 생각하며 알지오3D로 만들어 보세요.`));
   k(`#tip-dialog`).showModal();
+}
+// 📌 활동 안내와 👁 보는 방향 안내를 한 상자에 담는다.
+function hintBox(t, s) {
+  if (!t.hint && !t.viewHint) return;
+  let e = L(`div`, `view-hint`);
+  (t.hint && e.append(L(`p`, ``, `📌 ${t.hint}`)), t.viewHint && e.append(L(`p`, ``, `👁 ${t.viewHint}`)), s.append(e));
+}
+function recallButton(q) {
+  let e = L(`button`, `recall-btn`, `🖍 ${pageNo(d.find((e) => e.q === q))}쪽에 그린 내 그림 보기`);
+  return (e.addEventListener(`click`, () => recallDialog(q)), e);
 }
 function guideDialog(e = 0) {
   ((k(`#tip-title`).textContent = `알지오3D에서 평면도형을 회전시키는 순서`), k(`#tip-content`).replaceChildren());
@@ -1580,7 +1611,7 @@ function guideBox(e, t) {
     r = L(`button`, ``, `그림으로 보기`);
   return (
     r.addEventListener(`click`, () => guideDialog()),
-    n.append(L(`span`, ``, `만드는 순서: ① 위쪽 보기 → ② 다각형·원으로 그리기 → ③ 회전하기 → ④ 초록색 축(y축) → ⑤ 평면도형 누르기`), r),
+    n.append(L(`span`, ``, `만드는 순서: ① 위쪽 보기 → ② 다각형·원으로 그리기 → ③ 회전하기 → ④ 초록색 축(y축) → ⑤ 평면도형 누르기 · 잘못하면 ↶`), r),
     n
   );
 }
@@ -1592,7 +1623,7 @@ var FEEDBACK = [
     다름: `알지오3D에서 직사각형을 한 변을 축으로 360° 돌려 보고, 어떤 입체도형이 되는지 다시 관찰해 보세요.`,
   },
   {
-    맞음: `직각삼각형의 빗변을 회전축으로 하면 어떤 입체도형이 될까요? 어느 변을 축으로 하느냐에 따라 결과가 같은지 확인해 보세요.`,
+    맞음: `직각삼각형의 빗변을 회전축으로 하면 어떤 입체도형이 될까요? 위의 📌 안내대로 빗변이 y축 위에 오는 삼각형을 그려 돌려 보세요.`,
     "조건이 필요함": [/직각|빗변/, `어떤 변을 회전축으로 해야 원뿔이 되는지(예: 직각을 낀 변) 조건을 구체적으로 써 보세요.`],
     다름: `직각을 낀 한 변을 축으로 돌렸을 때와 빗변을 축으로 돌렸을 때를 비교해 보세요. 항상 원뿔이 아닌가요?`,
   },
@@ -1649,6 +1680,7 @@ function conceptHints() {
 function selfCheck(e, t) {
   let n = L(`div`, `self-check`),
     r = L(`button`, ``, `💬 스스로 점검하기`),
+    _t = (r.title = `미리 정한 규칙으로 주는 힌트예요(AI 아님).`),
     a = L(`ul`);
   function o() {
     a.replaceChildren(...e().map((e) => L(`li`, ``, e)));
@@ -1821,6 +1853,17 @@ function oe(e, t) {
       e.setAttribute(`role`, `heading`),
       e.setAttribute(`aria-level`, `1`),
       (n.querySelector(`.lesson`).textContent = `알지오매스 3D 활용`));
+    let r = L(`div`, `start-guide`),
+      a = L(`ol`);
+    for (let e of [
+      `오른쪽 아래 ‘다음 →’을 눌러 한 화면씩 진행해요. 쓴 내용은 자동으로 저장돼요.`,
+      `화면의 📌·👁 안내와 💡 TIP을 먼저 읽고 활동해요.`,
+      `알지오3D 화면이 작으면 ‘크게보기’를 눌러요. 잘못 조작했으면 ↶(되돌리기)를 눌러요.`,
+      `마지막 화면에서 학습 기록을 저장해 선생님 OneDrive 폴더에 제출해요.`,
+    ])
+      a.append(L(`li`, ``, e));
+    let i = L(`button`, `start-go`, `시작하기 →`);
+    (i.addEventListener(`click`, () => Y(d[1].id)), r.append(L(`b`, ``, `혼자서 이렇게 진행해요`), a, i), n.append(r));
   } else if (e.type === `divider`) {
     let e = n.querySelector(`.stage-name`);
     (e.replaceChildren(L(`span`, `letter`, `${t.id}. `), document.createTextNode(t.name)),
@@ -1923,10 +1966,21 @@ function J() {
       }
       (n.append(r), e.append(n));
     }
+    let w = L(`div`, `finish-who`),
+      wi = L(`input`);
+    ((wi.id = `who-input`), (wi.placeholder = `예: 10101홍길동`), (wi.value = whoGet()), (wi.maxLength = 30));
+    wi.addEventListener(`input`, () => whoSet(wi.value));
+    let wl = L(`label`, ``, `학번+이름`);
+    ((wl.htmlFor = wi.id), w.append(wl, wi), e.append(w));
     let n = L(`button`, `primary`, `학습 기록 저장하기 ↓`);
-    n.addEventListener(`click`, Z);
+    n.addEventListener(`click`, () => (whoGet() ? Z() : (B(`먼저 학번+이름을 적어 주세요.`), wi.focus())));
+    let sub = L(`a`, `glb-submit-btn finish-submit`, `📤 OneDrive 제출 폴더 열기`);
+    ((sub.href = GLB_SUBMIT_URL), (sub.target = `_blank`), (sub.rel = `noopener`));
+    e.append(
+      L(`p`, `finish-steps`, `① 학번+이름을 적고 ‘학습 기록 저장하기’를 눌러요(‘다운로드’ 폴더에 ‘학번이름_회전체학습기록.json’이 저장돼요). ② ‘OneDrive 제출 폴더 열기’를 눌러 그 파일을 올려요.`),
+    );
     let r = L(`button`, ``, `목차 보기`);
-    (r.addEventListener(`click`, () => Y(`bridge`)), e.append(L(`div`, `finish-actions`)), e.lastChild.append(n, r), s.append(e));
+    (r.addEventListener(`click`, () => Y(`bridge`)), e.append(L(`div`, `finish-actions`)), e.lastChild.append(n, sub, r), s.append(e));
   } else if (t.type === `situation`) {
     let n = L(`div`, `intro-row`),
       i = L(`img`);
@@ -1940,18 +1994,23 @@ function J() {
     (ie(r, n),
       t.figure && q(t.figure, i),
       t.note && i.append(L(`p`, `note-box drawing-note`, t.note)),
+      t.recall && i.append(recallButton(t.recall)),
       t.fields.forEach((e) => i.append(G(e))),
       e.append(n, i),
       s.append(e));
   } else if (t.type === `judgment`) {
     s.append(L(`p`, `judgment-statement`, r.statements[t.statement]));
-    t.viewHint && s.append(L(`p`, `view-hint`, `👁 ${t.viewHint}`));
+    hintBox(t, s);
     let e = L(`select`, `judgment-select`),
       n = `q6-${t.statement}-judgment`,
       a = selfCheck(() => judgeHints(t.statement), !0);
     ((e.id = n), e.setAttribute(`aria-label`, `${t.statement + 1}번 문장에 대한 판단`), (e.disabled = lockedQ(6)));
     for (let t of [``, `맞음`, `조건이 필요함`, `다름`]) {
-      let n = L(`option`, ``, t || `판단을 선택하세요`);
+      let n = L(
+        `option`,
+        ``,
+        { "": `판단을 선택하세요`, 맞음: `맞음 — 항상 맞아요`, "조건이 필요함": `조건이 필요함 — 어떤 경우에만 맞아요(조건을 이유에 써요)`, 다름: `다름 — 맞지 않아요` }[t],
+      );
       ((n.value = t), e.append(n));
     }
     if (
@@ -1967,7 +2026,7 @@ function J() {
     }
     s.append(a);
   } else {
-    if ((t.hint && s.append(L(`p`, `view-hint`, `📌 ${t.hint}`)), t.viewHint && s.append(L(`p`, `view-hint`, `👁 ${t.viewHint}`)), t.guide === `full` && s.append(guideBox(`full`)), t.figure && q(t.figure, s), t.define && s.append(L(`p`, `define-box`, t.define)), t.terms)) {
+    if ((hintBox(t, s), t.guide === `full` && s.append(guideBox(`full`)), t.figure && q(t.figure, s), t.define && s.append(L(`p`, `define-box`, t.define)), t.terms)) {
       let e = L(`div`, `terms`);
       (r.terms.forEach((t) => e.append(L(`span`, ``, t))), s.append(e));
     }
@@ -2000,10 +2059,7 @@ function J() {
       let e = L(`button`, `section-cta`, `🔍 단면 관찰 열기`);
       (e.addEventListener(`click`, () => ne.section(void 0, t.sectionCta)), s.append(e));
     }
-    if (t.recall) {
-      let e = L(`button`, `recall-btn`, `🖍 ${pageNo(d.find((e) => e.q === t.recall))}쪽에 그린 내 그림 보기`);
-      (e.addEventListener(`click`, () => recallDialog(t.recall)), s.append(e));
-    }
+    t.recall && s.append(recallButton(t.recall));
     (t.guide === `short` && s.append(guideBox(`short`)), t.checks && K(r, s));
   }
   t.tip && re(t.tip, s, t.tipFigure);
@@ -2016,7 +2072,7 @@ function J() {
     (k(`#page-select`).value = String(a + 1)),
     (k(`#page-progress`).value = a + 1),
     (k(`#nav-stage`).textContent = n ? `${n.id}. ${n.name}` : t.title),
-    (k(`#source-btn`).textContent = `원고 ${r?.page || { B: 2, R: 3, I: 5, D: 6, G: 6, E: 7 }[t.chapter] || 1}쪽`),
+    (k(`#source-btn`).textContent = `원본 활동지 ${r?.page || { B: 2, R: 3, I: 5, D: 6, G: 6, E: 7 }[t.chapter] || 1}쪽`),
     A(`[data-phase]`).forEach((e) => {
       n && +e.dataset.phase === n.stage ? e.setAttribute(`aria-current`, `step`) : e.removeAttribute(`aria-current`);
     }),
@@ -2040,12 +2096,28 @@ function X() {
   (k(`#slide-stage`).style.setProperty(`--scale`, String(Math.min((e.width - 12) / 1280, (e.height - 12) / 720))),
     k(`#slide-stage`).style.setProperty(`--art-scale`, String(innerWidth <= 700 ? e.width / 881 : 1280 / 881)));
 }
+// 학번+이름: 저장 파일 이름에만 쓴다(학습 기록 형식은 바꾸지 않음).
+var WHO_KEY = `workbook:m3-1-algeomath-solids:who`;
+function whoGet() {
+  try {
+    return (localStorage.getItem(WHO_KEY) || ``).trim();
+  } catch {
+    return ``;
+  }
+}
+function whoSet(e) {
+  try {
+    localStorage.setItem(WHO_KEY, e.trim());
+  } catch {}
+}
 function Z() {
   V();
   let e = URL.createObjectURL(new Blob([JSON.stringify(M, null, 2)], { type: `application/json` })),
     t = L(`a`);
   ((t.href = e),
-    (t.download = `회전체-학습기록-${new Date().toISOString().replace(/[:.]/g, `-`)}.json`),
+    (t.download = whoGet()
+      ? `${whoGet().replace(/[\/:*?"<>|\s]/g, ``)}_회전체학습기록.json`
+      : `회전체-학습기록-${new Date().toISOString().replace(/[:.]/g, `-`)}.json`),
     document.body.append(t),
     t.click(),
     t.remove(),
@@ -4337,6 +4409,133 @@ textarea[readonly] {
     flex-direction: column;
   }
 }
+.start-guide {
+  z-index: 5;
+  color: #24476a;
+  background: #ffffffee;
+  border: 1.5px solid #c9dcef;
+  border-radius: 14px;
+  width: 560px;
+  padding: 12px 18px;
+  font-size: 15px;
+  line-height: 1.55;
+  position: absolute;
+  bottom: 22px;
+  left: calc(50% - 280px);
+  box-shadow: 0 8px 30px #1f4d7a22;
+}
+.start-guide ol {
+  margin: 4px 0 8px;
+  padding-left: 20px;
+}
+.start-go {
+  color: #fff;
+  background: #1f89ed;
+  border: 0;
+  border-radius: 9px;
+  padding: 7px 16px;
+  font-size: 15px;
+  font-weight: 800;
+}
+.judge-legend {
+  color: #6a7d8f;
+  margin: -4px 0 0;
+  font-size: 12.5px;
+}
+.finish-who {
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+}
+.finish-who input {
+  border: 1.5px solid #bdccd9;
+  border-radius: 9px;
+  width: 220px;
+  padding: 7px 12px;
+  font-size: 16px;
+}
+.finish-steps {
+  color: #5d7388;
+  margin: 0;
+  font-size: 14px !important;
+}
+.finish-submit {
+  align-self: center;
+}
+@media (width<=700px) {
+  .start-guide {
+    width: auto;
+    font-size: 13px;
+    position: static;
+  }
+}
+@media (width > 700px) {
+  .tool-slide #sheet-body.with-tool:not(.tool-strip) .answer-field {
+    flex: 1 0 auto;
+    min-height: 96px;
+  }
+  .tool-strip .view-hint {
+    flex: 1;
+    min-width: 0;
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+  .tool-strip .recall-btn {
+    padding: 8px 10px;
+    font-size: 13.5px;
+  }
+  [data-slide="finish"] .finish-todo {
+    max-height: 132px;
+  }
+  [data-slide="finish"] .finish-content {
+    gap: 8px;
+  }
+  [data-slide="finish"] .finish-content > p:not(.finish-steps) {
+    display: none;
+  }
+}
+.view-hint p {
+  margin: 0;
+}
+.view-hint p + p {
+  margin-top: 4px;
+}
+@media (width > 700px) {
+  .tool-slide .with-tool:not(.tool-strip) .view-hint {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+  .tool-slide .with-tool:not(.tool-strip) .tip-button {
+    padding: 5px 12px;
+    font-size: 14px;
+  }
+  .tool-slide .with-tool:not(.tool-strip) .self-check {
+    padding: 5px 10px;
+  }
+  .tool-slide .with-tool:not(.tool-strip) .section-cta {
+    padding: 7px 12px;
+    font-size: 15px;
+  }
+  .tool-slide .with-tool:not(.tool-strip) .judgment-statement {
+    padding: 8px 12px;
+    font-size: 17px;
+  }
+  .tool-slide .with-tool:not(.tool-strip) .answer-field label {
+    margin-bottom: 4px;
+    font-size: 16px;
+  }
+}
+@media (width > 700px) {
+  .tool-slide .with-tool:not(.tool-strip) .self-check small {
+    display: none;
+  }
+  .tool-slide .with-tool:not(.tool-strip) .q-tracker .qt-here {
+    display: none;
+  }
+}
 
 </style>
   </head>
@@ -4425,7 +4624,7 @@ textarea[readonly] {
       <p>
         작은 화면은 세로로 배치됩니다. 외부 도구가 비어 보이면 새 창으로 열거나 HTML 파일을 Edge·Chrome으로 열어 주세요.
       </p>
-      <p class="version-note">v2.3 · 2026-10-03 수업 실연 검토 의견 반영</p>
+      <p class="version-note">v2.4 · 2026-10-03 자기주도 진행 보완</p>
     </dialog>
     <dialog id="tip-dialog">
       <header>

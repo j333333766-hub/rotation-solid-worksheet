@@ -2188,3 +2188,130 @@ textarea[readonly] {
     flex-direction: column;
   }
 }
+.start-guide {
+  z-index: 5;
+  color: #24476a;
+  background: #ffffffee;
+  border: 1.5px solid #c9dcef;
+  border-radius: 14px;
+  width: 560px;
+  padding: 12px 18px;
+  font-size: 15px;
+  line-height: 1.55;
+  position: absolute;
+  bottom: 22px;
+  left: calc(50% - 280px);
+  box-shadow: 0 8px 30px #1f4d7a22;
+}
+.start-guide ol {
+  margin: 4px 0 8px;
+  padding-left: 20px;
+}
+.start-go {
+  color: #fff;
+  background: #1f89ed;
+  border: 0;
+  border-radius: 9px;
+  padding: 7px 16px;
+  font-size: 15px;
+  font-weight: 800;
+}
+.judge-legend {
+  color: #6a7d8f;
+  margin: -4px 0 0;
+  font-size: 12.5px;
+}
+.finish-who {
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+}
+.finish-who input {
+  border: 1.5px solid #bdccd9;
+  border-radius: 9px;
+  width: 220px;
+  padding: 7px 12px;
+  font-size: 16px;
+}
+.finish-steps {
+  color: #5d7388;
+  margin: 0;
+  font-size: 14px !important;
+}
+.finish-submit {
+  align-self: center;
+}
+@media (width<=700px) {
+  .start-guide {
+    width: auto;
+    font-size: 13px;
+    position: static;
+  }
+}
+@media (width > 700px) {
+  .tool-slide #sheet-body.with-tool:not(.tool-strip) .answer-field {
+    flex: 1 0 auto;
+    min-height: 96px;
+  }
+  .tool-strip .view-hint {
+    flex: 1;
+    min-width: 0;
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+  .tool-strip .recall-btn {
+    padding: 8px 10px;
+    font-size: 13.5px;
+  }
+  [data-slide="finish"] .finish-todo {
+    max-height: 132px;
+  }
+  [data-slide="finish"] .finish-content {
+    gap: 8px;
+  }
+  [data-slide="finish"] .finish-content > p:not(.finish-steps) {
+    display: none;
+  }
+}
+.view-hint p {
+  margin: 0;
+}
+.view-hint p + p {
+  margin-top: 4px;
+}
+@media (width > 700px) {
+  .tool-slide .with-tool:not(.tool-strip) .view-hint {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+  .tool-slide .with-tool:not(.tool-strip) .tip-button {
+    padding: 5px 12px;
+    font-size: 14px;
+  }
+  .tool-slide .with-tool:not(.tool-strip) .self-check {
+    padding: 5px 10px;
+  }
+  .tool-slide .with-tool:not(.tool-strip) .section-cta {
+    padding: 7px 12px;
+    font-size: 15px;
+  }
+  .tool-slide .with-tool:not(.tool-strip) .judgment-statement {
+    padding: 8px 12px;
+    font-size: 17px;
+  }
+  .tool-slide .with-tool:not(.tool-strip) .answer-field label {
+    margin-bottom: 4px;
+    font-size: 16px;
+  }
+}
+@media (width > 700px) {
+  .tool-slide .with-tool:not(.tool-strip) .self-check small {
+    display: none;
+  }
+  .tool-slide .with-tool:not(.tool-strip) .q-tracker .qt-here {
+    display: none;
+  }
+}
