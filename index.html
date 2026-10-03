@@ -105,7 +105,7 @@ var e = {
       stage: 1,
       page: 2,
       title: `만들고 싶은 모양 그리기`,
-      original: `오늘 수업을 통해 만들어 보고 싶은 입체도형을 손으로 그리시오.`,
+      original: `한 직선을 축으로 하여 평면도형을 1회전 시킬 때 생기는 입체도형 중에서 오늘 만들어 보고 싶은 것을 그리시오.`,
       drawing: `q4-drawing`,
       drawingLabel: `만들고 싶은 입체도형 스케치`,
       fields: [r(`q4-plan`, `그림 설명 · 글로 대신 표현해도 좋아요`, `어떤 모양을 만들고 싶은가요?`)],
@@ -353,7 +353,8 @@ var e = {
       q: 4,
       fields: [`q4-plan`],
       complete: 4,
-      title: `오늘 만들어 보고 싶은 입체도형을 그려 보세요.`,
+      title: `한 직선을 축으로 하여 평면도형을 1회전 시킬 때 생기는 입체도형을 그려 보세요.`,
+      note: `여기에서 그린 입체도형은 마지막 활동(E. 나만의 회전체 만들기)에서 알지오매스로 직접 만들고, 그림판3D로 색칠하여 꾸며 봅니다.`,
     },
     ...u(`R`),
     {
@@ -1867,7 +1868,12 @@ function J() {
     let e = L(`div`, `drawing-layout`),
       n = L(`div`, `drawing-canvas`),
       i = L(`div`, `drawing-side`);
-    (ie(r, n), t.figure && q(t.figure, i), t.fields.forEach((e) => i.append(G(e))), e.append(n, i), s.append(e));
+    (ie(r, n),
+      t.figure && q(t.figure, i),
+      t.note && i.append(L(`p`, `note-box drawing-note`, t.note)),
+      t.fields.forEach((e) => i.append(G(e))),
+      e.append(n, i),
+      s.append(e));
   } else if (t.type === `judgment`) {
     s.append(L(`p`, `judgment-statement`, r.statements[t.statement]));
     let e = L(`select`, `judgment-select`),
@@ -4088,6 +4094,10 @@ textarea[readonly] {
   .finish-todo li b {
     flex-basis: 100%;
   }
+}
+.drawing-note {
+  padding: 12px 16px;
+  font-size: 17px;
 }
 
 </style>
