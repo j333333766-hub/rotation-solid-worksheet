@@ -149,14 +149,16 @@ var e = {
       stage: 2,
       page: 5,
       title: `컵을 만든 평면도형은?`,
-      original: `실생활 속 입체도형(종이컵)을 보고, 그것을 만드는 평면도형을 추측하여 y축을 회전축으로 삼아 제1사분면과 제4사분면에 그리시오.`,
+      original: `실생활 속 입체도형(종이컵)을 보고, 그것을 만드는 평면도형을 추측하여 y축을 회전축으로 삼아 알지오3D의 xy평면(제1사분면과 제4사분면)에 다각형 도구로 그리시오.`,
       figure: `cup`,
       alt: `원고에 제시된 위쪽이 넓고 아래쪽이 좁은 종이컵`,
       drawing: `q7-drawing`,
       drawingLabel: `컵을 만드는 평면도형 추측`,
       grid: !0,
-      fields: [r(`q7-plan`, `그림 설명 · 글로 대신 표현해도 좋아요`, `y축과 도형의 위치 관계도 설명해 보세요.`)],
-      either: !0,
+      fields: [
+        r(`q7-plan`, `내가 그린 평면도형 설명`, `어떤 모양을 그렸는지, 그 도형이 y축과 어떻게 놓여 있는지 설명해 보세요.`),
+      ],
+      checks: [{ id: `q7-check`, label: `알지오3D의 xy평면에 컵을 만드는 평면도형을 그렸어요.` }],
       note: `실험실의 「사다리꼴」은 컵의 바깥 윤곽을 비교하기 위한 속이 찬 모형입니다. 실제 종이컵의 두께와 빈 공간도 생각해 보세요.`,
     },
     {
@@ -436,12 +438,19 @@ var e = {
     ...u(`I`),
     {
       id: `cup-sketch`,
-      type: `drawing`,
+      type: `activity`,
       chapter: `I`,
       q: 7,
+      // 24~26쪽은 같은 알지오3D 작업 공간(I)을 쓴다: 여기서 그린 도형을 25쪽에서 그대로 회전시킨다.
+      tools: [`blank`],
+      space: `I`,
+      layout: `side`,
+      initView: 2,
       fields: [`q7-plan`],
+      checks: !0,
       complete: 7,
-      title: `컵을 만드는 평면도형을 추측하여 제1사분면과 제4사분면에 그리세요.`,
+      title: `컵을 만드는 평면도형을 추측하여 알지오3D의 제1사분면과 제4사분면에 그리세요.`,
+      hint: `보는 시점이 ‘위쪽’으로 맞춰져 있어 xy평면이 보여요. 왼쪽 빨간 십자 아이콘 → ‘다각형’을 고르고 꼭짓점을 차례로 찍은 뒤, 처음 점을 다시 누르면 평면도형이 완성돼요. 그린 도형은 다음 화면에서 그대로 회전시켜 봅니다.`,
       figure: `cup`,
     },
     {
@@ -452,7 +461,7 @@ var e = {
       tools: [`blank`],
       space: `I`,
       fields: [`q8-1`],
-      guide: `short`,
+      hint: `24쪽에서 그린 평면도형이 그대로 있어요. 빨간 십자 → ‘회전하기’ → ‘초록색 축(y축) 기준으로 회전’ → 그린 도형을 누르세요.`,
       title: `추측한 평면도형을 y축으로 회전시켜 컵과 비교하세요.`,
       figure: `cup`,
     },
@@ -1142,9 +1151,10 @@ function te({ getToolState: e, onToolStateChange: t }) {
           ? `자료를 불러오지 못했어요. ‘처음 상태로’를 누르거나 새 창으로 열어 주세요.`
           : `화면이 비어 보이면 새 창으로 열어 주세요.`;
   }
-  async function load(e, k) {
+  async function load(e, k, v) {
     (st.set(e, `loading`), status());
     let t = await loadPreset(r.get(e), k);
+    t && v != null && (await polyCall(r.get(e), `camera-view`, v));
     (st.set(e, t ? `ok` : `fail`), status());
   }
   function c(e) {
@@ -1161,7 +1171,8 @@ function te({ getToolState: e, onToolStateChange: t }) {
       (n(`#external-link`).href = a[e]),
       !r.has(t))
     ) {
-      let i = document.createElement(`iframe`);
+      let i = document.createElement(`iframe`),
+        vw = o.initView;
       ((i.title = `${T[e]} · ${e === `paint` ? `색칠·장식` : `알지오3D`}`),
         (i.dataset.model = e),
         (i.dataset.workspace = o.space),
@@ -1177,7 +1188,7 @@ function te({ getToolState: e, onToolStateChange: t }) {
         // 알지오3D는 처음 실행될 때의 창 너비(750px 이하면 모바일 배치)로 화면 배치를 정한다.
         // 두 번째 창부터는 캐시 덕에 크기가 정해지기 전에 실행되어 모바일 배치가 되므로, 자리를 잡은 뒤 주소를 넣는다.
         setTimeout(() => {
-          (p && i.addEventListener(`load`, () => load(t, e), { once: !0 }), (i.src = p ? a.poly : a[e]));
+          (p && i.addEventListener(`load`, () => load(t, e, vw), { once: !0 }), (i.src = p ? a.poly : a[e]));
         }, 400));
     }
     // 앱이 실어 주는 자료(B·R·I 단계)는 저장할 필요가 없으므로 도형 저장 안내는 ‘새 도형 만들기’에서만 보인다.
@@ -1250,7 +1261,7 @@ function te({ getToolState: e, onToolStateChange: t }) {
           }, 3500));
         return;
       }
-      ((rs = !1), (t.textContent = `처음 상태로`), load(cur, cur.split(`:`)[1]));
+      ((rs = !1), (t.textContent = `처음 상태로`), load(cur, cur.split(`:`)[1], o.initView));
     }),
     n(`#section-tool`).addEventListener(`click`, () => {
       let t = e();
@@ -1938,7 +1949,7 @@ function J() {
     }
     s.append(a);
   } else {
-    if ((t.viewHint && s.append(L(`p`, `view-hint`, `👁 ${t.viewHint}`)), t.guide === `full` && s.append(guideBox(`full`)), t.figure && q(t.figure, s), t.define && s.append(L(`p`, `define-box`, t.define)), t.terms)) {
+    if ((t.hint && s.append(L(`p`, `view-hint`, `📌 ${t.hint}`)), t.viewHint && s.append(L(`p`, `view-hint`, `👁 ${t.viewHint}`)), t.guide === `full` && s.append(guideBox(`full`)), t.figure && q(t.figure, s), t.define && s.append(L(`p`, `define-box`, t.define)), t.terms)) {
       let e = L(`div`, `terms`);
       (r.terms.forEach((t) => e.append(L(`span`, ``, t))), s.append(e));
     }
@@ -4192,6 +4203,11 @@ textarea[readonly] {
   font-size: 14.5px;
   font-weight: 600;
   line-height: 1.5;
+}
+@media (width > 700px) {
+  .tool-slide .figure-cup img {
+    max-height: 105px;
+  }
 }
 
 </style>

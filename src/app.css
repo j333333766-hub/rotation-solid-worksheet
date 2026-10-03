@@ -2074,3 +2074,8 @@ textarea[readonly] {
   font-weight: 600;
   line-height: 1.5;
 }
+@media (width > 700px) {
+  .tool-slide .figure-cup img {
+    max-height: 105px;
+  }
+}
