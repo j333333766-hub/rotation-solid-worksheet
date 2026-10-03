@@ -2453,3 +2453,11 @@ textarea[readonly] {
   padding: 10px 14px;
   font-size: 17px;
 }
+button.danger {
+  color: #fff;
+  background: #d9534f;
+  border-color: #d9534f;
+}
+#reset-btn {
+  color: #a1531b;
+}

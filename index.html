@@ -2292,7 +2292,17 @@ function Z() {
     setTimeout(() => URL.revokeObjectURL(e), 3e4),
     B(`학습 기록 파일을 내려받습니다. 도형은 알지오매스에서 따로 저장하세요.`));
 }
-(k(`#export-btn`).addEventListener(`click`, Z),
+(k(`#reset-btn`).addEventListener(`click`, () => k(`#reset-dialog`).showModal()),
+  k(`#reset-backup`).addEventListener(`click`, Z),
+  k(`#reset-confirm`).addEventListener(`click`, () => {
+    // 저장된 기록을 지우고 빈 기록으로 바꾼 뒤 표지에서 다시 연다(알지오3D 작업 공간도 새로 열림).
+    (clearTimeout(N), (M = h()), x(M));
+    try {
+      localStorage.removeItem(WHO_KEY);
+    } catch {}
+    (history.replaceState(null, ``, `#1`), location.reload());
+  }),
+  k(`#export-btn`).addEventListener(`click`, Z),
   k(`#backup-current`).addEventListener(`click`, Z),
   k(`#import-btn`).addEventListener(`click`, () => k(`#import-file`).click()),
   k(`#import-file`).addEventListener(`change`, async (e) => {
@@ -4843,6 +4853,14 @@ textarea[readonly] {
   padding: 10px 14px;
   font-size: 17px;
 }
+button.danger {
+  color: #fff;
+  background: #d9534f;
+  border-color: #d9534f;
+}
+#reset-btn {
+  color: #a1531b;
+}
 
 </style>
   </head>
@@ -4856,7 +4874,7 @@ textarea[readonly] {
       </div>
       <div class="app-actions">
         <span id="save-status" role="status">자동 저장 준비</span><button id="export-btn">↓ 저장</button
-        ><button id="import-btn">↑ 불러오기</button><button id="help-btn" aria-label="사용 안내">?</button
+        ><button id="import-btn">↑ 불러오기</button><button id="reset-btn" title="이 컴퓨터에 저장된 내 기록을 지우고 처음부터 시작">↺ 새로 시작</button><button id="help-btn" aria-label="사용 안내">?</button
         ><input id="import-file" type="file" accept=".json,application/json" hidden />
       </div>
     </header>
@@ -4924,6 +4942,7 @@ textarea[readonly] {
           한 활동이 여러 화면으로 나뉜 경우 화면 아래의 쪽 번호 단추로 채운 화면(초록색)과 빈 화면을 확인할 수 있습니다. 모두 채운
           뒤 마지막 화면에서 활동 완료를 누르세요. 완료한 활동은 잠기며, 고치려면 ‘완료 취소’를 누릅니다.
         </li>
+        <li>공용 컴퓨터에서 앞 사람의 기록이 보이면 위쪽 ‘↺ 새로 시작’을 눌러 지우고 시작하세요.</li>
         <li>
           알지오3D 모델은 도구에서 .algeo3d로 따로 저장하세요. 학습 기록 JSON에는 답변·스케치·첨부 이미지가 담깁니다.
         </li>
@@ -4976,6 +4995,18 @@ textarea[readonly] {
       <div class="dialog-actions">
         <button id="backup-current">현재 기록 저장</button
         ><button id="confirm-import" class="primary">이 기록 불러오기</button>
+      </div>
+    </dialog>
+    <dialog id="reset-dialog">
+      <header>
+        <h2>새로 시작하기</h2>
+        <button data-close aria-label="새로 시작 닫기">×</button>
+      </header>
+      <p>이 컴퓨터(브라우저)에 저장된 <b>답, 그림, 완료 표시, 학번+이름</b>이 모두 지워지고 표지부터 다시 시작해요.</p>
+      <p>앞 사람이 쓰던 컴퓨터라면 눌러도 괜찮아요. 내 기록이 필요하면 먼저 ‘현재 기록 저장’을 누르세요.</p>
+      <div class="dialog-actions">
+        <button id="reset-backup">현재 기록 저장</button
+        ><button id="reset-confirm" class="primary danger">모두 지우고 새로 시작</button>
       </div>
     </dialog>
     <dialog id="section-dialog">

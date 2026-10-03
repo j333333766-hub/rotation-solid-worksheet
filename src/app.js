@@ -2283,7 +2283,17 @@ function Z() {
     setTimeout(() => URL.revokeObjectURL(e), 3e4),
     B(`학습 기록 파일을 내려받습니다. 도형은 알지오매스에서 따로 저장하세요.`));
 }
-(k(`#export-btn`).addEventListener(`click`, Z),
+(k(`#reset-btn`).addEventListener(`click`, () => k(`#reset-dialog`).showModal()),
+  k(`#reset-backup`).addEventListener(`click`, Z),
+  k(`#reset-confirm`).addEventListener(`click`, () => {
+    // 저장된 기록을 지우고 빈 기록으로 바꾼 뒤 표지에서 다시 연다(알지오3D 작업 공간도 새로 열림).
+    (clearTimeout(N), (M = h()), x(M));
+    try {
+      localStorage.removeItem(WHO_KEY);
+    } catch {}
+    (history.replaceState(null, ``, `#1`), location.reload());
+  }),
+  k(`#export-btn`).addEventListener(`click`, Z),
   k(`#backup-current`).addEventListener(`click`, Z),
   k(`#import-btn`).addEventListener(`click`, () => k(`#import-file`).click()),
   k(`#import-file`).addEventListener(`change`, async (e) => {
