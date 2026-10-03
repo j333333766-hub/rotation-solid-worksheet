@@ -1948,6 +1948,7 @@ textarea[readonly] {
   pointer-events: none;
   width: 820px;
   height: 520px;
+  flex: none;
   position: fixed;
   top: 0;
   left: -10000px;
@@ -2024,4 +2025,40 @@ textarea[readonly] {
 .drawing-note {
   padding: 12px 16px;
   font-size: 17px;
+}
+.recall-btn {
+  color: #fff;
+  background: #e56a90;
+  border: 0;
+  border-radius: 10px;
+  flex: none;
+  padding: 9px 14px;
+  font-size: 15px;
+  font-weight: 800;
+  box-shadow: 0 3px 0 #b84a6d;
+}
+.recall-canvas {
+  border: 1px solid #d1deea;
+  border-radius: 10px;
+  width: 100%;
+  height: auto;
+}
+.recall-text {
+  white-space: pre-wrap;
+  background: #f6f9fc;
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+.recall-hint {
+  color: #8b99a8;
+  font-size: 13px;
+}
+@media (width > 700px) {
+  .tool-strip .guide-short {
+    min-width: 0;
+    font-size: 13px;
+  }
+  .tool-strip .q-tracker .qt-here {
+    display: none;
+  }
 }

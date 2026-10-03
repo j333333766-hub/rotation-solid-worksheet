@@ -520,6 +520,7 @@ var e = {
       space: `E`,
       layout: `strip`,
       guide: `short`,
+      recall: 4,
       title: `알지오3D로 나만의 회전체를 만들고 STL로 내보내세요.`,
       tip: `계속 편집할 모델은 .algeo3d로 따로 저장하세요. STL은 다음 화면의 그림판3D로 옮겨 색칠·장식할 때 사용합니다.`,
     },
@@ -1180,7 +1181,12 @@ function te({ getToolState: e, onToolStateChange: t }) {
   }
   function l(e) {
     // 도구 카드와 iframe은 display:none 대신 보이지 않게만 한다(크기가 0이 되면 알지오3D가 다음부터 모바일 배치로 열린다).
-    ((o = e), n(`#tool-card`).classList.toggle(`parked`, !e.tools));
+    let pc = n(`#tool-card`);
+    // 숨길 때는 지금 크기를 그대로 고정해 둔다(크기가 바뀌면 알지오3D 화면이 제대로 다시 그려지지 않는다).
+    (!e.tools && !pc.classList.contains(`parked`) && ((pc.style.width = `${pc.offsetWidth}px`), (pc.style.height = `${pc.offsetHeight}px`)),
+      e.tools && (pc.style.width = pc.style.height = ``),
+      (o = e),
+      pc.classList.toggle(`parked`, !e.tools));
     for (let e of r.values()) e.classList.add(`parked`);
     if (e.tools) {
       n(`#model-choice`).replaceChildren();
@@ -1483,6 +1489,36 @@ var GUIDE = [
   [`guide4`, `‘회전축 선택’ 창에서 ‘초록색 축(y축) 기준으로 회전’을 눌러요.`],
   [`guide5`, `평면도형을 누르면 y축을 중심으로 돌린 입체도형이 만들어져요. 화면을 끌어 여러 방향에서 관찰해요.`],
 ];
+// 앞에서 그린 그림(문항 q의 스케치와 설명)을 대화상자로 다시 보여 준다.
+function recallDialog(q) {
+  let t = i[q - 1],
+    n = d.find((e) => e.q === q),
+    r = M.drawings[t.drawing] || [],
+    a = (M.answers[t.fields?.[0]?.id] || ``).trim();
+  ((k(`#tip-title`).textContent = `${pageNo(n)}쪽에 그린 나의 입체도형`), k(`#tip-content`).replaceChildren());
+  if (r.some((e) => e.points.length > 1)) {
+    let e = L(`canvas`, `recall-canvas`);
+    ((e.width = 600), (e.height = 340), e.setAttribute(`role`, `img`), e.setAttribute(`aria-label`, `${pageNo(n)}쪽에 그린 그림`));
+    let t = e.getContext(`2d`);
+    ((t.fillStyle = `#fff`), t.fillRect(0, 0, 600, 340));
+    for (let e of r)
+      e.points.length > 1 &&
+        (t.beginPath(),
+        (t.strokeStyle = e.color),
+        (t.lineWidth = 2.8),
+        (t.lineCap = t.lineJoin = `round`),
+        e.points.forEach(([e, n], r) => (r ? t.lineTo(e * 600, n * 340) : t.moveTo(e * 600, n * 340))),
+        t.stroke());
+    k(`#tip-content`).append(e);
+  }
+  a && k(`#tip-content`).append(L(`p`, `recall-text`, a));
+  if (!k(`#tip-content`).children.length) {
+    let e = L(`button`, ``, `${pageNo(n)}쪽으로 가서 그리기 →`);
+    (e.addEventListener(`click`, () => (k(`#tip-dialog`).close(), Y(n.id))),
+      k(`#tip-content`).append(L(`p`, ``, `아직 ${pageNo(n)}쪽에 그린 그림이나 설명이 없어요.`), e));
+  } else k(`#tip-content`).append(L(`p`, `recall-hint`, `이 그림을 보면서 어떤 평면도형을 어느 직선을 축으로 회전하면 될지 생각하며 알지오3D로 만들어 보세요.`));
+  k(`#tip-dialog`).showModal();
+}
 function guideDialog(e = 0) {
   ((k(`#tip-title`).textContent = `알지오3D에서 평면도형을 회전시키는 순서`), k(`#tip-content`).replaceChildren());
   let t = L(`ol`, `guide-big`);
@@ -1928,6 +1964,10 @@ function J() {
     if ((t.hints && s.append(selfCheck(generalHints)), t.sectionCta)) {
       let e = L(`button`, `section-cta`, `🔍 단면 관찰 열기`);
       (e.addEventListener(`click`, () => ne.section(void 0, t.sectionCta)), s.append(e));
+    }
+    if (t.recall) {
+      let e = L(`button`, `recall-btn`, `🖍 ${pageNo(d.find((e) => e.q === t.recall))}쪽에 그린 내 그림 보기`);
+      (e.addEventListener(`click`, () => recallDialog(t.recall)), s.append(e));
     }
     (t.guide === `short` && s.append(guideBox(`short`)), t.checks && K(r, s));
   }
@@ -4022,6 +4062,7 @@ textarea[readonly] {
   pointer-events: none;
   width: 820px;
   height: 520px;
+  flex: none;
   position: fixed;
   top: 0;
   left: -10000px;
@@ -4098,6 +4139,42 @@ textarea[readonly] {
 .drawing-note {
   padding: 12px 16px;
   font-size: 17px;
+}
+.recall-btn {
+  color: #fff;
+  background: #e56a90;
+  border: 0;
+  border-radius: 10px;
+  flex: none;
+  padding: 9px 14px;
+  font-size: 15px;
+  font-weight: 800;
+  box-shadow: 0 3px 0 #b84a6d;
+}
+.recall-canvas {
+  border: 1px solid #d1deea;
+  border-radius: 10px;
+  width: 100%;
+  height: auto;
+}
+.recall-text {
+  white-space: pre-wrap;
+  background: #f6f9fc;
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+.recall-hint {
+  color: #8b99a8;
+  font-size: 13px;
+}
+@media (width > 700px) {
+  .tool-strip .guide-short {
+    min-width: 0;
+    font-size: 13px;
+  }
+  .tool-strip .q-tracker .qt-here {
+    display: none;
+  }
 }
 
 </style>
