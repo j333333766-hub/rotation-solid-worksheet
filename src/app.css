@@ -283,8 +283,9 @@ textarea {
 }
 .intro-row img {
   object-fit: contain;
-  width: 52%;
-  max-height: 200px;
+  width: 56%;
+  max-height: 230px;
+  margin-bottom: 8px;
 }
 .intro-row p {
   flex: 1;
@@ -1819,6 +1820,43 @@ textarea[readonly] {
   padding: 10px 14px;
   font-size: 16px;
   line-height: 1.55;
+  word-break: keep-all;
+}
+.define-box p {
+  margin: 0;
+}
+.define-box p + p {
+  margin-top: 5px;
+}
+.define-box b {
+  color: #3a1f73;
+  font-weight: 800;
+}
+/* 정의 글 옆에 용어 그림 */
+.define-box.with-figure {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.define-box.with-figure .define-text {
+  flex: 1;
+  min-width: 0;
+}
+.define-box.with-figure img {
+  flex: none;
+  width: 40%;
+  max-width: 440px;
+  background: #fff;
+  border-radius: 8px;
+}
+@media (max-width: 860px) {
+  .define-box.with-figure {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .define-box.with-figure img {
+    width: 100%;
+  }
 }
 .frame-box {
   background: #f7f5fd;
@@ -2463,4 +2501,42 @@ button.danger {
 }
 #reset-btn {
   color: #a1531b;
+}
+/* 개념 정리 화면: 넓은 화면에서는 왼쪽에 개념 상자(정의와 용어 그림), 오른쪽에 용어·쓰기 칸·문장 틀 */
+@media (width > 1050px) {
+  [data-slide="concept"] #slide-content {
+    display: grid;
+    grid-template-columns: minmax(0, 43%) minmax(0, 1fr);
+    grid-auto-rows: auto;
+    gap: 9px 18px;
+    align-content: start;
+  }
+  [data-slide="concept"] #slide-content > * {
+    grid-column: 2;
+  }
+  [data-slide="concept"] #slide-content > .define-box {
+    grid-column: 1;
+    grid-row: 1 / span 8;
+    align-self: start;
+    font-size: 15.5px;
+  }
+  [data-slide="concept"] .define-box.with-figure {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  [data-slide="concept"] .define-box.with-figure img {
+    width: 100%;
+    max-width: none;
+  }
+  [data-slide="concept"] .terms {
+    justify-content: flex-start;
+  }
+  [data-slide="concept"] .answer-field {
+    min-height: 150px;
+  }
+}
+/* 도움말 창의 글이 낱말 중간에서 끊기지 않게 */
+#tip-content {
+  word-break: keep-all;
 }
