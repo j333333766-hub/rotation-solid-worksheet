@@ -69,7 +69,7 @@ var e = {
       page: 1,
       title: `우리 주변에서 찾아볼까요?`,
       original: `오늘 해결할 문제를 살펴보시오.`,
-      lead: `우리 주변의 도자기·컵·팽이는 어떻게 이런 매끈한 모양으로 만들어졌을까요?`,
+      lead: `우리 주변의 도자기·컵·팽이는 어떻게 이런 모양으로 만들어졌을까요?`,
       figure: `objects`,
       alt: `원고에 제시된 음료수병, 컵, 원뿔 모양 포장과 도자기`,
       fields: [
@@ -281,7 +281,7 @@ var e = {
       stage: 1,
       name: `회전 도구로 입체도형 맛보기`,
       color: `#0D996E`,
-      question: `우리 주변의 매끈한 물건들은 어떻게 만들어진 것일까?`,
+      question: `우리 주변의 도자기·컵·팽이는 어떻게 만들어진 것일까?`,
     },
     {
       id: `R`,
@@ -343,7 +343,7 @@ var e = {
       id: `big-question`,
       type: `inquiry`,
       title: `이번 탐구를 이끄는 질문`,
-      text: `평면도형을 한 직선을 축으로 하여 1회전 시킬 때 어떤 입체도형이 만들어지며, 그 입체도형의 단면에는 어떤 성질이 나타날까?`,
+      text: `평면도형을 한 직선을 축으로 하여 1회전 시킬 때\n어떤 입체도형이 만들어지며,\n그 입체도형의 단면에는 어떤 성질이 나타날까?`,
     },
     { id: `bridge`, type: `toc`, title: `오늘의 탐구 흐름` },
     ...u(`B`),
@@ -1957,8 +1957,6 @@ function oe(e, t) {
       r.forEach((e, t) => {
         t && e.remove();
       }));
-    let i = L(`button`, `inquiry-go`, e.id === `big-question` ? `탐구 흐름 보기 →` : `활동 시작 →`);
-    (i.addEventListener(`click`, () => Y(d[d.indexOf(e) + 1].id)), n.querySelector(`.bubble`).append(i));
   }
 }
 // 목차의 다리: 누르면 그 단계의 설명만 보여 준다(화면 이동은 다음 버튼·쪽 번호로).
@@ -2101,11 +2099,17 @@ function J() {
   else if (t.type === `ar`) s.append(arGuide());
   else if (t.type === `finish`) {
     let e = L(`div`, `finish-content`);
-    e.append(
-      L(`strong`, ``, `${M.completed.length} / 12 활동 완료`),
-      L(`p`, ``, `나의 생각과 그림, 작품을 학습 기록 파일로 보관하세요.`),
-    );
     let t = i.filter((e) => !M.completed.includes(e.id));
+    e.append(
+      L(`strong`, ``, t.length ? `활동 12개 가운데 ${M.completed.length}개를 마쳤어요` : `오늘의 활동을 모두 마쳤어요`),
+      L(
+        `p`,
+        ``,
+        t.length
+          ? `아직 하지 않은 활동이 ${t.length}개 있어요. 아래 목록에서 이어서 하거나, 지금까지의 기록을 먼저 보관할 수 있어요.`
+          : `수고했어요! 나의 생각과 그림, 작품을 학습 기록 파일로 보관하고 제출하면 끝이에요.`,
+      ),
+    );
     if (t.length) {
       let n = L(`div`, `finish-todo`);
       n.append(L(`p`, ``, `아직 완료하지 않은 활동`));

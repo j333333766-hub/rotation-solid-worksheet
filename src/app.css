@@ -385,6 +385,7 @@ textarea {
   flex-shrink: 0;
 }
 .goal-copy {
+  word-break: keep-all;
   text-align: center;
   color: #174d7a;
   background: #e8f4ff;
@@ -774,6 +775,7 @@ textarea {
 .reference-art .b-text {
   letter-spacing: -0.035em;
   word-break: keep-all;
+  white-space: pre-line;
   margin: 15px 0 0;
   font-size: 23px;
   font-weight: 750;
@@ -2272,7 +2274,8 @@ textarea[readonly] {
   [data-slide="finish"] .finish-content {
     gap: 8px;
   }
-  [data-slide="finish"] .finish-content > p:not(.finish-steps) {
+  /* 아직 안 한 활동 목록이 있을 때만 자리를 아끼려고 안내 문단을 숨긴다(모두 마쳤을 때의 마무리 말은 보인다) */
+  [data-slide="finish"] .finish-content:has(.finish-todo) > p:not(.finish-steps) {
     display: none;
   }
 }
