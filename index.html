@@ -7,6 +7,9 @@
     <meta name="version" content="2.4" />
     <title>알지오매스를 활용한 회전체 만들기 | BRIDGE</title>
     <script type="module">
+// 수업 사이트(파이어베이스)에 실릴 때: 바깥 페이지가 WB_READY(로그인·기록 불러오기)와 WB_HOST(저장·제출 연결)를 준다.
+// 깃허브판처럼 WB_HOST 가 없으면 아래 연결은 모두 그냥 지나간다.
+if (globalThis.WB_READY) await globalThis.WB_READY;
 (function () {
   let e = document.createElement(`link`).relList;
   if (e && e.supports && e.supports(`modulepreload`)) return;
@@ -745,7 +748,7 @@ function resetOldRecords() {
   } catch {}
 }
 function b() {
-  resetOldRecords();
+  globalThis.WB_HOST || resetOldRecords();
   try {
     let e = localStorage.getItem(m);
     return e ? { state: y(JSON.parse(e)), restored: !0 } : { state: h() };
@@ -755,11 +758,14 @@ function b() {
 }
 function x(e) {
   e.savedAt = new Date().toISOString();
+  let ok = !0;
   try {
-    return (localStorage.setItem(m, JSON.stringify(e)), !0);
+    localStorage.setItem(m, JSON.stringify(e));
   } catch {
-    return !1;
+    ok = !1;
   }
+  if (globalThis.WB_HOST) return (globalThis.WB_HOST.save(e), !0);
+  return ok;
 }
 function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage: a, locked: lk = !1, axis: ax = !1 }) {
   let o = document.createElement(`div`);
@@ -1893,6 +1899,7 @@ function ae(e) {
 // ---- 작품 3D 파일(GLB) 제출: 교사의 OneDrive 폴더(공유 링크)를 새 창으로 연다 ----
 var GLB_SUBMIT_URL = `https://icego0265-my.sharepoint.com/:f:/g/personal/j333333_guwol_icems_kr/IgCAsA7TFOuLRZvoN6d1nG3WARgbr5CFjdEcsZ5Fd2RpXVg?e=xWhxB6`;
 function glbSubmitBox() {
+  if (globalThis.WB_HOST) return globalThis.WB_HOST.submitBox();
   let e = L(`div`, `glb-submit`),
     t = L(`a`, `glb-submit-btn`, `📤 3D 파일 제출하기`),
     n = L(`div`);
@@ -1912,6 +1919,9 @@ function glbSubmitBox() {
 }
 // ---- 스마트폰 AR 안내: 제출 폴더를 휴대폰으로 열어 아이폰은 USDZ, 안드로이드는 GLB를 연다 ----
 function arGuide() {
+  const HA = globalThis.WB_HOST && globalThis.WB_HOST.ar,
+    FN = HA ? HA.name : `OneDrive 제출 폴더`,
+    FQ = HA ? HA.qr : window.ASSET_IMG.qrFolder;
   let e = L(`div`, `ar-guide`),
     t = (t, n, r, a) => {
       let i = L(`section`, `ar-col`),
@@ -1927,29 +1937,31 @@ function arGuide() {
     };
   return (
     e.append(
-      L(`p`, `ar-lead`, `39쪽에서 OneDrive 폴더에 올린 내 작품 파일(아이폰은 USDZ, 안드로이드는 GLB)을 스마트폰으로 내려받아 열면, 내 책상이나 바닥 위에 회전체를 띄워 볼 수 있어요. 스마트폰 카메라로 ‘OneDrive 제출 폴더’ QR 코드를 찍어 시작하세요.`),
+      L(`p`, `ar-lead`, HA
+        ? `39쪽에서 제출한 내 작품 파일(아이폰은 USDZ, 안드로이드는 GLB)을 스마트폰으로 내려받아 열면, 내 책상이나 바닥 위에 회전체를 띄워 볼 수 있어요. 스마트폰 카메라로 ‘${FN}’ QR 코드를 찍고 학교 구글 계정으로 로그인해 시작하세요.`
+        : `39쪽에서 OneDrive 폴더에 올린 내 작품 파일(아이폰은 USDZ, 안드로이드는 GLB)을 스마트폰으로 내려받아 열면, 내 책상이나 바닥 위에 회전체를 띄워 볼 수 있어요. 스마트폰 카메라로 ‘OneDrive 제출 폴더’ QR 코드를 찍어 시작하세요.`),
       L(`div`, `ar-cols`),
     ),
     e.lastChild.append(
       t(
         `🍎 아이폰·아이패드`,
         [
-          `카메라로 ‘OneDrive 제출 폴더’ QR 코드를 찍어 폴더를 열어요.`,
-          `내 파일 ‘학번이름.usdz’(예: 10101홍길동.usdz)를 눌러 다운로드한 뒤, 다운로드한 파일을 눌러 열어요.`,
+          HA ? `카메라로 ‘${FN}’ QR 코드를 찍고 학교 구글 계정으로 로그인해요.` : `카메라로 ‘OneDrive 제출 폴더’ QR 코드를 찍어 폴더를 열어요.`,
+          HA ? `내 .usdz 파일의 ‘받기’를 누른 뒤, 다운로드한 파일을 눌러 열어요.` : `내 파일 ‘학번이름.usdz’(예: 10101홍길동.usdz)를 눌러 다운로드한 뒤, 다운로드한 파일을 눌러 열어요.`,
           `3D 모델이 보이면 위쪽의 ‘AR’을 누르고, 휴대폰을 천천히 움직여 바닥을 비춰요.`,
         ],
-        [[window.ASSET_IMG.qrFolder, `OneDrive 제출 폴더`]],
+        [[FQ, FN]],
         `USDZ 파일은 아이폰에서 별도 앱 없이 바로 AR로 열려요.`,
       ),
       t(
         `🤖 안드로이드`,
         [
           `‘Files by Google’ 앱이 없으면 먼저 설치해요. (QR 코드 또는 han.gl/구글파일)`,
-          `카메라로 ‘OneDrive 제출 폴더’ QR 코드를 찍어 폴더를 열고, 내 파일 ‘학번이름.glb’(예: 10101홍길동.glb)를 다운로드해요.`,
+          HA ? `카메라로 ‘${FN}’ QR 코드를 찍고 학교 구글 계정으로 로그인한 뒤, 내 .glb 파일의 ‘받기’를 눌러요.` : `카메라로 ‘OneDrive 제출 폴더’ QR 코드를 찍어 폴더를 열고, 내 파일 ‘학번이름.glb’(예: 10101홍길동.glb)를 다운로드해요.`,
           `‘Files by Google’ 앱 → ‘다운로드’에서 내 .glb 파일을 눌러요. Google 앱으로 3D 모델이 열리면 ‘내 공간에서 보기’(AR)를 눌러요.`,
         ],
         [
-          [window.ASSET_IMG.qrFolder, `OneDrive 제출 폴더`],
+          [FQ, FN],
           [window.ASSET_IMG.qrFiles, `Files by Google 설치`, `han.gl/구글파일`],
         ],
         `다운로드 알림이나 다른 파일 앱에서 .glb를 누르면 Google 앱으로 연결되지 않는 경우가 많아요. 꼭 ‘Files by Google’ 앱에서 여세요.`,
@@ -2178,6 +2190,14 @@ function J() {
     n.addEventListener(`click`, () => (whoGet() ? Z() : (B(`먼저 학번+이름을 적어 주세요.`), wi.focus())));
     let sub = L(`a`, `glb-submit-btn finish-submit`, `📤 OneDrive 제출 폴더 열기`);
     ((sub.href = GLB_SUBMIT_URL), (sub.target = `_blank`), (sub.rel = `noopener`));
+    if (globalThis.WB_HOST) {
+      // 수업 사이트: 쓴 내용은 이미 계정에 저장되고 있다. 마지막에 '제출'로 선생님께 다 했다고 알린다.
+      ((wi.readOnly = !0), (n.textContent = `선생님께 제출하기 ✓`));
+      n.replaceWith((n = n.cloneNode(!0)));
+      n.addEventListener(`click`, () => (V(), globalThis.WB_HOST.submitRecord(M)));
+      sub = L(`span`);
+      e.append(L(`p`, `finish-steps`, `쓴 내용은 내 구글 계정에 자동으로 저장돼요. 다 마쳤으면 ‘선생님께 제출하기’를 눌러요. 제출한 뒤에도 고치면 선생님 화면에 바로 반영돼요.`));
+    } else
     e.append(
       L(`p`, `finish-steps`, `① 학번+이름을 적고 ‘학습 기록 저장하기’를 눌러요(‘다운로드’ 폴더에 ‘학번이름_회전체학습기록.json’이 저장돼요). ② ‘OneDrive 제출 폴더 열기’를 눌러 그 파일을 올려요.`),
     );
