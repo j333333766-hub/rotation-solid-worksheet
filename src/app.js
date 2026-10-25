@@ -2441,3 +2441,10 @@ var $ = Number(location.hash.slice(1));
 (Number.isInteger($) && d[$ - 1] && (M.currentSlide = d[$ - 1].id),
   J(),
   j.warning ? B(j.warning) : (k(`#save-status`).textContent = j.restored ? `● 이전 기록 복원` : `입력하면 자동 저장`));
+// 수업 사이트 교사 현황판 '쪽별 보기'용: 쪽마다 어떤 문항·확인란·그림·알지오3D가 있는지(tools/import 쪽에서 읽어 감)
+globalThis.WB_SLIDES = d.map((s, n) => ({
+  page: n + 1, id: s.id, type: s.type, chapter: s.chapter || null, q: s.q || null, title: s.title || ``,
+  fields: (s.fields || []).map((f) => (typeof f === `string` ? f : f.id)),
+  checks: !!s.checks, statement: s.statement ?? null, tools: s.tools || [], space: s.space || null,
+  drawing: s.q && i[s.q - 1] ? i[s.q - 1].drawing || null : null,
+}));
