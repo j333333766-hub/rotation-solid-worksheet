@@ -770,47 +770,94 @@ function x(e) {
 function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage: a, locked: lk = !1, axis: ax = !1 }) {
   let o = document.createElement(`div`);
   ((o.className = `sketch`),
-    (o.innerHTML = `<div class="sketch-tools"><span class="sketch-label"></span><div class="shape-tools" role="group" aria-label="그리기 도구"><button type="button" data-tool="pen" class="tool active" aria-pressed="true">✏️ 자유선</button><button type="button" data-tool="line" class="tool" aria-pressed="false">／ 선분</button><button type="button" data-tool="ellipse" class="tool" aria-pressed="false">⬭ 타원</button></div><button type="button" class="sym" aria-pressed="false" hidden>⇋ 좌우 대칭</button><div class="pen-colors" role="group" aria-label="펜 색상"><button type="button" data-color="#176d64" class="pen active" aria-label="초록색 펜" aria-pressed="true"></button><button type="button" data-color="#e77738" class="pen" aria-label="주황색 펜" aria-pressed="false"></button><button type="button" data-color="#334155" class="pen" aria-label="검정색 펜" aria-pressed="false"></button></div><button type="button" class="quiet undo">되돌리기</button><button type="button" class="quiet clear">지우기</button></div><canvas width="600" height="340"></canvas><p class="micro"></p>`),
+    (o.innerHTML = `<div class="sketch-tools"><span class="sketch-label"></span><div class="shape-tools" role="group" aria-label="그리기 도구"><button type="button" data-tool="pen" class="tool active" aria-pressed="true">✏️ 자유선</button><button type="button" data-tool="line" class="tool" aria-pressed="false">／ 선분</button><button type="button" data-tool="ellipse" class="tool" aria-pressed="false">⬭ 타원</button><button type="button" data-tool="select" class="tool" aria-pressed="false">↖ 옮기기·크기</button></div><button type="button" class="sym" aria-pressed="false" hidden>⇋ 좌우 대칭</button><div class="pen-colors" role="group" aria-label="펜 색상"><button type="button" data-color="#176d64" class="pen active" aria-label="초록색 펜" aria-pressed="true"></button><button type="button" data-color="#e77738" class="pen" aria-label="주황색 펜" aria-pressed="false"></button><button type="button" data-color="#334155" class="pen" aria-label="검정색 펜" aria-pressed="false"></button></div><button type="button" class="quiet undo">되돌리기</button><button type="button" class="quiet seldel" style="visibility:hidden">고른 도형 지우기</button><button type="button" class="quiet clear">지우기</button></div><canvas width="600" height="340"></canvas><p class="micro"></p>`),
     (o.querySelector(`.sketch-label`).textContent = r),
     e.append(o));
   let s = o.querySelector(`canvas`),
     c = s.getContext(`2d`);
   (s.setAttribute(`aria-label`, r), s.setAttribute(`role`, `img`));
-  let l = null,
+  // 획 = {color, points:[[x,y]…]}(0~1 비율 좌표). 선분은 kind:'line'(점 2개), 타원은 kind:'ellipse' + cx·cy·rx·ry(점 73개로 닫은 곡선),
+  // 좌우 대칭으로 생긴 짝은 mir:1 로 원래 획 바로 뒤에 둔다. 저장·교사 화면은 points 만 쓴다.
+  let d = structuredClone(t),
+    cur = null, // 지금 그리는 획
+    op = null, // 옮기기·크기 끌기 {type, start, orig}
+    sel = -1, // 고른 도형(선분·타원)의 번호
+    hist = [], // 되돌리기용 이전 상태
     u = `#176d64`,
-    d = structuredClone(t),
     tool = `pen`,
     sym = !1;
-  // 좌우 대칭(10/29): 켜면 한쪽에 그린 획을 축(가운데 세로선)에 대해 뒤집은 획(mir)을 함께 남긴다. 되돌리기는 둘을 같이 지운다.
-  const mirror = (k) => ({ color: k.color, ...(k.kind ? { kind: k.kind } : {}), mir: 1, points: k.points.map(([x, y]) => [+(1 - x).toFixed(4), y]) });
-  // 뒤집어도 같은 획(축 위의 선, 축에 대해 대칭인 선분·타원)은 두 번 그리지 않는다
-  const onAxis = (k) => {
-    let xs = k.points.map(([x]) => x),
-      [a0, b0] = [k.points[0], k.points.at(-1)];
-    return k.kind === `ellipse` ? Math.abs(Math.min(...xs) + Math.max(...xs) - 1) < 0.004
-      : xs.every((x) => Math.abs(x - 0.5) < 0.004) || (k.kind === `line` && Math.abs(a0[0] + b0[0] - 1) < 0.004 && Math.abs(a0[1] - b0[1]) < 0.002);
-  };
-  // 선분·타원 도구(10/29): 마우스·터치패드로도 반듯하게 그리도록. 끝점·축·모눈에 달라붙고, 거의 수평·수직인 선분은 반듯하게 편다.
-  // 결과는 자유선과 같은 {color, points} 획(타원은 점 73개로 닫은 곡선)이라 저장·교사 화면은 그대로 쓴다.
   const TIP = {
     pen: `마우스·펜·손가락으로 그리세요. 그리기 어려우면 선분·타원 도구를 쓰거나 작성란에 글로 설명할 수 있어요.`,
-    line: `선분: 시작점에서 끝점까지 끌어요. 축이나 다른 선의 끝점에 가까우면 달라붙고, 거의 수평·수직이면 반듯해져요.`,
-    ellipse: `타원: 가운데 점을 누르고 바깥쪽으로 끌어요. 가운데를 축 위에 두면 축에 대해 좌우가 같은 타원이 돼요.`,
+    line: `선분: 시작점에서 끝점까지 끌어요. 축이나 다른 선의 끝점에 가까우면 달라붙고, 거의 수평·수직이면 반듯해져요. 다 그린 뒤 ‘옮기기·크기’로 고칠 수 있어요.`,
+    ellipse: `타원: 가운데 점을 누르고 바깥쪽으로 끌어요. 가운데를 축 위에 두면 좌우가 같은 타원이 돼요. 다 그린 뒤 ‘옮기기·크기’로 고칠 수 있어요.`,
+    select: `옮기기·크기: 선분이나 타원을 눌러 고른 뒤 끌어서 옮겨요. 네모 손잡이를 끌면 선분의 끝점, 타원의 가로·세로 길이가 바뀌어요. 좌우 대칭 짝도 함께 바뀌어요.`,
   };
-  o.querySelector(`.micro`).textContent = TIP.pen;
-  function snapPt(q, keepFree) {
-    let r = s.getBoundingClientRect(),
-      W = r.width || 600,
-      H = r.height || 340,
+  const micro = (txt) => (o.querySelector(`.micro`).textContent = txt);
+  micro(TIP.pen);
+  const r4 = (v) => +v.toFixed(4);
+  const box = () => {
+    let b = s.getBoundingClientRect();
+    return { W: b.width || 600, H: b.height || 340 };
+  };
+  function ellipsePts(cx, cy, rx, ry) {
+    let out = [];
+    for (let k = 0; k <= 72; k++) {
+      let g = (k / 72) * Math.PI * 2;
+      out.push([r4(cx + rx * Math.cos(g)), r4(cy + ry * Math.sin(g))]);
+    }
+    return out;
+  }
+  // 타원의 가운데·반지름(예전 획처럼 값이 없으면 점에서 구함)
+  function ep(k) {
+    if (k.cx !== undefined) return { cx: k.cx, cy: k.cy, rx: k.rx, ry: k.ry };
+    let xs = k.points.map(([x]) => x),
+      ys = k.points.map(([, y]) => y);
+    return { cx: (Math.min(...xs) + Math.max(...xs)) / 2, cy: (Math.min(...ys) + Math.max(...ys)) / 2, rx: (Math.max(...xs) - Math.min(...xs)) / 2, ry: (Math.max(...ys) - Math.min(...ys)) / 2 };
+  }
+  function setEllipse(k, cx, cy, rx, ry) {
+    Object.assign(k, { cx: r4(cx), cy: r4(cy), rx: r4(rx), ry: r4(ry) });
+    k.points = ellipsePts(cx, cy, rx, ry);
+  }
+  // 축(가운데 세로선)에 대해 뒤집은 획
+  function mirror(k) {
+    let m = { color: k.color, ...(k.kind ? { kind: k.kind } : {}), mir: 1, points: k.points.map(([x, y]) => [r4(1 - x), y]) };
+    if (k.kind === `ellipse`) {
+      let q = ep(k);
+      Object.assign(m, { cx: r4(1 - q.cx), cy: q.cy, rx: q.rx, ry: q.ry });
+    }
+    return m;
+  }
+  // 뒤집어도 같은 획(축 위의 선, 축에 대해 대칭인 선분·타원)은 두 번 그리지 않는다
+  function onAxis(k) {
+    let xs = k.points.map(([x]) => x),
+      [a0, b0] = [k.points[0], k.points.at(-1)];
+    return k.kind === `ellipse` ? Math.abs(ep(k).cx - 0.5) < 0.002
+      : xs.every((x) => Math.abs(x - 0.5) < 0.004) || (k.kind === `line` && Math.abs(a0[0] + b0[0] - 1) < 0.004 && Math.abs(a0[1] - b0[1]) < 0.002);
+  }
+  // 좌우 대칭 짝의 번호(없으면 -1)
+  function partnerOf(j) {
+    if (d[j]?.mir) return d[j - 1] && !d[j - 1].mir ? j - 1 : -1;
+    return d[j + 1]?.mir ? j + 1 : -1;
+  }
+  function syncPartner(j) {
+    let pj = partnerOf(j);
+    if (pj < 0) return;
+    let m = mirror(d[j]);
+    d[j].mir && delete m.mir;
+    d[pj] = m;
+  }
+  // 축·모눈·다른 선의 끝점에 달라붙기. skip = 끌고 있는 도형(과 짝)은 빼고 본다
+  function snapPt(q, keepFree, skip = []) {
+    let { W, H } = box(),
       best = null,
       bd = 11;
-    for (let k of d) {
-      if (k === l || k.kind === `ellipse` || !k.points.length) continue;
+    d.forEach((k, j) => {
+      if (k === cur || skip.includes(j) || k.kind === `ellipse` || !k.points.length) return;
       for (let e of [k.points[0], k.points.at(-1)]) {
         let dd = Math.hypot((e[0] - q[0]) * W, (e[1] - q[1]) * H);
         dd < bd && ((bd = dd), (best = e));
       }
-    }
+    });
     if (best) return [best[0], best[1], 1];
     if (keepFree) return q;
     let x = q[0],
@@ -824,15 +871,49 @@ function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage:
     (ax || n) && Math.abs(x - 0.5) * W < 10 && (x = 0.5);
     return [x, y];
   }
-  function ellipsePts(c, e) {
-    let rx = Math.abs(e[0] - c[0]),
-      ry = Math.abs(e[1] - c[1]),
-      out = [];
-    for (let k = 0; k <= 72; k++) {
-      let a = (k / 72) * Math.PI * 2;
-      out.push([+(c[0] + rx * Math.cos(a)).toFixed(4), +(c[1] + ry * Math.sin(a)).toFixed(4)]);
+  // 거의 수평·수직이면 반듯하게
+  function straighten(a0, b) {
+    let { W, H } = box(),
+      dx = (b[0] - a0[0]) * W,
+      dy = (b[1] - a0[1]) * H;
+    return Math.abs(dy) < Math.abs(dx) * 0.1 ? [b[0], a0[1]] : Math.abs(dx) < Math.abs(dy) * 0.1 ? [a0[0], b[1]] : [b[0], b[1]];
+  }
+  // 고른 도형의 손잡이(비율 좌표)
+  function handles(k) {
+    if (k.kind === `line`) return k.points.map(([x, y], j) => ({ h: `p${j}`, x, y }));
+    let q = ep(k);
+    return [
+      { h: `rx`, x: q.cx + q.rx, y: q.cy },
+      { h: `rx`, x: q.cx - q.rx, y: q.cy },
+      { h: `ry`, x: q.cx, y: q.cy + q.ry },
+      { h: `ry`, x: q.cx, y: q.cy - q.ry },
+    ];
+  }
+  function hitHandle(q) {
+    if (sel < 0 || !d[sel]) return null;
+    let { W, H } = box();
+    return handles(d[sel]).find((g) => Math.hypot((g.x - q[0]) * W, (g.y - q[1]) * H) < 11) || null;
+  }
+  // 누른 곳의 선분·타원(위에 그린 것부터)
+  function hitShape(q) {
+    let { W, H } = box();
+    for (let j = d.length - 1; j >= 0; j--) {
+      let k = d[j];
+      if (k.kind === `line`) {
+        let [[x1, y1], [x2, y2]] = k.points,
+          ax1 = x1 * W, ay1 = y1 * H, bx = x2 * W, by = y2 * H, px = q[0] * W, py = q[1] * H,
+          L2 = (bx - ax1) ** 2 + (by - ay1) ** 2,
+          tt = L2 ? Math.max(0, Math.min(1, ((px - ax1) * (bx - ax1) + (py - ay1) * (by - ay1)) / L2)) : 0;
+        if (Math.hypot(px - (ax1 + tt * (bx - ax1)), py - (ay1 + tt * (by - ay1))) < 10) return j;
+      } else if (k.kind === `ellipse`) {
+        let g = ep(k),
+          rx = Math.max(g.rx * W, 8),
+          ry = Math.max(g.ry * H, 8),
+          v = ((q[0] - g.cx) * W / (rx + 8)) ** 2 + ((q[1] - g.cy) * H / (ry + 8)) ** 2;
+        if (v <= 1) return j;
+      }
     }
-    return out;
+    return -1;
   }
   function f() {
     if ((c.clearRect(0, 0, 600, 340), (c.fillStyle = `#fff`), c.fillRect(0, 0, 600, 340), n)) {
@@ -870,107 +951,173 @@ function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage:
       (c.fillStyle = `#c97a3a`),
       (c.font = `13px sans-serif`),
       c.fillText(`축`, 308, 24));
-    for (let e of sym && l && !onAxis(l) ? [...d, mirror(l)] : d)
-      e.points.length &&
-        (c.beginPath(),
-        (c.strokeStyle = e.color),
-        (c.lineWidth = 2.8),
-        (c.lineCap = `round`),
-        (c.lineJoin = `round`),
-        e.points.forEach(([e, t], n) => (n ? c.lineTo(e * 600, t * 340) : c.moveTo(e * 600, t * 340))),
-        c.stroke());
-    ((o.querySelector(`.undo`).disabled = lk || !d.length), (o.querySelector(`.clear`).disabled = lk || !d.length));
+    let path = (k) => {
+      c.beginPath();
+      k.points.forEach(([x, y], j) => (j ? c.lineTo(x * 600, y * 340) : c.moveTo(x * 600, y * 340)));
+    };
+    // 고른 도형(과 짝)은 밑에 하늘색 띠
+    if (tool === `select` && d[sel]) {
+      ((c.strokeStyle = `#9cc9f5`), (c.lineWidth = 9), (c.lineCap = `round`), (c.lineJoin = `round`));
+      for (let j of [sel, partnerOf(sel)]) j >= 0 && (path(d[j]), c.stroke());
+    }
+    for (let k of sym && cur && !onAxis(cur) ? [...d, mirror(cur)] : d)
+      k.points.length && ((c.strokeStyle = k.color), (c.lineWidth = 2.8), (c.lineCap = `round`), (c.lineJoin = `round`), path(k), c.stroke());
+    // 손잡이: 화면에서 정사각형으로 보이게 캔버스 비율을 맞춘다
+    if (tool === `select` && d[sel]) {
+      let { W, H } = box(),
+        hw = (10 * 600) / W,
+        hh = (10 * 340) / H;
+      ((c.fillStyle = `#fff`), (c.strokeStyle = `#1c7ed6`), (c.lineWidth = 1.5));
+      for (let g of handles(d[sel])) (c.fillRect(g.x * 600 - hw / 2, g.y * 340 - hh / 2, hw, hh), c.strokeRect(g.x * 600 - hw / 2, g.y * 340 - hh / 2, hw, hh));
+    }
+    ((o.querySelector(`.undo`).disabled = lk || (!d.length && !hist.length)), (o.querySelector(`.clear`).disabled = lk || !d.length));
+    o.querySelector(`.seldel`).style.visibility = tool === `select` && d[sel] ? `` : `hidden`; // 자리는 늘 차지해 그림판 크기가 변하지 않게
   }
   lk && o.classList.add(`locked`);
   function p(e) {
     let t = s.getBoundingClientRect();
-    return [
-      Math.max(0, Math.min(1, (e.clientX - t.left) / t.width)),
-      Math.max(0, Math.min(1, (e.clientY - t.top) / t.height)),
-    ];
+    return [Math.max(0, Math.min(1, (e.clientX - t.left) / t.width)), Math.max(0, Math.min(1, (e.clientY - t.top) / t.height))];
   }
-  (s.addEventListener(`pointerdown`, (e) => {
-    if (e.button === 0) {
-      if (lk) {
-        a(`완료한 활동이에요. 고치려면 먼저 ‘완료 취소’를 누르세요.`);
-        return;
-      }
-      if (d.length >= 500) {
-        a(`스케치가 꽉 찼어요. 일부를 지우거나 글로 설명해 주세요.`);
-        return;
-      }
-      if ((e.preventDefault(), s.setPointerCapture(e.pointerId), tool !== `pen`)) {
-        let a0 = snapPt(p(e)).slice(0, 2);
-        ((l = { color: u, kind: tool, start: a0, points: [a0, a0] }), d.push(l), f());
-        return;
-      }
-      ((l = { color: u, points: [p(e)] }), d.push(l), f());
+  const snapshot = () => (hist.push(structuredClone(d)), hist.length > 60 && hist.shift());
+  const save = () => i(structuredClone(d));
+  s.addEventListener(`pointerdown`, (e) => {
+    if (e.button !== 0) return;
+    if (lk) {
+      a(`완료한 활동이에요. 고치려면 먼저 ‘완료 취소’를 누르세요.`);
+      return;
     }
-  }),
-    s.addEventListener(`pointermove`, (e) => {
-      if (!l) return;
-      if (l.kind) {
-        e.preventDefault();
-        let r = s.getBoundingClientRect(),
-          a0 = l.start,
-          b = snapPt(p(e), l.kind === `ellipse`);
-        if (l.kind === `line`) {
-          if (!b[2]) {
-            let dx = (b[0] - a0[0]) * r.width,
-              dy = (b[1] - a0[1]) * r.height;
-            Math.abs(dy) < Math.abs(dx) * 0.1 ? (b = [b[0], a0[1]]) : Math.abs(dx) < Math.abs(dy) * 0.1 && (b = [a0[0], b[1]]);
-          }
-          l.points = [a0, [b[0], b[1]]];
-        } else l.points = ellipsePts(a0, b);
-        f();
-        return;
+    let q = p(e);
+    if (tool === `select`) {
+      let g = hitHandle(q);
+      if (!g) {
+        sel = hitShape(q);
+        if (sel < 0) return f();
       }
-      if ((e.preventDefault(), l.points.length >= 5e3)) return;
-      let t = p(e),
-        n = l.points.at(-1);
-      Math.hypot(t[0] - n[0], t[1] - n[1]) > 0.0015 && (l.points.push(t), f());
-    }));
+      (e.preventDefault(), s.setPointerCapture(e.pointerId), snapshot());
+      op = { type: g ? g.h : `move`, start: q, orig: structuredClone(d[sel]) };
+      return f();
+    }
+    if (d.length >= 500) {
+      a(`스케치가 꽉 찼어요. 일부를 지우거나 글로 설명해 주세요.`);
+      return;
+    }
+    (e.preventDefault(), s.setPointerCapture(e.pointerId), snapshot(), (sel = -1));
+    if (tool !== `pen`) {
+      let a0 = snapPt(q).slice(0, 2);
+      cur = { color: u, kind: tool, start: a0, points: [a0, a0] };
+    } else cur = { color: u, points: [q] };
+    (d.push(cur), f());
+  });
+  s.addEventListener(`pointermove`, (e) => {
+    if (op) {
+      e.preventDefault();
+      let q = p(e),
+        k = d[sel],
+        O = op.orig,
+        { W } = box();
+      if (op.type === `move`) {
+        let dx = q[0] - op.start[0],
+          dy = q[1] - op.start[1];
+        if (k.kind === `ellipse`) {
+          let g = ep(O),
+            cx = g.cx + dx;
+          (ax || n) && Math.abs(cx - 0.5) * W < 10 && (cx = 0.5);
+          setEllipse(k, cx, g.cy + dy, g.rx, g.ry);
+        } else k.points = O.points.map(([x, y]) => [r4(x + dx), r4(y + dy)]);
+      } else if (op.type === `rx` || op.type === `ry`) {
+        let g = ep(O),
+          rx = op.type === `rx` ? Math.max(0.008, Math.abs(q[0] - g.cx)) : g.rx,
+          ry = op.type === `ry` ? Math.max(0.008, Math.abs(q[1] - g.cy)) : g.ry;
+        setEllipse(k, g.cx, g.cy, rx, ry);
+      } else {
+        let j = op.type === `p0` ? 0 : 1,
+          other = O.points[1 - j],
+          b = snapPt(q, !1, [sel, partnerOf(sel)]);
+        b = b[2] ? [b[0], b[1]] : straighten(other, b);
+        k.points = j ? [other, [r4(b[0]), r4(b[1])]] : [[r4(b[0]), r4(b[1])], other];
+      }
+      return (syncPartner(sel), f());
+    }
+    if (!cur) return;
+    e.preventDefault();
+    if (cur.kind) {
+      let a0 = cur.start,
+        b = snapPt(p(e), cur.kind === `ellipse`);
+      if (cur.kind === `line`) cur.points = [a0, b[2] ? [b[0], b[1]] : straighten(a0, b)];
+      else setEllipse(cur, a0[0], a0[1], Math.abs(b[0] - a0[0]), Math.abs(b[1] - a0[1]));
+      return f();
+    }
+    if (cur.points.length >= 5e3) return;
+    let q = p(e),
+      last = cur.points.at(-1);
+    Math.hypot(q[0] - last[0], q[1] - last[1]) > 0.0015 && (cur.points.push(q), f());
+  });
   function m() {
-    if (!l) return;
-    if (l.kind) {
-      let r = s.getBoundingClientRect(),
-        [a0, b] = l.kind === `line` ? l.points : [l.start, [l.points[0][0], l.points[18][1]]];
-      (Math.abs(b[0] - a0[0]) * r.width < 4 && Math.abs(b[1] - a0[1]) * r.height < 4 ? d.pop() : delete l.start);
-    } else l.points.length < 2 && d.pop();
-    sym && d.at(-1) === l && !onAxis(l) && d.push(mirror(l));
-    ((l = null), f(), i(structuredClone(d)));
+    if (op) {
+      // 그대로 놓았으면 되돌리기 기록을 남기지 않는다
+      JSON.stringify(op.orig) === JSON.stringify(d[sel]) ? hist.pop() : save();
+      op = null;
+      return f();
+    }
+    if (!cur) return;
+    let k = cur;
+    if (k.kind) {
+      let { W, H } = box(),
+        small = k.kind === `line`
+          ? Math.abs(k.points[1][0] - k.points[0][0]) * W < 4 && Math.abs(k.points[1][1] - k.points[0][1]) * H < 4
+          : ep(k).rx * W < 3 && ep(k).ry * H < 3;
+      small ? d.pop() : delete k.start;
+    } else k.points.length < 2 && d.pop();
+    if (d.at(-1) !== k) {
+      (hist.pop(), (cur = null), f());
+      return;
+    }
+    sym && !onAxis(k) && d.push(mirror(k));
+    ((cur = null), f(), save());
   }
-  (s.addEventListener(`pointerup`, m),
-    s.addEventListener(`pointercancel`, m),
-    s.addEventListener(`lostpointercapture`, m),
-    o.querySelectorAll(`[data-color]`).forEach((e) => {
-      (e.style.setProperty(`--pen`, e.dataset.color),
-        e.addEventListener(`click`, () => {
-          ((u = e.dataset.color),
-            o.querySelectorAll(`[data-color]`).forEach((t) => {
-              (t.classList.toggle(`active`, t === e), t.setAttribute(`aria-pressed`, String(t === e)));
-            }));
-        }));
-    }),
-    o.querySelectorAll(`[data-tool]`).forEach((e) => {
+  (s.addEventListener(`pointerup`, m), s.addEventListener(`pointercancel`, m), s.addEventListener(`lostpointercapture`, m));
+  o.querySelectorAll(`[data-color]`).forEach((e) => {
+    (e.style.setProperty(`--pen`, e.dataset.color),
       e.addEventListener(`click`, () => {
-        ((tool = e.dataset.tool), sym || (o.querySelector(`.micro`).textContent = TIP[tool]));
-        o.querySelectorAll(`[data-tool]`).forEach((t) => {
-          (t.classList.toggle(`active`, t === e), t.setAttribute(`aria-pressed`, String(t === e)));
-        });
-      });
-    }),
-    o.querySelector(`.undo`).addEventListener(`click`, () => {
-      (d.pop()?.mir && d.pop(), f(), i(structuredClone(d)));
-    }),
-    (() => {
-      let b = o.querySelector(`.sym`);
-      ((b.hidden = !(ax || n)),
-        b.addEventListener(`click`, () => {
-          ((sym = !sym), b.classList.toggle(`active`, sym), b.setAttribute(`aria-pressed`, String(sym)));
-          o.querySelector(`.micro`).textContent = sym ? `좌우 대칭: 축의 한쪽에만 그리면 반대쪽이 저절로 그려져요. 되돌리기를 누르면 둘 다 지워져요.` : TIP[tool];
-        }));
-    })());
+        u = e.dataset.color;
+        o.querySelectorAll(`[data-color]`).forEach((t) => (t.classList.toggle(`active`, t === e), t.setAttribute(`aria-pressed`, String(t === e))));
+        // 도형을 고른 채 색을 누르면 그 도형(과 짝)의 색을 바꾼다
+        if (tool === `select` && d[sel] && !lk && d[sel].color !== u) {
+          snapshot();
+          for (let j of [sel, partnerOf(sel)]) j >= 0 && (d[j].color = u);
+          (f(), save());
+        }
+      }));
+  });
+  o.querySelectorAll(`[data-tool]`).forEach((e) => {
+    e.addEventListener(`click`, () => {
+      tool = e.dataset.tool;
+      s.style.cursor = tool === `select` ? `pointer` : ``;
+      tool !== `select` && (sel = -1);
+      sym && tool !== `select` ? micro(TIP.sym) : micro(TIP[tool]);
+      o.querySelectorAll(`[data-tool]`).forEach((t) => (t.classList.toggle(`active`, t === e), t.setAttribute(`aria-pressed`, String(t === e))));
+      f();
+    });
+  });
+  TIP.sym = `좌우 대칭: 축의 한쪽에만 그리면 반대쪽이 저절로 그려져요. 되돌리기를 누르면 둘 다 지워져요.`;
+  o.querySelector(`.undo`).addEventListener(`click`, () => {
+    if (hist.length) d = hist.pop();
+    else d.pop()?.mir && d.pop(); // 예전에 그려 둔 그림: 마지막 획(대칭 짝이면 둘)
+    ((sel = -1), f(), save());
+  });
+  o.querySelector(`.seldel`).addEventListener(`click`, () => {
+    if (!d[sel] || lk) return;
+    snapshot();
+    let pj = partnerOf(sel);
+    (d.splice(Math.max(sel, pj), 1), pj >= 0 && d.splice(Math.min(sel, pj), 1));
+    ((sel = -1), f(), save());
+  });
+  let b = o.querySelector(`.sym`);
+  ((b.hidden = !(ax || n)),
+    b.addEventListener(`click`, () => {
+      ((sym = !sym), b.classList.toggle(`active`, sym), b.setAttribute(`aria-pressed`, String(sym)));
+      micro(sym && tool !== `select` ? TIP.sym : TIP[tool]);
+    }));
   let h = !1;
   return (
     o.querySelector(`.clear`).addEventListener(`click`, (e) => {
@@ -982,7 +1129,7 @@ function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage:
           }, 3500));
         return;
       }
-      ((d = []), (h = !1), (e.target.textContent = `지우기`), f(), i([]));
+      (snapshot(), (d = []), (sel = -1), (h = !1), (e.target.textContent = `지우기`), f(), save());
     }),
     f(),
     () => {}
@@ -3131,6 +3278,10 @@ textarea {
   margin: 0;
   padding: 7px 10px;
   font-size: 11px;
+  line-height: 1.45;
+  /* 도구마다 안내 길이가 달라도 그림판 높이가 바뀌지 않게 두 줄 자리를 늘 둔다 */
+  min-height: calc(2.9em + 14px);
+  box-sizing: border-box;
 }
 .upload-layout {
   flex: 1;

@@ -569,6 +569,10 @@ textarea {
   margin: 0;
   padding: 7px 10px;
   font-size: 11px;
+  line-height: 1.45;
+  /* 도구마다 안내 길이가 달라도 그림판 높이가 바뀌지 않게 두 줄 자리를 늘 둔다 */
+  min-height: calc(2.9em + 14px);
+  box-sizing: border-box;
 }
 .upload-layout {
   flex: 1;
