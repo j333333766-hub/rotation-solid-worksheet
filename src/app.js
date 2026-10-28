@@ -692,7 +692,12 @@ function y(e) {
         return [e[0], e[1]];
       });
       if (((n += t.length), n > 6e4)) throw Error(`스케치가 너무 큽니다.`);
-      return { color: e.color, points: t };
+      // 선분·타원·대칭 짝 표시도 지닌다(버리면 새로고침 뒤 옮기기·크기·짝 맞추기가 안 된다)
+      let g = { color: e.color, points: t };
+      if (e.mir === 1) g.mir = 1;
+      if (e.kind === `line` && t.length === 2) g.kind = `line`;
+      if (e.kind === `ellipse` && [e.cx, e.cy, e.rx, e.ry].every((q) => v(q, 0, 1))) Object.assign(g, { kind: `ellipse`, cx: e.cx, cy: e.cy, rx: e.rx, ry: e.ry });
+      return g;
     });
   }
   if (e.image !== null && e.image !== void 0) {
