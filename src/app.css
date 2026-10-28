@@ -509,6 +509,21 @@ textarea {
   font-size: 13px;
   font-weight: 600;
 }
+.sketch-tools .sym {
+  color: #8a4b12;
+  white-space: nowrap;
+  background: #fff;
+  border: 1px solid #f0c9a4;
+  border-radius: 9px;
+  padding: 6px 10px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.sketch-tools .sym.active {
+  color: #fff;
+  background: #d9772f;
+  border-color: #d9772f;
+}
 .shape-tools .tool.active {
   color: #fff;
   background: #176d64;

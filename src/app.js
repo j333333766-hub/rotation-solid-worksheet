@@ -761,7 +761,7 @@ function x(e) {
 function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage: a, locked: lk = !1, axis: ax = !1 }) {
   let o = document.createElement(`div`);
   ((o.className = `sketch`),
-    (o.innerHTML = `<div class="sketch-tools"><span class="sketch-label"></span><div class="shape-tools" role="group" aria-label="그리기 도구"><button type="button" data-tool="pen" class="tool active" aria-pressed="true">✏️ 자유선</button><button type="button" data-tool="line" class="tool" aria-pressed="false">／ 선분</button><button type="button" data-tool="ellipse" class="tool" aria-pressed="false">⬭ 타원</button></div><div class="pen-colors" role="group" aria-label="펜 색상"><button type="button" data-color="#176d64" class="pen active" aria-label="초록색 펜" aria-pressed="true"></button><button type="button" data-color="#e77738" class="pen" aria-label="주황색 펜" aria-pressed="false"></button><button type="button" data-color="#334155" class="pen" aria-label="검정색 펜" aria-pressed="false"></button></div><button type="button" class="quiet undo">되돌리기</button><button type="button" class="quiet clear">지우기</button></div><canvas width="600" height="340"></canvas><p class="micro"></p>`),
+    (o.innerHTML = `<div class="sketch-tools"><span class="sketch-label"></span><div class="shape-tools" role="group" aria-label="그리기 도구"><button type="button" data-tool="pen" class="tool active" aria-pressed="true">✏️ 자유선</button><button type="button" data-tool="line" class="tool" aria-pressed="false">／ 선분</button><button type="button" data-tool="ellipse" class="tool" aria-pressed="false">⬭ 타원</button></div><button type="button" class="sym" aria-pressed="false" hidden>⇋ 좌우 대칭</button><div class="pen-colors" role="group" aria-label="펜 색상"><button type="button" data-color="#176d64" class="pen active" aria-label="초록색 펜" aria-pressed="true"></button><button type="button" data-color="#e77738" class="pen" aria-label="주황색 펜" aria-pressed="false"></button><button type="button" data-color="#334155" class="pen" aria-label="검정색 펜" aria-pressed="false"></button></div><button type="button" class="quiet undo">되돌리기</button><button type="button" class="quiet clear">지우기</button></div><canvas width="600" height="340"></canvas><p class="micro"></p>`),
     (o.querySelector(`.sketch-label`).textContent = r),
     e.append(o));
   let s = o.querySelector(`canvas`),
@@ -770,7 +770,17 @@ function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage:
   let l = null,
     u = `#176d64`,
     d = structuredClone(t),
-    tool = `pen`;
+    tool = `pen`,
+    sym = !1;
+  // 좌우 대칭(10/29): 켜면 한쪽에 그린 획을 축(가운데 세로선)에 대해 뒤집은 획(mir)을 함께 남긴다. 되돌리기는 둘을 같이 지운다.
+  const mirror = (k) => ({ color: k.color, ...(k.kind ? { kind: k.kind } : {}), mir: 1, points: k.points.map(([x, y]) => [+(1 - x).toFixed(4), y]) });
+  // 뒤집어도 같은 획(축 위의 선, 축에 대해 대칭인 선분·타원)은 두 번 그리지 않는다
+  const onAxis = (k) => {
+    let xs = k.points.map(([x]) => x),
+      [a0, b0] = [k.points[0], k.points.at(-1)];
+    return k.kind === `ellipse` ? Math.abs(Math.min(...xs) + Math.max(...xs) - 1) < 0.004
+      : xs.every((x) => Math.abs(x - 0.5) < 0.004) || (k.kind === `line` && Math.abs(a0[0] + b0[0] - 1) < 0.004 && Math.abs(a0[1] - b0[1]) < 0.002);
+  };
   // 선분·타원 도구(10/29): 마우스·터치패드로도 반듯하게 그리도록. 끝점·축·모눈에 달라붙고, 거의 수평·수직인 선분은 반듯하게 편다.
   // 결과는 자유선과 같은 {color, points} 획(타원은 점 73개로 닫은 곡선)이라 저장·교사 화면은 그대로 쓴다.
   const TIP = {
@@ -851,7 +861,7 @@ function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage:
       (c.fillStyle = `#c97a3a`),
       (c.font = `13px sans-serif`),
       c.fillText(`축`, 308, 24));
-    for (let e of d)
+    for (let e of sym && l && !onAxis(l) ? [...d, mirror(l)] : d)
       e.points.length &&
         (c.beginPath(),
         (c.strokeStyle = e.color),
@@ -918,6 +928,7 @@ function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage:
         [a0, b] = l.kind === `line` ? l.points : [l.start, [l.points[0][0], l.points[18][1]]];
       (Math.abs(b[0] - a0[0]) * r.width < 4 && Math.abs(b[1] - a0[1]) * r.height < 4 ? d.pop() : delete l.start);
     } else l.points.length < 2 && d.pop();
+    sym && d.at(-1) === l && !onAxis(l) && d.push(mirror(l));
     ((l = null), f(), i(structuredClone(d)));
   }
   (s.addEventListener(`pointerup`, m),
@@ -934,15 +945,23 @@ function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage:
     }),
     o.querySelectorAll(`[data-tool]`).forEach((e) => {
       e.addEventListener(`click`, () => {
-        ((tool = e.dataset.tool), (o.querySelector(`.micro`).textContent = TIP[tool]));
+        ((tool = e.dataset.tool), sym || (o.querySelector(`.micro`).textContent = TIP[tool]));
         o.querySelectorAll(`[data-tool]`).forEach((t) => {
           (t.classList.toggle(`active`, t === e), t.setAttribute(`aria-pressed`, String(t === e)));
         });
       });
     }),
     o.querySelector(`.undo`).addEventListener(`click`, () => {
-      (d.pop(), f(), i(structuredClone(d)));
-    }));
+      (d.pop()?.mir && d.pop(), f(), i(structuredClone(d)));
+    }),
+    (() => {
+      let b = o.querySelector(`.sym`);
+      ((b.hidden = !(ax || n)),
+        b.addEventListener(`click`, () => {
+          ((sym = !sym), b.classList.toggle(`active`, sym), b.setAttribute(`aria-pressed`, String(sym)));
+          o.querySelector(`.micro`).textContent = sym ? `좌우 대칭: 축의 한쪽에만 그리면 반대쪽이 저절로 그려져요. 되돌리기를 누르면 둘 다 지워져요.` : TIP[tool];
+        }));
+    })());
   let h = !1;
   return (
     o.querySelector(`.clear`).addEventListener(`click`, (e) => {
