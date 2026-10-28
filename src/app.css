@@ -473,12 +473,25 @@ textarea {
   min-height: 0;
   display: flex;
   overflow: hidden;
+  position: relative;
+}
+/* '고른 도형 지우기'는 도구 줄 밖, 그림판 오른쪽 아래에 띄운다(도구 줄이 1366px 노트북에서 셋째 줄로 밀리지 않게) */
+.sketch .seldel {
+  position: absolute;
+  right: 10px;
+  bottom: calc(2.9em + 22px);
+  z-index: 2;
+  background: #fff;
+  border: 1px solid #cddbe7;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px #0001;
 }
 .sketch-tools {
   background: #eff6fd;
   flex-wrap: wrap;
   align-items: center;
-  gap: 7px;
+  /* 1366px 노트북에서도 도구가 한 줄에 들어가게(셋째 줄로 밀리면 그림판이 좁아진다) */
+  gap: 5px;
   padding: 10px;
   display: flex;
 }
@@ -505,7 +518,7 @@ textarea {
   background: 0 0;
   border: 0;
   border-radius: 7px;
-  padding: 5px 9px;
+  padding: 5px 7px;
   font-size: 13px;
   font-weight: 600;
 }
@@ -515,7 +528,7 @@ textarea {
   background: #fff;
   border: 1px solid #f0c9a4;
   border-radius: 9px;
-  padding: 6px 10px;
+  padding: 6px 8px;
   font-size: 13px;
   font-weight: 700;
 }
