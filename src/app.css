@@ -491,6 +491,28 @@ textarea {
   gap: 2px;
   display: flex;
 }
+.shape-tools {
+  background: #fff;
+  border: 1px solid #cddbe7;
+  border-radius: 9px;
+  gap: 2px;
+  padding: 2px;
+  display: flex;
+}
+.shape-tools .tool {
+  color: #3d5a72;
+  white-space: nowrap;
+  background: 0 0;
+  border: 0;
+  border-radius: 7px;
+  padding: 5px 9px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.shape-tools .tool.active {
+  color: #fff;
+  background: #176d64;
+}
 .pen {
   background: 0 0;
   border: 2px solid #0000;

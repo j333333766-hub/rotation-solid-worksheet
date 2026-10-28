@@ -761,7 +761,7 @@ function x(e) {
 function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage: a, locked: lk = !1, axis: ax = !1 }) {
   let o = document.createElement(`div`);
   ((o.className = `sketch`),
-    (o.innerHTML = `<div class="sketch-tools"><span class="sketch-label"></span><div class="pen-colors" role="group" aria-label="펜 색상"><button type="button" data-color="#176d64" class="pen active" aria-label="초록색 펜" aria-pressed="true"></button><button type="button" data-color="#e77738" class="pen" aria-label="주황색 펜" aria-pressed="false"></button><button type="button" data-color="#334155" class="pen" aria-label="검정색 펜" aria-pressed="false"></button></div><button type="button" class="quiet undo">되돌리기</button><button type="button" class="quiet clear">지우기</button></div><canvas width="600" height="340"></canvas><p class="micro">마우스·펜·손가락으로 그리세요. 그리기 어려우면 작성란에 글로 설명할 수 있어요.</p>`),
+    (o.innerHTML = `<div class="sketch-tools"><span class="sketch-label"></span><div class="shape-tools" role="group" aria-label="그리기 도구"><button type="button" data-tool="pen" class="tool active" aria-pressed="true">✏️ 자유선</button><button type="button" data-tool="line" class="tool" aria-pressed="false">／ 선분</button><button type="button" data-tool="ellipse" class="tool" aria-pressed="false">⬭ 타원</button></div><div class="pen-colors" role="group" aria-label="펜 색상"><button type="button" data-color="#176d64" class="pen active" aria-label="초록색 펜" aria-pressed="true"></button><button type="button" data-color="#e77738" class="pen" aria-label="주황색 펜" aria-pressed="false"></button><button type="button" data-color="#334155" class="pen" aria-label="검정색 펜" aria-pressed="false"></button></div><button type="button" class="quiet undo">되돌리기</button><button type="button" class="quiet clear">지우기</button></div><canvas width="600" height="340"></canvas><p class="micro"></p>`),
     (o.querySelector(`.sketch-label`).textContent = r),
     e.append(o));
   let s = o.querySelector(`canvas`),
@@ -769,7 +769,52 @@ function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage:
   (s.setAttribute(`aria-label`, r), s.setAttribute(`role`, `img`));
   let l = null,
     u = `#176d64`,
-    d = structuredClone(t);
+    d = structuredClone(t),
+    tool = `pen`;
+  // 선분·타원 도구(10/29): 마우스·터치패드로도 반듯하게 그리도록. 끝점·축·모눈에 달라붙고, 거의 수평·수직인 선분은 반듯하게 편다.
+  // 결과는 자유선과 같은 {color, points} 획(타원은 점 73개로 닫은 곡선)이라 저장·교사 화면은 그대로 쓴다.
+  const TIP = {
+    pen: `마우스·펜·손가락으로 그리세요. 그리기 어려우면 선분·타원 도구를 쓰거나 작성란에 글로 설명할 수 있어요.`,
+    line: `선분: 시작점에서 끝점까지 끌어요. 축이나 다른 선의 끝점에 가까우면 달라붙고, 거의 수평·수직이면 반듯해져요.`,
+    ellipse: `타원: 가운데 점을 누르고 바깥쪽으로 끌어요. 가운데를 축 위에 두면 축에 대해 좌우가 같은 타원이 돼요.`,
+  };
+  o.querySelector(`.micro`).textContent = TIP.pen;
+  function snapPt(q, keepFree) {
+    let r = s.getBoundingClientRect(),
+      W = r.width || 600,
+      H = r.height || 340,
+      best = null,
+      bd = 11;
+    for (let k of d) {
+      if (k === l || k.kind === `ellipse` || !k.points.length) continue;
+      for (let e of [k.points[0], k.points.at(-1)]) {
+        let dd = Math.hypot((e[0] - q[0]) * W, (e[1] - q[1]) * H);
+        dd < bd && ((bd = dd), (best = e));
+      }
+    }
+    if (best) return [best[0], best[1], 1];
+    if (keepFree) return q;
+    let x = q[0],
+      y = q[1];
+    if (n) {
+      let gx = Math.round((x * 600) / 25) * 25,
+        gy = Math.round((y * 340 - 20) / 25) * 25 + 20;
+      Math.abs(gx - x * 600) * (W / 600) < 7 && (x = gx / 600);
+      Math.abs(gy - y * 340) * (H / 340) < 7 && (y = gy / 340);
+    }
+    (ax || n) && Math.abs(x - 0.5) * W < 10 && (x = 0.5);
+    return [x, y];
+  }
+  function ellipsePts(c, e) {
+    let rx = Math.abs(e[0] - c[0]),
+      ry = Math.abs(e[1] - c[1]),
+      out = [];
+    for (let k = 0; k <= 72; k++) {
+      let a = (k / 72) * Math.PI * 2;
+      out.push([+(c[0] + rx * Math.cos(a)).toFixed(4), +(c[1] + ry * Math.sin(a)).toFixed(4)]);
+    }
+    return out;
+  }
   function f() {
     if ((c.clearRect(0, 0, 600, 340), (c.fillStyle = `#fff`), c.fillRect(0, 0, 600, 340), n)) {
       ((c.lineWidth = 1), (c.strokeStyle = `#e5eee8`), c.beginPath());
@@ -835,17 +880,45 @@ function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage:
         a(`스케치가 꽉 찼어요. 일부를 지우거나 글로 설명해 주세요.`);
         return;
       }
-      (e.preventDefault(), s.setPointerCapture(e.pointerId), (l = { color: u, points: [p(e)] }), d.push(l), f());
+      if ((e.preventDefault(), s.setPointerCapture(e.pointerId), tool !== `pen`)) {
+        let a0 = snapPt(p(e)).slice(0, 2);
+        ((l = { color: u, kind: tool, start: a0, points: [a0, a0] }), d.push(l), f());
+        return;
+      }
+      ((l = { color: u, points: [p(e)] }), d.push(l), f());
     }
   }),
     s.addEventListener(`pointermove`, (e) => {
-      if (!l || (e.preventDefault(), l.points.length >= 5e3)) return;
+      if (!l) return;
+      if (l.kind) {
+        e.preventDefault();
+        let r = s.getBoundingClientRect(),
+          a0 = l.start,
+          b = snapPt(p(e), l.kind === `ellipse`);
+        if (l.kind === `line`) {
+          if (!b[2]) {
+            let dx = (b[0] - a0[0]) * r.width,
+              dy = (b[1] - a0[1]) * r.height;
+            Math.abs(dy) < Math.abs(dx) * 0.1 ? (b = [b[0], a0[1]]) : Math.abs(dx) < Math.abs(dy) * 0.1 && (b = [a0[0], b[1]]);
+          }
+          l.points = [a0, [b[0], b[1]]];
+        } else l.points = ellipsePts(a0, b);
+        f();
+        return;
+      }
+      if ((e.preventDefault(), l.points.length >= 5e3)) return;
       let t = p(e),
         n = l.points.at(-1);
       Math.hypot(t[0] - n[0], t[1] - n[1]) > 0.0015 && (l.points.push(t), f());
     }));
   function m() {
-    l && (l.points.length < 2 && d.pop(), (l = null), f(), i(structuredClone(d)));
+    if (!l) return;
+    if (l.kind) {
+      let r = s.getBoundingClientRect(),
+        [a0, b] = l.kind === `line` ? l.points : [l.start, [l.points[0][0], l.points[18][1]]];
+      (Math.abs(b[0] - a0[0]) * r.width < 4 && Math.abs(b[1] - a0[1]) * r.height < 4 ? d.pop() : delete l.start);
+    } else l.points.length < 2 && d.pop();
+    ((l = null), f(), i(structuredClone(d)));
   }
   (s.addEventListener(`pointerup`, m),
     s.addEventListener(`pointercancel`, m),
@@ -858,6 +931,14 @@ function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage:
               (t.classList.toggle(`active`, t === e), t.setAttribute(`aria-pressed`, String(t === e)));
             }));
         }));
+    }),
+    o.querySelectorAll(`[data-tool]`).forEach((e) => {
+      e.addEventListener(`click`, () => {
+        ((tool = e.dataset.tool), (o.querySelector(`.micro`).textContent = TIP[tool]));
+        o.querySelectorAll(`[data-tool]`).forEach((t) => {
+          (t.classList.toggle(`active`, t === e), t.setAttribute(`aria-pressed`, String(t === e)));
+        });
+      });
     }),
     o.querySelector(`.undo`).addEventListener(`click`, () => {
       (d.pop(), f(), i(structuredClone(d)));
