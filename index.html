@@ -156,7 +156,7 @@ var e = {
         `직사각형을 한 변을 축으로 하여 1회전 시키면 원기둥이 된다.`,
         `직각삼각형을 한 변을 축으로 하여 1회전 시키면 원뿔이 된다.`,
         `반원을 지름을 축으로 하여 1회전 시키면 구가 된다.`,
-        `회전축에 수직인 단면은 모두 원이다.`,
+        `회전축에 수직인 평면으로 자른 단면은 모두 원이다.`,
         `회전축을 포함하는 평면으로 자른 단면은 회전축을 대칭축으로 하는 선대칭 도형이다.`,
       ],
       note: `문장은 원고 그대로입니다. 회전축의 선택, 자르는 위치, 속이 빈 물체인지에 따라 조건이 더 필요한지도 확인해 보세요.`,
@@ -1177,7 +1177,7 @@ function ee(e, t, n) {
     a = 0,
     o = !1,
     s = null;
-  e.innerHTML = `<div class="lab-top"><label>회전할 평면도형<select id="shape-select"><option value="rectangle">직사각형</option><option value="triangle">직각삼각형</option><option value="semicircle">반원</option><option value="trapezoid">사다리꼴</option><option value="hollow">속이 빈 원기둥(두루마리 휴지)</option></select></label><button class="quiet" id="reset-view">시점 초기화</button></div><div class="model-wrap"><canvas id="solid-canvas" width="760" height="560" role="img" aria-label="회전체와 회전축을 보여 주는 3차원 모형"></canvas><span class="model-hint">드래그하여 시점 바꾸기</span></div><div class="lab-controls"><div class="angle-label"><label for="angle-range">회전각</label><output id="angle-output"></output><button type="button" class="play-btn" id="play-rotation">▶ 회전 보기</button></div><input id="angle-range" type="range" min="0" max="360" step="1" aria-label="회전각"><div class="cut-header"><label for="cut-select">단면 관찰</label><select id="cut-select"><option value="none">자르지 않기</option><option value="horizontal">회전축에 수직으로</option><option value="vertical">회전축을 포함하는 평면으로</option></select></div><div id="height-control"><label for="height-range">자르는 높이 <output id="height-output"></output></label><input id="height-range" type="range" min="-0.95" max="0.95" step="0.01" aria-label="자르는 높이"></div><p id="lab-description" class="lab-description"></p></div>`;
+  e.innerHTML = `<div class="lab-top"><label>회전할 평면도형<select id="shape-select"><option value="rectangle">직사각형</option><option value="triangle">직각삼각형</option><option value="semicircle">반원</option><option value="trapezoid">사다리꼴</option><option value="hollow">속이 빈 원기둥(두루마리 휴지)</option></select></label><button class="quiet" id="reset-view">시점 초기화</button></div><div class="model-wrap"><canvas id="solid-canvas" width="760" height="560" role="img" aria-label="회전체와 회전축을 보여 주는 3차원 모형"></canvas><span class="model-hint">드래그하여 시점 바꾸기</span></div><div class="lab-controls"><div class="angle-label"><label for="angle-range">회전각</label><output id="angle-output"></output><button type="button" class="play-btn" id="play-rotation">▶ 회전 보기</button></div><input id="angle-range" type="range" min="0" max="360" step="1" aria-label="회전각"><div class="cut-header"><label for="cut-select">단면 관찰</label><select id="cut-select"><option value="none">자르지 않기</option><option value="horizontal">회전축에 수직인 평면으로</option><option value="vertical">회전축을 포함하는 평면으로</option></select></div><div id="height-control"><label for="height-range">자르는 높이 <output id="height-output"></output></label><input id="height-range" type="range" min="-0.95" max="0.95" step="0.01" aria-label="자르는 높이"></div><p id="lab-description" class="lab-description"></p></div>`;
   let c = (t) => e.querySelector(t),
     l = c(`#solid-canvas`),
     u = l.getContext(`2d`);
@@ -1360,7 +1360,7 @@ function ee(e, t, n) {
           : `완전히 회전한 모형의 단면입니다. 높이는 −1부터 1까지이며, 끝점은 제외합니다.`),
       l.setAttribute(
         `aria-label`,
-        `${C[r.shape]}을 ${Math.round(r.angle)}도 회전한 모형. ${r.cut === `none` ? `단면 미표시` : r.cut === `horizontal` ? `회전축에 수직인 단면` : `회전축을 포함하는 평면으로 자른 단면`} 표시.`,
+        `${C[r.shape]}을 ${Math.round(r.angle)}도 회전한 모형. ${r.cut === `none` ? `단면 미표시` : r.cut === `horizontal` ? `회전축에 수직인 평면으로 자른 단면` : `회전축을 포함하는 평면으로 자른 단면`} 표시.`,
       ),
       p());
   }
