@@ -756,7 +756,8 @@ function spRender(t, s) {
       A = t.type === `trapA`,
       [ks, kn, kh1, kh2] = [`${K}-seen`, `${K}-note`, `${K}-h1`, `${K}-h2`],
       [dS, d1, d2] = [`${K}-solid`, `${K}-c1`, `${K}-c2`],
-      seen = !!M.answers[ks],
+      // 예전 판(그림 없이 예상만 고르고 확인)의 '확인함'은 잠그지 않는다 — 두 단면 그림까지 있어야 확인 끝으로 본다
+      seen = !!M.answers[ks] && [d1, d2].every((k) => (M.drawings[k] || []).some((e) => e.points.length > 1)),
       hs = [Number(M.answers[kh1]) || 30, Number(M.answers[kh2]) || 70],
       ys = T.pts.map((q) => q[1]),
       y0 = Math.min(...ys),
