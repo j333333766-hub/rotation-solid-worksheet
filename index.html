@@ -636,6 +636,203 @@ var e = {
   f = d.map((e) => e.id),
   p = (e) => d.find((t) => t.q === e)?.id || `cover`,
   m = `workbook:${t}:v1`;
+// ---- 특별판(2026-11-10 공개 수업): 바깥 페이지가 globalThis.WB_SPECIAL 을 주면 질문·장·쪽 목록을 바꾼다 ----
+// 1부 숨은 단서 찾기(민수·지연 사전 → 사다리꼴 ①·③ 3D 확인 → 숨은 단서 → 사후·느낀 점)
+// 2부 나만의 회전체(실생활 회전체 → 스케치 → 알지오3D(오른쪽에 스케치) → STL → 그림판3D → 활동지 안에서 제출 → AR 갤러리)
+var SP = !!globalThis.WB_SPECIAL;
+var SP_TRAP = {
+  t1: { name: `① 사다리꼴의 높이가 회전축의 일부인 경우`, pts: [[0, 0], [2.6, 0], [1.3, 2], [0, 2]] },
+  t3: { name: `③ 평행한 한 쌍의 대변 중 짧은 변이 회전축의 일부인 경우`, pts: [[0, 0], [2, 0], [2, 2.6], [0, 1.3]] },
+};
+var SP_VOTE = [
+  [`민수`, `민수의 생각에 동의한다.`],
+  [`지연`, `지연이의 생각에 동의한다.`],
+  [`둘 다 아님`, `민수와 지연이의 생각에 모두 동의하지 않는다.`],
+];
+var SP_PRED = [
+  [`꽉 찬 원`, `어느 높이에서 잘라도 꽉 찬 원이다.`],
+  [`가운데가 빈 원`, `가운데가 빈 원(고리 모양)이 생기는 높이가 있다.`],
+];
+var SP_CONF = [`찍었다`, `조금 자신 있다`, `꽤 자신 있다`, `확실하다`];
+var SP_CLUE = [`단면의 넓이`, `단면의 경계`, `단면의 중심`, `단면의 개수`];
+var SP_REAL = [
+  [`팽이`, `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><path d="M60 112 L22 52 Q60 30 98 52 Z" fill="#f59e0b" stroke="#92400e" stroke-width="3"/><ellipse cx="60" cy="52" rx="38" ry="10" fill="#fcd34d" stroke="#92400e" stroke-width="3"/><rect x="55" y="14" width="10" height="34" rx="4" fill="#ef4444" stroke="#7f1d1d" stroke-width="3"/><path d="M30 64 Q60 76 90 64" stroke="#fff" stroke-width="4" fill="none"/></svg>`],
+  [`항아리`, `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><path d="M44 12 H76 V22 Q98 36 100 64 Q100 98 78 110 H42 Q20 98 20 64 Q22 36 44 22 Z" fill="#c2410c" stroke="#7c2d12" stroke-width="3"/><ellipse cx="60" cy="12" rx="18" ry="5" fill="#9a3412" stroke="#7c2d12" stroke-width="3"/><path d="M26 58 Q60 70 94 58" stroke="#fde68a" stroke-width="4" fill="none"/><path d="M28 78 Q60 90 92 78" stroke="#fde68a" stroke-width="4" fill="none"/></svg>`],
+  [`도넛`, `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><ellipse cx="60" cy="64" rx="50" ry="30" fill="#d97706" stroke="#78350f" stroke-width="3"/><ellipse cx="60" cy="58" rx="46" ry="24" fill="#f472b6" stroke="#9d174d" stroke-width="2"/><ellipse cx="60" cy="60" rx="15" ry="8" fill="#fff" stroke="#78350f" stroke-width="3"/><g stroke-width="4" stroke-linecap="round"><path d="M30 50 l5 3" stroke="#22d3ee"/><path d="M84 46 l6 2" stroke="#facc15"/><path d="M78 72 l5 -3" stroke="#a3e635"/><path d="M38 70 l6 1" stroke="#fff"/><path d="M60 40 l4 4" stroke="#a78bfa"/></g></svg>`],
+];
+var SP_GALLERY = `https://j333333766-hub.github.io/rotation-ar-gallery/`;
+if (SP) {
+  i = [
+    { id: 1, auto: !0, title: `처음 생각`, original: `민수와 지연이 중 누구의 생각에 동의하나요?`, fields: [r(`sp-pre`, `처음 생각(민수·지연)`), r(`sp-pre-why`, `처음 생각의 이유`, `왜 그렇게 생각했는지 짧게 적어 보세요.`)] },
+    { id: 2, auto: !0, title: `사다리꼴 ①`, original: `사다리꼴 ①을 1회전 시킨 회전체의 단면을 예상하고 3D로 확인하세요.`, fields: [r(`sp-t1-pred`, `① 예상`), r(`sp-t1-conf`, `① 예상의 자신감`), r(`sp-t1-seen`, `① 3D 확인`), r(`sp-t1-note`, `① 확인해 보니`, `예상과 같았나요? 무엇을 보았나요?`)] },
+    { id: 3, auto: !0, title: `사다리꼴 ③`, original: `사다리꼴 ③을 1회전 시킨 회전체의 단면을 예상하고 3D로 확인하세요.`, fields: [r(`sp-t3-pred`, `③ 예상`), r(`sp-t3-conf`, `③ 예상의 자신감`), r(`sp-t3-seen`, `③ 3D 확인`), r(`sp-t3-note`, `③ 확인해 보니`, `예상과 같았나요? 무엇을 보았나요?`)] },
+    { id: 4, auto: !0, title: `숨은 단서`, original: `회전체의 단면 모양을 결정하는 숨은 단서를 찾으세요.`, fields: [r(`sp-clue`, `숨은 단서`)] },
+    { id: 5, auto: !0, title: `바뀐 생각`, original: `다시 한번, 민수와 지연이 중 누구의 생각에 동의하나요?`, fields: [r(`sp-post`, `지금 생각(민수·지연)`), r(`sp-post-why`, `지금 생각의 이유`, `처음과 같다면 왜 같은지, 바뀌었다면 무엇 때문에 바뀌었는지 적어 보세요.`), r(`sp-feel`, `수업 중에 느낀 점`, `오늘 수업에서 느낀 점이나 새롭게 알게 된 점을 적어 보세요.`)] },
+    { id: 6, auto: !0, title: `실생활 회전체`, original: `실생활 회전체를 만드는 평면도형을 그리고 1회전 시켜 보세요.`, fields: [r(`sp-real`, `고른 실생활 회전체`)], checks: [{ id: `sp-real-check`, label: `평면도형을 그리고 회전하기로 1회전 시켜 확인했어요.` }] },
+    { id: 7, auto: !0, either: !0, title: `나만의 회전체 설계`, original: `만들고 싶은 회전체를 스케치하세요.`, drawing: `sp-drawing`, drawingLabel: `나만의 회전체 스케치 · 가운데 점선을 축으로 생각하고 그려요`, axisGuide: !0, fields: [r(`sp-plan`, `무엇을 닮은 작품인가요?`, `예) 꽃병 — 아래는 둥글고 위는 좁아요. 그림 대신 글로 설명해도 좋아요.`)] },
+    { id: 8, auto: !0, title: `알지오3D로 만들기`, original: `알지오3D로 나만의 회전체를 만들고 STL로 내보내세요.`, checks: [{ id: `sp-stl-check`, label: `회전체를 만들고 STL 파일을 내려받았어요.` }] },
+    { id: 9, auto: !0, title: `색칠하고 제출하기`, original: `그림판3D로 색칠한 작품을 제출하세요.`, fields: [r(`sp-desc`, `내 회전체 설명`, `어떤 평면도형을 어느 직선을 축으로 하여 1회전 시켜 만들었나요?`)], checks: [{ id: `sp-paint-check`, label: `그림판3D에서 색칠하고 GLB(또는 USDZ)로 저장했어요.` }] },
+  ];
+  l = [
+    { id: `S`, stage: 2, name: `1부 · 숨은 단서를 찾아라`, color: `#1073C6`, desc: `민수와 지연이의 생각을 사다리꼴 회전체로 확인합니다.`, question: `회전체의 단면 모양은 무엇이 결정할까?` },
+    { id: `M`, stage: 3, name: `2부 · 나만의 회전체 만들기`, color: `#E56A90`, desc: `실생활 회전체를 거쳐 나만의 회전체를 설계하고 만듭니다.`, question: `내가 원하는 회전체를 만들려면 어떤 평면도형을 돌려야 할까?` },
+  ];
+  d = [
+    { id: `sp-cover`, type: `cover`, title: `오늘의 미션` },
+    { id: `sp-pre`, type: `vote`, chapter: `S`, q: 1, which: `pre`, fields: [`sp-pre`, `sp-pre-why`], title: `민수와 지연이 중 누구의 생각에 동의하나요?` },
+    { id: `sp-t1`, type: `trap`, chapter: `S`, q: 2, trap: `t1`, fields: [`sp-t1-pred`, `sp-t1-conf`, `sp-t1-seen`, `sp-t1-note`], title: `사다리꼴 ①을 1회전 시키면 단면은 어떤 모양일까요?` },
+    { id: `sp-t3`, type: `trap`, chapter: `S`, q: 3, trap: `t3`, fields: [`sp-t3-pred`, `sp-t3-conf`, `sp-t3-seen`, `sp-t3-note`], title: `사다리꼴 ③을 1회전 시키면 단면은 어떤 모양일까요?` },
+    { id: `sp-clue`, type: `clue`, chapter: `S`, q: 4, fields: [`sp-clue`], title: `숨은 단서를 찾아라!` },
+    { id: `sp-post`, type: `vote`, chapter: `S`, q: 5, which: `post`, fields: [`sp-post`, `sp-post-why`, `sp-feel`], title: `다시 한번! 누구의 생각에 동의하나요?` },
+    { id: `sp-real`, type: `real`, chapter: `M`, q: 6, tools: [`blank`], space: `P`, layout: `side`, initView: 2, fields: [`sp-real`], title: `실생활 회전체 하나를 골라, 그것을 만드는 평면도형을 알지오3D에 그리세요.`, hint: `보는 시점이 ‘위쪽’이라 좌표평면이 보여요. 빨간 십자 → ‘다각형’으로 y축 오른쪽에 꼭짓점을 차례로 찍고, 처음 점을 다시 눌러 완성해요. 회전은 다음 화면에서 해요.` },
+    { id: `sp-real-rotate`, type: `activity`, chapter: `M`, q: 6, tools: [`blank`], space: `P`, layout: `side`, checks: !0, guide: `short`, title: `그린 평면도형을 1회전 시켜 고른 물건과 비교하세요.`, hint: `앞 화면에서 그린 도형이 그대로 있어요. 빨간 십자 → ‘회전하기’ → ‘초록색 축(y축) 기준으로 회전’ → 그린 도형을 눌러요. 다르면 ↶(되돌리기)로 고쳐요.` },
+    { id: `sp-sketch`, type: `drawing`, chapter: `M`, q: 7, fields: [`sp-plan`], title: `내가 만들고 싶은 회전체를 스케치하세요.`, note: `가운데 점선(회전축)의 왼쪽과 오른쪽이 똑같고, 위에서 보면 둥근 모양이면 돼요. 잘 그리지 않아도 괜찮아요. 이 그림을 보며 다음 화면에서 알지오3D로 만들어요.` },
+    { id: `sp-design`, type: `activity`, chapter: `M`, q: 8, tools: [`make`], space: `E`, layout: `side`, sideSketch: 7, title: `내 스케치를 만들 평면도형을 알지오3D에 그리세요.`, hint: `오른쪽 내 스케치를 보며, 한 변이 y축 위에 놓이도록 y축 오른쪽에 평면도형을 그려요. 빨간 십자 → ‘다각형’ → 꼭짓점 찍기 → 처음 점 다시 누르기. 회전은 다음 화면에서 해요.` },
+    { id: `sp-model`, type: `activity`, chapter: `M`, q: 8, tools: [`make`], space: `E`, layout: `side`, sideSketch: 7, checks: !0, title: `1회전 시켜 나만의 회전체를 만들고 STL로 내보내세요.`, hint: `① 빨간 십자 → ‘회전하기’ → ‘초록색 축(y축) 기준으로 회전’ → 그린 도형 누르기 ② 스케치와 다르면 ↶(되돌리기)로 고치기 ③ 왼쪽 위 메뉴(≡) → ‘STL 출력’ → ‘다운로드’ 폴더에 저장.` },
+    { id: `sp-paint`, type: `activity`, chapter: `M`, q: 9, tools: [`paint`], space: `E`, checks: !0, layout: `strip`, title: `STL을 불러와 색칠하고 GLB로 저장하세요.`, hint: `크게보기 → ‘파일 가져오기’로 ‘다운로드’ 폴더의 STL을 불러와요. 한두 가지 색으로 칠한 뒤 ‘저장 → GLB’(아이폰은 USDZ).` },
+    { id: `sp-submit`, type: `spfinish`, chapter: `M`, q: 9, fields: [`sp-desc`], title: `작품을 제출하고 AR 갤러리에서 함께 보아요.` },
+  ];
+  f = d.map((e) => e.id);
+  o = i.flatMap((e) => e.fields?.map((e) => e.id) || []);
+  s = i.flatMap((e) => e.checks?.map((e) => e.id) || []);
+  c = i.flatMap((e) => (e.drawing ? [e.drawing] : []));
+  m = globalThis.WB_CFG?.key || `workbook:${t}:special`;
+}
+// 오른쪽 칸에 늘 보이는 '내 스케치'(특별판 10·11쪽). 팝업 recallDialog 와 같은 그림을 칸 안에 그린다.
+function spSketchCard(q) {
+  let t = i[q - 1],
+    n = d.find((e) => e.q === q),
+    r = M.drawings[t.drawing] || [],
+    a = (M.answers[t.fields?.[0]?.id] || ``).trim(),
+    w = L(`div`, `sp-sketch-card`);
+  w.append(L(`b`, ``, `🖍 ${pageNo(n)}쪽에 그린 내 스케치`));
+  if (r.some((e) => e.points.length > 1)) {
+    let e = L(`canvas`, `recall-canvas`);
+    ((e.width = 600), (e.height = 340), e.setAttribute(`role`, `img`), e.setAttribute(`aria-label`, `${pageNo(n)}쪽에 그린 그림`));
+    let g = e.getContext(`2d`);
+    ((g.fillStyle = `#fff`), g.fillRect(0, 0, 600, 340));
+    g.save(), (g.strokeStyle = `#94a3b8`), g.setLineDash([6, 6]), g.beginPath(), g.moveTo(300, 0), g.lineTo(300, 340), g.stroke(), g.restore();
+    for (let s of r)
+      s.points.length > 1 &&
+        (g.beginPath(),
+        (g.strokeStyle = s.color),
+        (g.lineWidth = 2.8),
+        (g.lineCap = g.lineJoin = `round`),
+        s.points.forEach(([x, y], k) => (k ? g.lineTo(x * 600, y * 340) : g.moveTo(x * 600, y * 340))),
+        g.stroke());
+    w.append(e);
+  }
+  a && w.append(L(`p`, `recall-text`, a));
+  if (!r.some((e) => e.points.length > 1) && !a) {
+    let e = L(`button`, ``, `${pageNo(n)}쪽으로 가서 그리기 →`);
+    (e.addEventListener(`click`, () => Y(n.id)), w.append(L(`p`, ``, `아직 ${pageNo(n)}쪽에 그린 스케치가 없어요.`), e));
+  }
+  return w;
+}
+// 고르기 단추 묶음(값은 답 문자열로 저장 — 교사 쪽별 보기에 그대로 보인다)
+function spPick(id, opts, { lock = !1, onPick } = {}) {
+  let w = L(`div`, `sp-pick`);
+  for (let [v, label] of opts) {
+    let b = L(`button`, M.answers[id] === v ? `on` : ``, label);
+    ((b.type = `button`), (b.disabled = lock), b.setAttribute(`aria-pressed`, String(M.answers[id] === v)));
+    b.addEventListener(`click`, () => {
+      ((M.answers[id] = v), H(), w.querySelectorAll(`button`).forEach((x) => (x.classList.toggle(`on`, x === b), x.setAttribute(`aria-pressed`, String(x === b)))), onPick && onPick(v));
+    });
+    w.append(b);
+  }
+  return w;
+}
+var spViewers = [];
+function spDispose() {
+  for (let v of spViewers.splice(0)) try { v.dispose(); } catch {}
+}
+// 특별판 쪽 그리기(vote·trap·clue·real·spfinish)
+function spRender(t, s) {
+  spDispose();
+  if (t.type === `vote`) {
+    let c = L(`div`, `sp-claims`);
+    c.innerHTML = `<div class="sp-claim a"><b>민수</b><span>“회전체를 회전축에 수직인 평면으로 자를 때 생기는 단면은 <u>원 모양</u>이야.”</span></div><div class="sp-claim b"><b>지연</b><span>“회전체를 회전축에 수직인 평면으로 자를 때 생기는 단면은 <u>원 모양이 아닐 수도</u> 있어.”</span></div>`;
+    s.append(c);
+    let [k, why, feel] = t.fields;
+    if (t.which === `post` && M.answers[`sp-pre`]) s.append(L(`p`, `sp-was`, `수업 처음 내 생각: ${M.answers[`sp-pre`]}`));
+    (s.append(L(`p`, `sp-q`, `누구의 생각에 동의하나요?`), spPick(k, SP_VOTE)), s.append(G(why)), feel && s.append(G(feel)));
+  } else if (t.type === `trap`) {
+    let T = SP_TRAP[t.trap],
+      [kp, kc, ks, kn] = t.fields,
+      seen = !!M.answers[ks],
+      w = L(`div`, `sp-trap`),
+      left = L(`div`, `sp-trap-fig`),
+      cv = L(`canvas`, `sp-prof`);
+    ((cv.width = 260), (cv.height = 200), left.append(L(`b`, ``, T.name), cv));
+    let res = L(`div`, `sp-res`);
+    res.hidden = !seen;
+    res.innerHTML = `<div class="sp-view"></div><label class="sp-cut">자르는 높이 <input type="range" min="2" max="98" value="30"></label><figure><canvas class="sp-sec" width="120" height="120"></canvas><figcaption>이 높이에서 회전축에 수직인 평면으로 자른 단면</figcaption></figure>`;
+    left.append(res);
+    let right = L(`div`, `sp-trap-q`);
+    right.append(L(`p`, `sp-q`, `회전축에 수직인 평면으로 자른 단면은 어떤 모양일까요? 예상해 보세요.`));
+    let go = L(`button`, `sp-go`, `🔍 3D로 돌려서 확인하기`),
+      ready = () => (go.disabled = !(M.answers[kp] && M.answers[kc]));
+    right.append(spPick(kp, SP_PRED, { lock: seen, onPick: ready }), L(`p`, `sp-q`, `내 예상에 얼마나 자신 있나요?`), spPick(kc, SP_CONF.map((x) => [x, x]), { lock: seen, onPick: ready }));
+    go.type = `button`;
+    let note = G(kn);
+    note.hidden = !seen;
+    let open = async (anim) => {
+      res.hidden = !1;
+      try {
+        let m = await import(`/js/solid3d.js`),
+          v = m.createSolidViewer(res.querySelector(`.sp-view`), { pts: T.pts }, { height: 190 });
+        spViewers.push(v);
+        anim ? await v.sweep() : v.showSolid();
+        let fr = res.querySelector(`input`),
+          cut = () => m.drawSection2D(res.querySelector(`.sp-sec`), m.sectionAt({ pts: T.pts }, v.setCut(fr.value / 100)), v.maxR);
+        ((fr.oninput = cut), cut());
+      } catch (e) {
+        res.querySelector(`.sp-view`).textContent = `3D 보기를 열지 못했어요. 선생님께 알려 주세요.`;
+      }
+    };
+    (go.addEventListener(`click`, () => {
+      if (go.disabled) return;
+      ((M.answers[ks] = `확인함`), H(), (go.hidden = !0), (note.hidden = !1), right.querySelectorAll(`.sp-pick button`).forEach((b) => (b.disabled = !0)), open(!0));
+    }),
+      (go.hidden = seen),
+      ready(),
+      right.append(go, note),
+      w.append(left, right),
+      s.append(w));
+    import(`/js/solid3d.js`).then((m) => m.drawProfile2D(cv, { pts: T.pts })).catch(() => {});
+    seen && open(!1);
+  } else if (t.type === `clue`) {
+    s.append(L(`p`, `sp-lead`, `사다리꼴 ①과 ③은 모두 같은 회전축으로 1회전 시켰는데, ③에서만 가운데가 빈 단면이 생겼어요. 단면의 모양을 결정하는 숨은 단서는 무엇일까요?`));
+    let p = L(`p`, `sp-fill`);
+    (p.append(L(`span`, ``, `회전체의 단면 모양을 결정하는 숨은 단서는 `)), p.append(spPick(t.fields[0], SP_CLUE.map((x) => [x, x]))), p.append(L(`span`, ``, ` 이다!`)), s.append(p));
+    s.append(L(`p`, `note-box`, `힌트: 평면도형의 어느 부분이 회전축에 닿아 있고, 어느 부분이 떨어져 있는지 다시 살펴보세요.`));
+  } else if (t.type === `real`) {
+    hintBox(t, s);
+    let g = L(`div`, `sp-real`);
+    for (let [v, svg] of SP_REAL) {
+      let b = L(`button`, M.answers[`sp-real`] === v ? `on` : ``);
+      ((b.type = `button`), (b.innerHTML = `${svg}<span>${v}</span>`), b.setAttribute(`aria-pressed`, String(M.answers[`sp-real`] === v)));
+      (b.addEventListener(`click`, () => {
+        ((M.answers[`sp-real`] = v), H(), g.querySelectorAll(`button`).forEach((x) => (x.classList.toggle(`on`, x === b), x.setAttribute(`aria-pressed`, String(x === b)))));
+      }),
+        g.append(b));
+    }
+    (s.append(L(`p`, `sp-q`, `하나를 골라 누르세요.`), g), s.append(L(`p`, `note-box`, `도넛처럼 가운데가 빈 회전체는 평면도형이 회전축에서 떨어져 있어야 해요!`)));
+  } else if (t.type === `spfinish`) {
+    s.append(G(t.fields[0]));
+    s.append(glbSubmitBox());
+    let a = L(`div`, `sp-gallery`),
+      q = L(`img`);
+    ((q.src = `/img/qr-ar-gallery.svg`), (q.alt = `AR 갤러리 QR 코드`), (q.onerror = () => q.remove()));
+    let link = L(`a`, ``, `🖼 AR 갤러리 열기 ↗`);
+    ((link.href = SP_GALLERY), (link.target = `_blank`), (link.rel = `noopener`));
+    (a.append(q, L(`div`, ``)), a.lastChild.append(L(`b`, ``, `제출한 작품은 1~2분 뒤 AR 갤러리에 올라와요`), L(`p`, ``, `스마트폰 카메라로 QR 코드를 찍으면 우리 반 작품을 AR로 볼 수 있어요.`), link), s.append(a));
+    if (globalThis.WB_HOST) {
+      let n = L(`button`, `primary sp-done`, `선생님께 제출하기 ✓`);
+      (n.addEventListener(`click`, () => (V(), globalThis.WB_HOST.submitRecord(M))), s.append(n));
+    }
+  }
+}
 function h() {
   return {
     schemaVersion: 1,
@@ -655,9 +852,9 @@ function h() {
 function g(e, t) {
   let n = (e) => !!t.answers[e]?.trim(),
     r = (e) => t.drawings[e]?.some((e) => e.points.length > 1);
-  return e.id === 6
+  return !SP && e.id === 6
     ? Array.from({ length: 5 }, (e, t) => n(`q6-${t}-judgment`) && n(`q6-${t}-reason`)).every(Boolean)
-    : e.id === 11
+    : !SP && e.id === 11
       ? (r(e.drawing) || n(`q11-plan`)) && n(`q11-description`) && !!t.checks[`q11-check`]
       : e.either
         ? r(e.drawing) || e.fields.some((e) => n(e.id))
@@ -1745,7 +1942,7 @@ function H() {
     (N = setTimeout(V, 250)));
 }
 function U() {
-  ((k(`#learning-progress`).textContent = `활동 완료 ${M.completed.length} / 12`),
+  ((k(`#learning-progress`).textContent = `활동 완료 ${M.completed.length} / ${i.length}`),
     A(`[data-complete]`).forEach((e) => {
       let t = M.completed.includes(+e.dataset.complete);
       ((e.textContent = t ? `✓ ${e.dataset.complete}번 활동 완료됨` : `${e.dataset.complete}번 활동 완료`),
@@ -2227,17 +2424,21 @@ function oe(e, t) {
   if (((n.innerHTML = e.type === `cover` ? E : e.type === `divider` ? O : D), e.type === `cover`)) {
     let e = n.querySelector(`.line-1`);
     (e.replaceChildren(
-      document.createTextNode(`알지오매스를 활용한`),
-      document.createElement(`br`),
-      L(`span`, `t-blue`, `회전체`),
-      document.createTextNode(` 만들기`),
+      ...(SP
+        ? [document.createTextNode(`숨은 단서를 찾고`), document.createElement(`br`), L(`span`, `t-blue`, `나만의 회전체`), document.createTextNode(` 만들기`)]
+        : [document.createTextNode(`알지오매스를 활용한`), document.createElement(`br`), L(`span`, `t-blue`, `회전체`), document.createTextNode(` 만들기`)]),
     ),
       e.setAttribute(`role`, `heading`),
       e.setAttribute(`aria-level`, `1`),
-      (n.querySelector(`.lesson`).textContent = `알지오매스 3D 활용`));
+      (n.querySelector(`.lesson`).textContent = SP ? `오늘의 미션 · 특별 수업` : `알지오매스 3D 활용`));
     let r = L(`div`, `start-guide`),
       a = L(`ol`);
-    for (let e of [
+    for (let e of SP ? [
+      `미션 1 · 숨은 단서를 찾아라: 민수와 지연이 중 누구의 생각이 맞는지 사다리꼴 회전체로 확인해요.`,
+      `미션 2 · 나만의 회전체: 실생활 회전체를 거쳐 나만의 회전체를 설계하고, 알지오3D·그림판3D로 만들어 제출해요.`,
+      `‘다음 →’을 눌러 한 화면씩 진행해요. 쓴 내용은 내 구글 계정에 자동으로 저장돼요.`,
+      `선생님이 화면을 부르면 그 쪽으로 이동해요.`,
+    ] : [
       `오른쪽 아래 ‘다음 →’을 눌러 한 화면씩 진행해요. 쓴 내용은 자동으로 저장돼요.`,
       `화면의 📌·👁 안내와 💡 TIP을 먼저 읽고 활동해요.`,
       `알지오3D 화면이 작으면 ‘크게보기’를 눌러요. 잘못 조작했으면 ↶(되돌리기)를 눌러요.`,
@@ -2245,7 +2446,7 @@ function oe(e, t) {
     ])
       a.append(L(`li`, ``, e));
     let i = L(`button`, `start-go`, `시작하기 →`);
-    (i.addEventListener(`click`, () => Y(d[1].id)), r.append(L(`b`, ``, `혼자서 이렇게 진행해요`), a, i), n.append(r));
+    (i.addEventListener(`click`, () => Y(d[1].id)), r.append(L(`b`, ``, SP ? `오늘의 미션` : `혼자서 이렇게 진행해요`), a, i), n.append(r));
   } else if (e.type === `divider`) {
     let e = n.querySelector(`.stage-name`);
     (e.replaceChildren(L(`span`, `letter`, `${t.id}. `), document.createTextNode(t.name)),
@@ -2375,6 +2576,7 @@ function J() {
     a = d.indexOf(t),
     o = [`cover`, `divider`, `inquiry`].includes(t.type),
     s = k(`#slide-content`);
+  spDispose();
   if (
     ((k(`#slide-stage`).dataset.slide = t.id),
     k(`#slide-stage`).style.setProperty(`--stage`, n?.color || `#1f89ed`),
@@ -2392,13 +2594,14 @@ function J() {
             ? ` tool-only`
             : ``)
       : ``),
-    (k(`#chapter-chip`).textContent = n ? `${n.id}. ${n.name}` : `BRIDGE · 수학 탐구`),
+    (k(`#chapter-chip`).textContent = n ? (SP ? n.name : `${n.id}. ${n.name}`) : `BRIDGE · 수학 탐구`),
     (k(`#slide-title`).textContent = t.title || n?.name || ``),
     (k(`#slide-original`).textContent = r ? `${r.id}. ${r.original}` : ``),
     (k(`#slide-original`).hidden = !r || t.type === `goal`),
     o)
   )
     oe(t, n);
+  else if (SP && [`vote`, `trap`, `clue`, `real`, `spfinish`].includes(t.type)) spRender(t, s);
   else if (t.type === `toc`) se(s);
   else if (t.type === `ar`) s.append(arGuide());
   else if (t.type === `finish`) {
@@ -2535,6 +2738,7 @@ function J() {
       (e.addEventListener(`click`, () => ne.section(void 0, t.sectionCta)), s.append(e));
     }
     t.recall && s.append(recallButton(t.recall));
+    t.sideSketch && s.append(spSketchCard(t.sideSketch));
     (t.guide === `short` && s.append(guideBox(`short`)), t.checks && K(r, s));
   }
   t.tip && re(t.tip, s, t.tipFigure);
@@ -2546,7 +2750,7 @@ function J() {
     (k(`#next-btn`).textContent = a === d.length - 1 ? `저장 ↓` : `다음 →`),
     (k(`#page-select`).value = String(a + 1)),
     (k(`#page-progress`).value = a + 1),
-    (k(`#nav-stage`).textContent = n ? `${n.id}. ${n.name}` : t.title),
+    (k(`#nav-stage`).textContent = n ? (SP ? n.name : `${n.id}. ${n.name}`) : t.title),
     (k(`#source-btn`).textContent = `원본 활동지 ${r?.page || { B: 2, R: 3, I: 5, D: 6, G: 6, E: 7 }[t.chapter] || 1}쪽`),
     A(`[data-phase]`).forEach((e) => {
       n && +e.dataset.phase === n.stage ? e.setAttribute(`aria-current`, `step`) : e.removeAttribute(`aria-current`);
@@ -2663,7 +2867,8 @@ function Q() {
   A(`[data-close]`).forEach((e) => e.addEventListener(`click`, () => e.closest(`dialog`).close())),
   k(`#tip-dialog`).addEventListener(`close`, () => k(`#tip-dialog`).classList.remove(`wide`)),
   k(`#home-btn`).addEventListener(`click`, () => Y(`cover`)),
-  k(`#toc-btn`).addEventListener(`click`, () => Y(`bridge`)),
+  k(`#toc-btn`).addEventListener(`click`, () => Y(SP ? `sp-cover` : `bridge`)),
+  (k(`#source-btn`).hidden = SP),
   d.forEach((e, t) => {
     let n = L(`option`, ``, String(t + 1));
     ((n.value = String(t + 1)),
@@ -5308,6 +5513,49 @@ button.danger {
 #tip-content {
   word-break: keep-all;
 }
+/* ---- 특별판(2026-11-10) ---- */
+.sp-claims{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sp-claim{border-radius:14px;padding:12px 16px;display:flex;flex-direction:column;gap:4px;font-size:16px;line-height:1.55}
+.sp-claim b{font-size:17px}
+.sp-claim.a{background:#eef6ff;border:1px solid #bcd7f5}
+.sp-claim.b{background:#fff3e8;border:1px solid #f7cfa6}
+.sp-q{margin:6px 0 0;font-weight:700;font-size:16px}
+.sp-was{margin:0;color:#475569;font-size:14px;background:#f1f5f9;border-radius:8px;padding:6px 10px}
+.sp-pick{display:flex;flex-wrap:wrap;gap:8px}
+.sp-pick button{font:inherit;font-size:15px;padding:9px 14px;border-radius:10px;border:2px solid #cbd5e1;background:#fff;cursor:pointer;text-align:left}
+.sp-pick button.on{border-color:var(--stage,#1f89ed);background:#eef6ff;font-weight:700}
+.sp-pick button:disabled{cursor:default;opacity:.85}
+.sp-trap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
+.sp-trap-fig{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:8px 10px;align-items:start}
+.sp-trap-fig>b{grid-column:1/-1;font-size:14px}
+.sp-trap-fig .sp-prof{width:100%;max-width:260px;background:#f8fafc;border-radius:12px}
+.sp-trap-q{display:flex;flex-direction:column;gap:8px}
+.sp-res{display:flex;flex-direction:column;gap:4px}
+.sp-res[hidden]{display:none}
+.sp-res .sp-view{min-height:190px}
+.sp-res .sp-cut{font-size:13px;display:flex;align-items:center;gap:6px}
+.sp-res .sp-cut input{flex:1}
+.sp-res figure{margin:0;display:flex;align-items:center;gap:8px;font-size:12.5px;color:#475569}
+.sp-res .sp-sec{width:80px;height:80px}
+.sp-go{font:inherit;font-weight:700;font-size:16px;padding:11px 16px;border-radius:12px;border:0;background:#3e63dd;color:#fff;cursor:pointer;align-self:flex-start}
+.sp-go:disabled{background:#cbd5e1;cursor:not-allowed}
+.sp-lead{font-size:17px;line-height:1.6;margin:0}
+.sp-fill{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:18px;font-weight:700;margin:6px 0}
+.sp-real{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.sp-real button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px;border-radius:12px;border:2px solid #cbd5e1;background:#fff;cursor:pointer;font:inherit;font-weight:700}
+.sp-real button.on{border-color:var(--stage,#e56a90);background:#fff1f6}
+.sp-real svg{width:100%;max-width:96px;height:auto}
+.sp-sketch-card{border:2px solid #f3c1d2;border-radius:12px;padding:8px 10px;background:#fff;display:flex;flex-direction:column;gap:6px}
+.sp-sketch-card .recall-canvas{width:100%;height:auto;border-radius:8px;border:1px solid #e2e8f0}
+.sp-sketch-card .recall-text{margin:0;font-size:14px}
+.sp-gallery{display:flex;gap:14px;align-items:center;border:1px solid #d8e0ec;border-radius:12px;padding:10px 14px;background:#f8fafc}
+.sp-gallery img{width:110px;height:110px}
+.sp-gallery p{margin:4px 0}
+.sp-done{align-self:flex-start;font-size:17px;padding:12px 20px}
+@media (max-width:900px){.sp-trap,.sp-claims{grid-template-columns:1fr}}
+[data-slide="sp-submit"] #slide-content{overflow-y:auto}
+[data-slide="sp-submit"] #slide-content>*{flex-shrink:0}
+[data-slide="sp-submit"] #slide-content textarea{min-height:64px}
 
 </style>
   </head>
