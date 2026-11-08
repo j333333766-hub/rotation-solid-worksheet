@@ -2676,3 +2676,6 @@ button.danger {
 .sp-pads2 .sketch .shape-tools button,.sp-pads2 .sketch .quiet,.sp-pads2 .sketch .sym{font-size:12px;padding:3px 7px}
 .sp-mine{display:flex;flex-direction:column;gap:2px;font-size:12px;color:#64748b}
 .sp-mine canvas{width:100%;max-width:220px;border:1px solid #e2e8f0;border-radius:8px}
+
+.sp-why{margin:2px 0;font-size:14px;font-weight:700;color:#b45309}
+.sp-why[hidden]{display:none}
