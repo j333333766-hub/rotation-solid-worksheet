@@ -2667,3 +2667,12 @@ button.danger {
 .sp-pads3 .sketch .pen{width:16px;height:16px}
 .sp-trap2 .sp-q{margin:2px 0}
 .sp-trap2 .sp-pick button{padding:6px 10px}
+
+/* 11/9 사다리꼴 쪽 나눔: A 회전체 예상(큰 그림판), B 두 높이 단면(그림판 둘) */
+.sp-pad-big .sketch canvas{max-height:360px;object-fit:contain}
+.sp-pads2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sp-pads2 .sketch .micro{display:none}
+.sp-pads2 .sketch-tools{gap:4px;flex-wrap:wrap}
+.sp-pads2 .sketch .shape-tools button,.sp-pads2 .sketch .quiet,.sp-pads2 .sketch .sym{font-size:12px;padding:3px 7px}
+.sp-mine{display:flex;flex-direction:column;gap:2px;font-size:12px;color:#64748b}
+.sp-mine canvas{width:100%;max-width:220px;border:1px solid #e2e8f0;border-radius:8px}
