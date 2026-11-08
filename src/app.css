@@ -2669,7 +2669,8 @@ button.danger {
 .sp-trap2 .sp-pick button{padding:6px 10px}
 
 /* 11/9 사다리꼴 쪽 나눔: A 회전체 예상(큰 그림판), B 두 높이 단면(그림판 둘) */
-.sp-pad-big .sketch canvas{max-height:360px;object-fit:contain}
+.sp-pad-big{max-width:620px}
+.sp-pad-big .sketch canvas{width:100%;height:auto}
 .sp-pads2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .sp-pads2 .sketch .micro{display:none}
 .sp-pads2 .sketch-tools{gap:4px;flex-wrap:wrap}
@@ -2679,3 +2680,5 @@ button.danger {
 
 .sp-why{margin:2px 0;font-size:14px;font-weight:700;color:#b45309}
 .sp-why[hidden]{display:none}
+
+.brand.sp-home b{font-size:17px;letter-spacing:-.02em}

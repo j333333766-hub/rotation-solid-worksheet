@@ -772,14 +772,8 @@ function spRender(t, s) {
       go = L(`button`, `sp-go`, `🔍 3D로 돌려서 확인하기`),
       why = L(`p`, `sp-why`),
       ready = () => {
-        go.disabled = !(has(dS) && has(d1) && has(d2) && Math.abs(hs[0] - hs[1]) >= 8);
-        go.title = !has(dS)
-          ? `앞 쪽(회전체 예상)에서 회전체를 먼저 그려야 확인할 수 있어요.`
-          : !has(d1) || !has(d2)
-            ? `①② 높이에서 자른 단면을 모두 그리면 확인할 수 있어요.`
-            : go.disabled
-              ? `①과 ② 높이를 조금 더 떨어뜨려 주세요.`
-              : ``;
+        go.disabled = !(has(d1) && has(d2));
+        go.title = go.disabled ? `①② 높이에서 자른 단면을 두 그림판에 모두 그리면 확인할 수 있어요.` : ``;
         why.textContent = go.disabled ? `👉 ${go.title}` : ``;
         why.hidden = !go.disabled || seen;
       },
@@ -2925,7 +2919,8 @@ function Q() {
   k(`#help-btn`).addEventListener(`click`, () => k(`#help-dialog`).showModal()),
   A(`[data-close]`).forEach((e) => e.addEventListener(`click`, () => e.closest(`dialog`).close())),
   k(`#tip-dialog`).addEventListener(`close`, () => k(`#tip-dialog`).classList.remove(`wide`)),
-  k(`#home-btn`).addEventListener(`click`, () => Y(`cover`)),
+  SP && ((k(`#home-btn`).innerHTML = `<b>오답의 재발견</b>`), k(`#home-btn`).setAttribute(`aria-label`, `오답의 재발견 홈으로`), k(`#home-btn`).classList.add(`sp-home`)),
+  k(`#home-btn`).addEventListener(`click`, () => (SP && globalThis.WB_HOST ? (V(), Promise.resolve(globalThis.WB_HOST.flush?.()).finally(() => (location.href = `/`))) : Y(`cover`))),
   k(`#toc-btn`).addEventListener(`click`, () => Y(SP ? `sp-cover` : `bridge`)),
   (k(`#source-btn`).hidden = SP),
   d.forEach((e, t) => {
