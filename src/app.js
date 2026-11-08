@@ -2421,7 +2421,7 @@ function oe(e, t) {
     ),
       e.setAttribute(`role`, `heading`),
       e.setAttribute(`aria-level`, `1`),
-      (n.querySelector(`.lesson`).textContent = SP ? `오늘의 미션 · 특별 수업` : `알지오매스 3D 활용`));
+      (n.querySelector(`.lesson`).textContent = SP ? `오늘의 미션 · 오답의 재발견` : `알지오매스 3D 활용`));
     let r = L(`div`, `start-guide`),
       a = L(`ol`);
     for (let e of SP ? [
