@@ -2637,3 +2637,33 @@ button.danger {
 [data-slide="sp-submit"] #slide-content{overflow-y:auto}
 [data-slide="sp-submit"] #slide-content>*{flex-shrink:0}
 [data-slide="sp-submit"] #slide-content textarea{min-height:64px}
+
+/* 11/9 사다리꼴 쪽: 두 높이 예상 그림(9쪽 스케치 도구) */
+.sp-trap2{grid-template-columns:minmax(0,0.85fr) minmax(0,1.15fr)}
+.sp-trap-fig2{display:flex;flex-direction:column;gap:6px}
+.sp-trap-fig2>b{font-size:14px}
+.sp-trap-fig2 .sp-prof{width:100%;max-width:260px;background:#f8fafc;border-radius:12px}
+.sp-mini{font-size:13px;color:#475569;margin:2px 0}
+.sp-pads{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sp-pad .sketch canvas{width:100%;height:auto}
+.sp-pads .sketch .shape-tools button,.sp-pads .sketch .quiet{font-size:12px;padding:3px 6px}
+.sp-locked .sketch{pointer-events:none;opacity:.95}
+.sp-locked .sketch-tools{display:none}
+.sp-actual{display:flex;gap:10px;flex-wrap:wrap}
+.sp-actual figure{margin:0;text-align:center;font-size:12px}
+@media (max-width:900px){.sp-trap2{grid-template-columns:1fr}}
+
+/* 11/9 사다리꼴 쪽을 1280×720 안에: 그림판 셋을 한 줄로, 넘치면 쪽 안에서 스크롤 */
+#slide-content:has(.sp-trap2){overflow-y:auto;padding-right:6px}
+.sp-trap2{grid-template-columns:270px minmax(0,1fr);gap:14px}
+.sp-trap-fig2 .sp-prof{max-width:220px}
+.sp-trap2 .sp-res .sp-view{min-height:160px}
+.sp-pads3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.sp-pads3 .sketch{padding:6px}
+.sp-pads3 .sketch .micro{display:none}
+.sp-pads3 .sketch-tools{gap:3px;flex-wrap:wrap}
+.sp-pads3 .sketch-label{font-size:12px;width:100%;margin:0}
+.sp-pads3 .sketch .shape-tools button,.sp-pads3 .sketch .quiet,.sp-pads3 .sketch .sym{font-size:11px;padding:2px 5px;min-height:0}
+.sp-pads3 .sketch .pen{width:16px;height:16px}
+.sp-trap2 .sp-q{margin:2px 0}
+.sp-trap2 .sp-pick button{padding:6px 10px}
