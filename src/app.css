@@ -2682,3 +2682,34 @@ button.danger {
 .sp-why[hidden]{display:none}
 
 .brand.sp-home b{font-size:17px;letter-spacing:-.02em}
+/* 11/10 특별판 2·8쪽: 실시간 수업 1차시 '나의 생각' 화면 구성 */
+.sp-claims2{display:grid;gap:8px;margin:4px 0 6px}
+.sp-claim2{display:flex;gap:12px;align-items:flex-start;background:#f1f5f9;border-radius:12px;padding:12px 16px;font-size:16px;line-height:1.6}
+.sp-claim2 b{flex:none;color:#1e3a5f}
+.sp-claim2.a{border-left:4px solid #16a34a}
+.sp-claim2.b{border-left:4px solid #f59e0b}
+.sp-radios{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.sp-radio{position:relative;display:flex;align-items:center;gap:10px;cursor:pointer;padding:6px 0;font-size:16px}
+.sp-radio input{position:absolute;opacity:0;width:1px;height:1px}
+.sp-radio-box{width:22px;height:22px;border:2px solid #1e3a5f;border-radius:50%;background:#fff;flex:none;position:relative}
+.sp-radio input:checked+.sp-radio-box{background:#1e3a5f}
+.sp-radio input:checked+.sp-radio-box::after{content:"";position:absolute;left:5px;top:5px;width:8px;height:8px;border-radius:50%;background:#fff}
+.sp-radio input:focus-visible+.sp-radio-box{box-shadow:0 0 0 3px #93c5fd}
+.sp-radio input:checked~span:last-child{font-weight:700}
+div.sp-was{font-size:15px;padding:10px 14px;border-radius:10px;line-height:1.6}
+.sp-was-why{color:#64748b}
+/* 11/10 특별판 7쪽: 앞 쪽 문제 상황·내 그림 + 숨은 단서 목록 */
+.sp-recap{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:12px 14px}
+.sp-recap small{display:block;color:#64748b;font-size:13px;margin-bottom:4px}
+.sp-recap-fig b{display:block;font-size:14px;max-width:260px;line-height:1.4;margin-bottom:4px}
+.sp-recap-fig canvas{background:#fff;border-radius:8px;max-width:100%}
+.sp-recap-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sp-recap-row figure{margin:0}
+.sp-recap-row canvas{width:100%;height:auto;aspect-ratio:300/170;border:1px solid #cbd5e1;border-radius:8px;background:#fff}
+.sp-recap-row figcaption{text-align:center;font-size:13px;color:#475569;margin-top:2px}
+.sp-clue-sel{font:inherit;font-size:18px;font-weight:700;padding:6px 12px;border-radius:10px;border:2px dashed #94a3b8;background:#fff;color:#64748b;cursor:pointer}
+.sp-clue-sel.on{border-style:solid;border-color:var(--stage,#1f89ed);color:#0f172a;background:#eef6ff}
+@media (max-width:900px){.sp-recap{grid-template-columns:1fr}}
+[data-slide="sp-pre"] #slide-content,[data-slide="sp-post"] #slide-content,[data-slide="sp-clue"] #slide-content{overflow-y:auto;min-height:0;padding-right:6px;gap:10px}
+[data-slide="sp-pre"] .answer-field textarea,[data-slide="sp-post"] .answer-field textarea{min-height:84px;height:84px;font-size:17px}
+[data-slide="sp-pre"] .answer-field label,[data-slide="sp-post"] .answer-field label{font-size:16px}

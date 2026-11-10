@@ -654,11 +654,11 @@ var SP_REAL = [
 var SP_GALLERY = `https://j333333766-hub.github.io/rotation-ar-gallery/`;
 if (SP) {
   i = [
-    { id: 1, auto: !0, title: `처음 생각`, original: `민수와 지연이 중 누구의 생각에 동의하나요?`, fields: [r(`sp-pre`, `처음 생각(민수·지연)`), r(`sp-pre-why`, `처음 생각의 이유`, `왜 그렇게 생각했는지 짧게 적어 보세요.`)] },
+    { id: 1, auto: !0, title: `처음 생각`, original: `민수와 지연이 중 누구의 생각에 동의하나요?`, fields: [r(`sp-pre`, `처음 생각(민수·지연)`), r(`sp-pre-why`, `그렇게 생각한 이유`, `이유를 적어 보세요.`)] },
     { id: 2, auto: !0, title: `사다리꼴 ①`, original: `사다리꼴 ①을 1회전 시킨 회전체와 그 단면을 예상하여 그리고 3D로 확인하세요.`, fields: [r(`sp-t1-seen`, `① 3D 확인`), r(`sp-t1-note`, `① 확인해 보니`, `예상과 같았나요? 무엇을 보았나요?`), r(`sp-t1-h1`, `① 자른 높이 ①(%)`), r(`sp-t1-h2`, `① 자른 높이 ②(%)`)], drawings: [`sp-t1-solid`, `sp-t1-c1`, `sp-t1-c2`] },
     { id: 3, auto: !0, title: `사다리꼴 ③`, original: `사다리꼴 ③을 1회전 시킨 회전체와 그 단면을 예상하여 그리고 3D로 확인하세요.`, fields: [r(`sp-t3-seen`, `③ 3D 확인`), r(`sp-t3-note`, `③ 확인해 보니`, `예상과 같았나요? 무엇을 보았나요?`), r(`sp-t3-h1`, `③ 자른 높이 ①(%)`), r(`sp-t3-h2`, `③ 자른 높이 ②(%)`)], drawings: [`sp-t3-solid`, `sp-t3-c1`, `sp-t3-c2`] },
     { id: 4, auto: !0, title: `숨은 단서`, original: `회전체의 단면 모양을 결정하는 숨은 단서를 찾으세요.`, fields: [r(`sp-clue`, `숨은 단서`)] },
-    { id: 5, auto: !0, title: `바뀐 생각`, original: `다시 한번, 민수와 지연이 중 누구의 생각에 동의하나요?`, fields: [r(`sp-post`, `지금 생각(민수·지연)`), r(`sp-post-why`, `지금 생각의 이유`, `처음과 같다면 왜 같은지, 바뀌었다면 무엇 때문에 바뀌었는지 적어 보세요.`), r(`sp-feel`, `수업 중에 느낀 점`, `오늘 수업에서 느낀 점이나 새롭게 알게 된 점을 적어 보세요.`)] },
+    { id: 5, auto: !0, title: `바뀐 생각`, original: `다시 한번, 민수와 지연이 중 누구의 생각에 동의하나요?`, fields: [r(`sp-post`, `지금 생각(민수·지연)`), r(`sp-post-why`, `그렇게 생각한 이유`, `이유를 적어 보세요.`)] },
     { id: 6, auto: !0, title: `실생활 회전체`, original: `실생활 회전체를 만드는 평면도형을 그리고 1회전 시켜 보세요.`, fields: [r(`sp-real`, `고른 실생활 회전체`)], checks: [{ id: `sp-real-check`, label: `평면도형을 그리고 회전하기로 1회전 시켜 확인했어요.` }] },
     { id: 7, auto: !0, either: !0, title: `나만의 회전체 설계`, original: `만들고 싶은 회전체를 스케치하세요.`, drawing: `sp-drawing`, drawingLabel: `나만의 회전체 스케치 · 가운데 점선을 축으로 생각하고 그려요`, axisGuide: !0, fields: [r(`sp-plan`, `무엇을 닮은 작품인가요?`, `예) 꽃병 — 아래는 둥글고 위는 좁아요. 그림 대신 글로 설명해도 좋아요.`)] },
     { id: 8, auto: !0, title: `알지오3D로 만들기`, original: `알지오3D로 나만의 회전체를 만들고 STL로 내보내세요.`, checks: [{ id: `sp-stl-check`, label: `회전체를 만들고 STL 파일을 내려받았어요.` }] },
@@ -676,7 +676,7 @@ if (SP) {
     { id: `sp-t3a`, type: `trapA`, chapter: `S`, q: 3, trap: `t3`, fields: [], drawings: [`sp-t3-solid`], title: `사다리꼴 ③을 1회전 시킨 회전체를 예상하여 그려 보세요.` },
     { id: `sp-t3`, type: `trap`, chapter: `S`, q: 3, trap: `t3`, fields: [`sp-t3-seen`, `sp-t3-note`, `sp-t3-h1`, `sp-t3-h2`], drawings: [`sp-t3-c1`, `sp-t3-c2`], title: `사다리꼴 ③의 회전체를 두 높이에서 자른 단면을 예상하여 그리고 3D로 확인하세요.` },
     { id: `sp-clue`, type: `clue`, chapter: `S`, q: 4, fields: [`sp-clue`], title: `숨은 단서를 찾아라!` },
-    { id: `sp-post`, type: `vote`, chapter: `S`, q: 5, which: `post`, fields: [`sp-post`, `sp-post-why`, `sp-feel`], title: `다시 한번! 누구의 생각에 동의하나요?` },
+    { id: `sp-post`, type: `vote`, chapter: `S`, q: 5, which: `post`, fields: [`sp-post`, `sp-post-why`], title: `다시 한번! 누구의 생각에 동의하나요?` },
     { id: `sp-real`, type: `real`, chapter: `M`, q: 6, tools: [`blank`], space: `P`, layout: `side`, initView: 2, fields: [`sp-real`], title: `실생활 회전체 하나를 골라, 그것을 만드는 평면도형을 알지오3D에 그리세요.`, hint: `보는 시점이 ‘위쪽’이라 좌표평면이 보여요. 빨간 십자 → ‘다각형’으로 y축 오른쪽에 꼭짓점을 차례로 찍고, 처음 점을 다시 눌러 완성해요. 회전은 다음 화면에서 해요.` },
     { id: `sp-real-rotate`, type: `activity`, chapter: `M`, q: 6, tools: [`blank`], space: `P`, layout: `side`, checks: !0, guide: `short`, title: `그린 평면도형을 1회전 시켜 고른 물건과 비교하세요.`, hint: `앞 화면에서 그린 도형이 그대로 있어요. 빨간 십자 → ‘회전하기’ → ‘초록색 축(y축) 기준으로 회전’ → 그린 도형을 눌러요. 다르면 ↶(되돌리기)로 고쳐요.` },
     { id: `sp-sketch`, type: `drawing`, chapter: `M`, q: 7, fields: [`sp-plan`], title: `내가 만들고 싶은 회전체를 스케치하세요.`, note: `가운데 점선(회전축)의 왼쪽과 오른쪽이 똑같고, 위에서 보면 둥근 모양이면 돼요. 잘 그리지 않아도 괜찮아요. 이 그림을 보며 다음 화면에서 알지오3D로 만들어요.` },
@@ -686,7 +686,7 @@ if (SP) {
     { id: `sp-submit`, type: `spfinish`, chapter: `M`, q: 9, fields: [`sp-desc`], title: `작품을 제출하고 AR 갤러리에서 함께 보아요.` },
   ];
   f = d.map((e) => e.id);
-  o = i.flatMap((e) => e.fields?.map((e) => e.id) || []).concat([`sp-t1-pred`, `sp-t1-conf`, `sp-t3-pred`, `sp-t3-conf`]); // 11/9 뺀 예상·자신감(이미 쓴 기록도 읽히게)
+  o = i.flatMap((e) => e.fields?.map((e) => e.id) || []).concat([`sp-t1-pred`, `sp-t1-conf`, `sp-t3-pred`, `sp-t3-conf`, `sp-feel`]); // 11/9 뺀 예상·자신감, 11/10 뺀 느낀 점(이미 쓴 기록도 읽히게)
   s = i.flatMap((e) => e.checks?.map((e) => e.id) || []);
   c = i.flatMap((e) => (e.drawing ? [e.drawing] : []).concat(e.drawings || []));
   m = globalThis.WB_CFG?.key || `workbook:${t}:special`;
@@ -743,12 +743,29 @@ function spDispose() {
 function spRender(t, s) {
   spDispose();
   if (t.type === `vote`) {
-    let c = L(`div`, `sp-claims`);
-    c.innerHTML = `<div class="sp-claim a"><b>민수</b><span>“회전체를 회전축에 수직인 평면으로 자를 때 생기는 단면은 <u>원 모양</u>이야.”</span></div><div class="sp-claim b"><b>지연</b><span>“회전체를 회전축에 수직인 평면으로 자를 때 생기는 단면은 <u>원 모양이 아닐 수도</u> 있어.”</span></div>`;
-    s.append(c);
-    let [k, why, feel] = t.fields;
-    if (t.which === `post` && M.answers[`sp-pre`]) s.append(L(`p`, `sp-was`, `수업 처음 내 생각: ${M.answers[`sp-pre`]}`));
-    (s.append(L(`p`, `sp-q`, `누구의 생각에 동의하나요?`), spPick(k, SP_VOTE)), s.append(G(why)), feel && s.append(G(feel)));
+    // 11/10: 실시간 수업 1차시 '나의 생각' 화면 구성(안내 글 → 두 의견 세로 → 동그라미 고르기 → 이유 한 칸)
+    let [k, why] = t.fields,
+      post = t.which === `post`;
+    if (post && M.answers[`sp-pre`]) {
+      let was = L(`div`, `sp-was`),
+        o = SP_VOTE.find((x) => x[0] === M.answers[`sp-pre`]),
+        r0 = (M.answers[`sp-pre-why`] || ``).trim();
+      (was.append(L(`span`, ``, `처음 [나의 생각]: `), L(`b`, ``, o ? o[1] : M.answers[`sp-pre`])), r0 && was.append(L(`br`), L(`span`, `sp-was-why`, `왜냐하면 ${r0}`)), s.append(was));
+    }
+    let lead = L(`p`, `sp-lead`);
+    lead.innerHTML = `다음은 회전체를 <b>회전축에 수직인 평면</b>으로 자를 때 생기는 단면에 대한 두 학생의 의견입니다.`;
+    let c = L(`div`, `sp-claims2`);
+    c.innerHTML = `<div class="sp-claim2 a"><b>민수</b><span>“회전체를 회전축에 수직인 평면으로 자를 때 생기는 단면은 <u>원 모양</u>이야.”</span></div><div class="sp-claim2 b"><b>지연</b><span>“회전체를 회전축에 수직인 평면으로 자를 때 생기는 단면은 <u>원 모양이 아닐 수도</u> 있어.”</span></div>`;
+    let ul = L(`ul`, `sp-radios`);
+    for (let [v, label] of SP_VOTE) {
+      let li = L(`li`),
+        lab = L(`label`, `sp-radio`),
+        inp = L(`input`);
+      ((inp.type = `radio`), (inp.name = `${k}-r`), (inp.value = v), (inp.checked = M.answers[k] === v));
+      inp.addEventListener(`change`, () => inp.checked && ((M.answers[k] = v), H()));
+      (lab.append(inp, L(`span`, `sp-radio-box`), L(`span`, ``, label)), li.append(lab), ul.append(li));
+    }
+    s.append(lead, c, L(`p`, `sp-q`, post ? `지금 나의 생각은?` : `두 학생의 의견에 대한 나의 생각은?`), ul, G(why));
   } else if (t.type === `trapA` || t.type === `trap`) {
     // 11/9: 사다리꼴마다 두 쪽 — A 회전체 예상 그리기 / B 두 높이 ①② 단면 예상 그리기 → 3D 확인(그림판은 9쪽 스케치 도구)
     let T = SP_TRAP[t.trap],
@@ -855,9 +872,44 @@ function spRender(t, s) {
     import(`/js/solid3d.js`).then((m) => ((mod = mod || m), lines())).catch(() => {});
     (ready(), seen && open(!1));
   } else if (t.type === `clue`) {
-    s.append(L(`p`, `sp-lead`, `사다리꼴 ①과 ③은 모두 같은 회전축으로 1회전 시켰는데, ③에서만 가운데가 빈 단면이 생겼어요. 단면의 모양을 결정하는 숨은 단서는 무엇일까요?`));
-    let p = L(`p`, `sp-fill`);
-    (p.append(L(`span`, ``, `회전체의 단면 모양을 결정하는 숨은 단서는 `)), p.append(spPick(t.fields[0], SP_CLUE.map((x) => [x, x]))), p.append(L(`span`, ``, ` 이다!`)), s.append(p));
+    // 11/10: 앞 쪽(사다리꼴 ③ 두 높이 단면) 문제 상황과 내가 그린 그림을 보여 주고, 숨은 단서는 목록에서 고른다
+    let T = SP_TRAP.t3,
+      n6 = d.find((e) => e.id === `sp-t3`),
+      hs = [Number(M.answers[`sp-t3-h1`]) || 30, Number(M.answers[`sp-t3-h2`]) || 70],
+      ys = T.pts.map((q) => q[1]),
+      yOf = (h) => Math.min(...ys) + (Math.max(...ys) - Math.min(...ys)) * (h / 100),
+      box = L(`div`, `sp-recap`),
+      fig = L(`div`, `sp-recap-fig`),
+      cv = L(`canvas`, `sp-prof`),
+      mine = L(`div`, `sp-recap-mine`);
+    ((cv.width = 260), (cv.height = 200));
+    fig.append(L(`small`, ``, `${pageNo(n6)}쪽 문제 상황`), L(`b`, ``, T.name), cv);
+    import(`/js/solid3d.js`).then((m) => m.drawProfile2D(cv, { pts: T.pts }, { cutYs: hs.map(yOf) })).catch(() => {});
+    mine.append(L(`small`, ``, `${pageNo(n6)}쪽에서 내가 그린 단면 예상`));
+    let row = L(`div`, `sp-recap-row`);
+    [[`sp-t3-c1`, `① 높이`], [`sp-t3-c2`, `② 높이`]].forEach(([k, lab]) => {
+      let f = L(`figure`),
+        st = M.drawings[k] || [],
+        c = L(`canvas`);
+      ((c.width = 300), (c.height = 170));
+      let g = c.getContext(`2d`);
+      ((g.fillStyle = `#fff`), g.fillRect(0, 0, 300, 170));
+      for (let e of st)
+        e.points.length > 1 &&
+          (g.beginPath(), (g.strokeStyle = e.color), (g.lineWidth = 2.2), (g.lineCap = g.lineJoin = `round`), e.points.forEach(([x, y], q) => (q ? g.lineTo(x * 300, y * 170) : g.moveTo(x * 300, y * 170))), g.stroke());
+      st.some((e) => e.points.length > 1) || ((g.fillStyle = `#94a3b8`), (g.font = `15px sans-serif`), (g.textAlign = `center`), g.fillText(`아직 그리지 않았어요`, 150, 90));
+      (f.append(c, L(`figcaption`, ``, `${lab}에서 자른 단면`)), row.append(f));
+    });
+    (mine.append(row), box.append(fig, mine), s.append(box));
+    let p = L(`p`, `sp-fill`),
+      sel = L(`select`, `sp-clue-sel`),
+      k = t.fields[0];
+    sel.setAttribute(`aria-label`, `숨은 단서 고르기`);
+    sel.innerHTML = `<option value="">XX 고르기 ▾</option>` + SP_CLUE.map((x) => `<option value="${x}">${x}</option>`).join(``);
+    sel.value = SP_CLUE.includes(M.answers[k]) ? M.answers[k] : ``;
+    sel.classList.toggle(`on`, !!sel.value);
+    sel.addEventListener(`change`, () => ((M.answers[k] = sel.value), sel.classList.toggle(`on`, !!sel.value), H()));
+    (p.append(L(`span`, ``, `회전체의 단면 모양을 결정하는 숨은 단서는 `), sel, L(`span`, ``, ` 이다!`)), s.append(p));
     s.append(L(`p`, `note-box`, `힌트: 평면도형의 어느 부분이 회전축에 닿아 있고, 어느 부분이 떨어져 있는지 다시 살펴보세요.`));
   } else if (t.type === `real`) {
     hintBox(t, s);
@@ -1044,7 +1096,7 @@ function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage:
   const TIP = {
     pen: `마우스·펜·손가락으로 그리세요. 그리기 어려우면 선분·타원 도구를 쓰거나 작성란에 글로 설명할 수 있어요.`,
     line: `선분: 시작점에서 끝점까지 끌어요. 축이나 다른 선의 끝점에 가까우면 달라붙고, 거의 수평·수직이면 반듯해져요. 다 그린 뒤 ‘옮기기·크기’로 고칠 수 있어요.`,
-    ellipse: `타원: 가운데 점을 누르고 바깥쪽으로 끌어요. 가운데를 축 위에 두면 좌우가 같은 타원이 돼요. 다 그린 뒤 ‘옮기기·크기’로 고칠 수 있어요.`,
+    ellipse: `타원: 가운데 점을 누르고 바깥쪽으로 끌어요. 가운데를 축 위에 두면 좌우가 같은 타원이 돼요. Shift 를 누른 채 끌면 원이 그려져요. 다 그린 뒤 ‘옮기기·크기’로 고칠 수 있어요.`,
     select: `옮기기·크기: 선분이나 타원을 눌러 고른 뒤 끌어서 옮겨요. 네모 손잡이를 끌면 선분의 끝점, 타원의 가로·세로 길이가 바뀌어요. 좌우 대칭 짝도 함께 바뀌어요.`,
   };
   const micro = (txt) => (o.querySelector(`.micro`).textContent = txt);
@@ -1283,6 +1335,11 @@ function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage:
         let g = ep(O),
           rx = op.type === `rx` ? Math.max(0.008, Math.abs(q[0] - g.cx)) : g.rx,
           ry = op.type === `ry` ? Math.max(0.008, Math.abs(q[1] - g.cy)) : g.ry;
+        if (e.shiftKey) {
+          let { W: w2, H: h2 } = box(),
+            R = op.type === `rx` ? rx * w2 : ry * h2;
+          ((rx = R / w2), (ry = R / h2));
+        }
         setEllipse(k, g.cx, g.cy, rx, ry);
       } else {
         let j = op.type === `p0` ? 0 : 1,
@@ -1299,7 +1356,17 @@ function S(e, { strokes: t = [], grid: n = !1, label: r, onChange: i, onMessage:
       let a0 = cur.start,
         b = snapPt(p(e), cur.kind === `ellipse`);
       if (cur.kind === `line`) cur.points = [a0, b[2] ? [b[0], b[1]] : straighten(a0, b)];
-      else setEllipse(cur, a0[0], a0[1], Math.abs(b[0] - a0[0]), Math.abs(b[1] - a0[1]));
+      else {
+        let rx = Math.abs(b[0] - a0[0]),
+          ry = Math.abs(b[1] - a0[1]);
+        // Shift 를 누른 채 끌면 원(화면에서 가로·세로 반지름이 같은 픽셀)
+        if (e.shiftKey) {
+          let { W, H } = box(),
+            R = Math.max(rx * W, ry * H);
+          ((rx = R / W), (ry = R / H));
+        }
+        setEllipse(cur, a0[0], a0[1], rx, ry);
+      }
       return f();
     }
     if (cur.points.length >= 5e3) return;
