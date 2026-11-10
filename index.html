@@ -914,7 +914,7 @@ function spRender(t, s) {
       sel = L(`select`, `sp-clue-sel`),
       k = t.fields[0];
     sel.setAttribute(`aria-label`, `숨은 단서 고르기`);
-    sel.innerHTML = `<option value="">XX 고르기 ▾</option>` + SP_CLUE.map((x) => `<option value="${x}">${x}</option>`).join(``);
+    sel.innerHTML = `<option value="">선택하세요</option>` + SP_CLUE.map((x) => `<option value="${x}">${x}</option>`).join(``);
     sel.value = SP_CLUE.includes(M.answers[k]) ? M.answers[k] : ``;
     sel.classList.toggle(`on`, !!sel.value);
     sel.addEventListener(`change`, () => ((M.answers[k] = sel.value), sel.classList.toggle(`on`, !!sel.value), H()));
@@ -5763,6 +5763,11 @@ div.sp-was{font-size:15px;padding:10px 14px;border-radius:10px;line-height:1.6}
 [data-slide="sp-pre"] #slide-content,[data-slide="sp-post"] #slide-content,[data-slide="sp-clue"] #slide-content{overflow-y:auto;min-height:0;padding-right:6px;gap:10px}
 [data-slide="sp-pre"] .answer-field textarea,[data-slide="sp-post"] .answer-field textarea{min-height:84px;height:84px;font-size:17px}
 [data-slide="sp-pre"] .answer-field label,[data-slide="sp-post"] .answer-field label{font-size:16px}
+/* 11/10: 7쪽 핵심 문장 크게 */
+[data-slide="sp-clue"] .sp-fill{font-size:26px;gap:12px;justify-content:center;margin:14px 0 8px;line-height:1.5}
+[data-slide="sp-clue"] .sp-clue-sel{font-size:24px;padding:8px 16px;min-width:200px}
+[data-slide="sp-clue"] .sp-recap-row canvas{width:auto;max-width:100%;height:150px;display:block;margin:0 auto}
+[data-slide="sp-clue"] .sp-recap-fig canvas{width:195px;height:150px}
 
 </style>
   </head>

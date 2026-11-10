@@ -905,7 +905,7 @@ function spRender(t, s) {
       sel = L(`select`, `sp-clue-sel`),
       k = t.fields[0];
     sel.setAttribute(`aria-label`, `숨은 단서 고르기`);
-    sel.innerHTML = `<option value="">XX 고르기 ▾</option>` + SP_CLUE.map((x) => `<option value="${x}">${x}</option>`).join(``);
+    sel.innerHTML = `<option value="">선택하세요</option>` + SP_CLUE.map((x) => `<option value="${x}">${x}</option>`).join(``);
     sel.value = SP_CLUE.includes(M.answers[k]) ? M.answers[k] : ``;
     sel.classList.toggle(`on`, !!sel.value);
     sel.addEventListener(`change`, () => ((M.answers[k] = sel.value), sel.classList.toggle(`on`, !!sel.value), H()));
